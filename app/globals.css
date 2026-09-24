@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  --color-paper: #f1f2ee;
+  --color-ink: #17181a;
+  --color-teal: #1f6f5c;
+  --color-amber: #c97a2b;
+  --color-border: #d6d8d1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #121312;
+    --color-ink: #edeeea;
+    --color-teal: #3fa588;
+    --color-amber: #e0954a;
+    --color-border: #2c2e2b;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-ink: var(--color-ink);
+  --color-teal: var(--color-teal);
+  --color-amber: var(--color-amber);
+  --color-border: var(--color-border);
+
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-work-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    background: var(--color-paper);
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--color-teal);
+    color: var(--color-paper);
+  }
+}
