@@ -8,21 +8,13 @@ type ImagePlaceholderProps = {
   style?: CSSProperties;
 };
 
-export function ImagePlaceholder({
-  width,
-  height,
-  label,
-  className = "",
-  style,
-}: ImagePlaceholderProps) {
+export function ImagePlaceholder({ width, height, label, className = "", style }: ImagePlaceholderProps) {
   return (
     <div
-      className={`flex items-center justify-center border-2 border-dashed border-border bg-ink/[0.03] ${className}`}
+      className={`flex items-center justify-center border-2 border-dashed border-border bg-panel ${className}`}
       style={{ aspectRatio: `${width} / ${height}`, ...style }}
     >
-      <span className="font-mono text-xs tracking-wide text-ink/50">
-        {label ?? `${width} × ${height}`}
-      </span>
+      <span className="font-mono text-xs tracking-wide text-ink/45">{label ?? `${width} × ${height}`}</span>
     </div>
   );
 }

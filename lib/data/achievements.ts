@@ -5,6 +5,10 @@ export type AchievementEntry = {
   title: string;
   category: string;
   paragraphs: RichSegment[][];
+  /** Short name used in the linked pair, e.g. "Grand Final". */
+  shortTitle?: string;
+  /** Earlier event this achievement grew out of, drawn as a linked pair in the log. */
+  precededBy?: { date: string; label: string; href: string };
 };
 
 export const achievements: AchievementEntry[] = [
@@ -12,6 +16,12 @@ export const achievements: AchievementEntry[] = [
     date: "March 2026",
     title: "Grand Finalist, Hackathon Uzbekistan",
     category: "International AI Hackathon",
+    shortTitle: "Grand Final",
+    precededBy: {
+      date: "February 2026",
+      label: "Elimination round · Sepsis Guard",
+      href: "/projects/sepsis-guard",
+    },
     paragraphs: [
       [
         "Advanced to the Grand Final of an international AI hackathon as one of two teams from Indonesia. Collaborated to develop an AI powered solution under time constraints while competing alongside participants from various countries.",

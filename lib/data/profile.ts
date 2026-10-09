@@ -33,7 +33,7 @@ export const profile: Profile = {
   linkedin: "https://linkedin.com/in/jasonalxharris",
   github: "https://github.com/JasonAH17",
   huggingface: "https://huggingface.co/JAH17",
-  headshot: { src: "/images/profile/headshot.jpg", width: 800, height: 800 },
+  headshot: { src: "/images/profile/headshot.jpg", width: 640, height: 640 },
   about:
     "I am a Computer Science student majoring in Artificial Intelligence at Bina Nusantara University with a passion for creating technology that makes a positive impact. I enjoy learning new things, collaborating with diverse teams, and exploring innovative ideas to address real-world challenges. Through academic and volunteer experiences, I have developed strong communication, teamwork, and problem solving skills while always striving to help others whenever I can contribute.",
   education: [

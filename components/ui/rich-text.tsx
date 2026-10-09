@@ -13,7 +13,7 @@ export function RichText({ segments }: { segments: RichSegment[] }) {
           <Link
             key={index}
             href={segment.href}
-            className="text-teal underline underline-offset-2"
+            className="text-signal underline underline-offset-2"
           >
             {segment.label}
           </Link>

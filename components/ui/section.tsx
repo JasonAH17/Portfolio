@@ -1,30 +1,19 @@
 import type { ReactNode } from "react";
-import { Divider } from "./divider";
 
 type SectionProps = {
   id?: string;
   children: ReactNode;
   className?: string;
-  divider?: boolean;
-  compact?: boolean;
+  /** Hairline on top. Sections choose their own header treatment; this is only the frame. */
+  rule?: boolean;
 };
 
-export function Section({
-  id,
-  children,
-  className = "",
-  divider = true,
-  compact = false,
-}: SectionProps) {
+export function Section({ id, children, className = "", rule = true }: SectionProps) {
   return (
-    <>
-      {divider && <Divider />}
-      <section
-        id={id}
-        className={`mx-auto w-full max-w-4xl px-6 text-left ${compact ? "py-14 sm:py-16" : "py-20 sm:py-24"} ${className}`}
-      >
+    <section id={id} className={rule ? "border-t border-border" : undefined}>
+      <div className={`mx-auto w-full max-w-6xl px-4 text-left sm:px-6 ${className}`}>
         {children}
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

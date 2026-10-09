@@ -1,39 +1,51 @@
 import type { Metadata } from "next";
-import { Fraunces, Work_Sans, JetBrains_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono, Newsreader } from "next/font/google";
+import { SignalDefs } from "@/components/signal/signal-defs";
+import { StatusBar } from "@/components/ui/status-bar";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-});
-
-const workSans = Work_Sans({
-  variable: "--font-work-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  axes: ["wdth"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
+});
+
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
 export const metadata: Metadata = {
   title: "Jason Alexander Harris — Portfolio",
   description:
-    "Computer Science student majoring in Artificial Intelligence at Bina Nusantara University.",
+    "Computer Science student majoring in Artificial Intelligence at Bina Nusantara University, building AI for healthcare.",
 };
+
+// Marks JS as available before first paint so sweep covers only hide traces when they can be revealed.
+const jsFlag = `document.documentElement.classList.add("js")`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${workSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${archivo.variable} ${jetbrainsMono.variable} ${newsreader.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
+      </head>
+      <body className="flex min-h-full flex-col font-sans">
+        <SignalDefs />
+        <StatusBar />
+        {children}
+      </body>
     </html>
   );
 }
