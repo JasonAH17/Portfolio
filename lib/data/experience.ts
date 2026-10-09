@@ -1,4 +1,7 @@
+export type ExperienceKind = "Experience" | "Volunteer";
+
 export type ExperienceEntry = {
+  kind: ExperienceKind;
   dateRange: string;
   title: string;
   organization: string;
@@ -7,6 +10,7 @@ export type ExperienceEntry = {
 
 export const experience: ExperienceEntry[] = [
   {
+    kind: "Volunteer",
     dateRange: "April 2025 — May 2025",
     title: "PAUD Teaching Volunteer",
     organization: "Teach For Indonesia (TFI)",

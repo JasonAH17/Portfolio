@@ -4,7 +4,7 @@ import { ImagePlaceholder } from "./image-placeholder";
 type LogEntryProps = {
   id?: string;
   date: string;
-  kind: "Achievement" | "Experience";
+  kind: "Achievement" | "Experience" | "Volunteer";
   title: string;
   subtitle?: string;
   photo?: boolean;
@@ -15,6 +15,7 @@ type LogEntryProps = {
 const kindColor = {
   Achievement: "var(--color-signal)",
   Experience: "var(--color-ch-pleth)",
+  Volunteer: "var(--color-ch-resp)",
 };
 
 /** One event in the log: timestamp column, rail with marker, entry content. */

@@ -2,7 +2,8 @@ import { AboutSection } from "@/components/sections/about-section";
 import { CertificationsSection } from "@/components/sections/certifications-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { HomeSection } from "@/components/sections/home-section";
-import { LogSection } from "@/components/sections/log-section";
+import { AchievementsSection } from "@/components/sections/achievements-section";
+import { ExperienceSection } from "@/components/sections/experience-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 
 export default function Home() {
@@ -11,7 +12,8 @@ export default function Home() {
       <HomeSection />
       <ProjectsSection />
       <AboutSection />
-      <LogSection />
+      <ExperienceSection />
+      <AchievementsSection />
       <CertificationsSection />
       <ContactSection />
     </main>

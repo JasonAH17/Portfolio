@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 
 const links = [
   { id: "projects", label: "Projects" },
-  { id: "log", label: "Log" },
+  { id: "experience", label: "Experience" },
+  { id: "achievements", label: "Achievements" },
   { id: "certifications", label: "Certs" },
   { id: "contact", label: "Contact" },
 ];
@@ -70,8 +71,8 @@ export function StatusBar() {
           WIB
         </p>
 
-        <nav aria-label="Sections" className="w-full sm:w-auto">
-          <ul className="flex gap-5 sm:gap-6">
+        <nav aria-label="Sections" className="-mx-4 w-[calc(100%+2rem)] overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:overflow-visible sm:px-0">
+          <ul className="flex gap-x-5 whitespace-nowrap sm:gap-x-6">
             {links.map((link) => {
               const isActive = active === link.id;
               return (
