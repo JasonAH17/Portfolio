@@ -1,8 +1,11 @@
+import type { CSSProperties } from "react";
+
 type ImagePlaceholderProps = {
   width: number;
   height: number;
   label?: string;
   className?: string;
+  style?: CSSProperties;
 };
 
 export function ImagePlaceholder({
@@ -10,11 +13,12 @@ export function ImagePlaceholder({
   height,
   label,
   className = "",
+  style,
 }: ImagePlaceholderProps) {
   return (
     <div
       className={`flex items-center justify-center border-2 border-dashed border-border bg-ink/[0.03] ${className}`}
-      style={{ aspectRatio: `${width} / ${height}` }}
+      style={{ aspectRatio: `${width} / ${height}`, ...style }}
     >
       <span className="font-mono text-xs tracking-wide text-ink/50">
         {label ?? `${width} × ${height}`}

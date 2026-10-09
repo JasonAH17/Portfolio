@@ -1,4 +1,3 @@
-import { Divider } from "@/components/ui/divider";
 import { HomeSection } from "@/components/sections/home-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { ExperienceSection } from "@/components/sections/experience-section";
@@ -20,8 +19,6 @@ export default function Home() {
       <CertificationsSection />
 
       <ContactSection />
-
-      <Divider />
     </div>
   );
 }

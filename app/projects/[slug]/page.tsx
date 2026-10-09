@@ -2,8 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Divider } from "@/components/ui/divider";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { ImpactBulletText } from "@/components/ui/impact-bullet";
 import { Section } from "@/components/ui/section";
-import { Stat } from "@/components/ui/stat";
 import { projects } from "@/lib/data/projects";
 
 export function generateStaticParams() {
@@ -25,7 +25,7 @@ export default async function ProjectPage(
       <Section divider={false} className="pt-24">
         <Link
           href="/#projects"
-          className="font-mono text-xs uppercase tracking-wide text-teal"
+          className="link-hover font-mono text-xs uppercase tracking-wide text-teal"
         >
           ← Projects
         </Link>
@@ -120,13 +120,7 @@ export default async function ProjectPage(
                 <li key={index} className="flex gap-3">
                   <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-teal" />
                   <span>
-                    {bullet.map((segment, segmentIndex) =>
-                      typeof segment === "string" ? (
-                        <span key={segmentIndex}>{segment}</span>
-                      ) : (
-                        <Stat key={segmentIndex}>{segment.stat}</Stat>
-                      ),
-                    )}
+                    <ImpactBulletText bullet={bullet} />
                   </span>
                 </li>
               ))}

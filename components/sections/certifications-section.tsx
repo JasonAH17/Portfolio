@@ -1,19 +1,23 @@
-import { EmptyState } from "@/components/ui/empty-state";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section } from "@/components/ui/section";
 import { certifications } from "@/lib/data/certifications";
 
 export function CertificationsSection() {
-  return (
-    <Section id="certifications">
-      <h2 className="text-2xl">Certifications</h2>
+  const isEmpty = certifications.length === 0;
 
-      {certifications.length === 0 ? (
-        <div className="mt-8">
-          <EmptyState message="No certifications added yet" />
+  return (
+    <Section id="certifications" compact={isEmpty}>
+      <h2 className="text-3xl sm:text-4xl">Certifications</h2>
+
+      {isEmpty ? (
+        <div className="mt-6 max-w-lg border-l-2 border-teal/40 py-1 pl-5">
+          <p className="font-serif text-lg text-ink/70 italic">
+            No certifications yet — this space will fill in as I complete
+            them.
+          </p>
         </div>
       ) : (
-        <div className="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2">
+        <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2">
           {certifications.map((cert) => (
             <div key={cert.name}>
               <ImagePlaceholder
@@ -34,7 +38,7 @@ export function CertificationsSection() {
                   href={cert.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 inline-block font-mono text-xs text-teal"
+                  className="link-hover mt-2 inline-block font-mono text-xs text-teal"
                 >
                   View credential
                 </a>

@@ -5,7 +5,7 @@ import { experience } from "@/lib/data/experience";
 export function ExperienceSection() {
   return (
     <Section id="experience">
-      <h2 className="text-2xl">Experience</h2>
+      <h2 className="text-3xl sm:text-4xl">Experience</h2>
       <div className="mt-8">
         {experience.map((entry, index) => (
           <TimelineItem

@@ -6,7 +6,7 @@ import { achievements } from "@/lib/data/achievements";
 export function AchievementsSection() {
   return (
     <Section id="achievements">
-      <h2 className="text-2xl">Achievements</h2>
+      <h2 className="text-3xl sm:text-4xl">Achievements</h2>
       <div className="mt-8">
         {achievements.map((entry, index) => (
           <TimelineItem
