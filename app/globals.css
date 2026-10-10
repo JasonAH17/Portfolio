@@ -29,6 +29,18 @@
   --name-size: min(calc((100vw - 2.5rem) / 4.4), 13.5rem);
 }
 
+/*
+ * Desktop: the photo sits beside the name and is exactly as tall as it
+ * (3 lines × 0.84 line-height = 2.52em, square). "ALEXANDER" is ~4.25em wide,
+ * so name + gap + photo fits the content width when size = (width - gap) / 6.9.
+ */
+@media (min-width: 1024px) {
+  :root {
+    --name-size: min(calc((min(100vw, 72rem) - 3rem - 2rem) / 6.9), 10rem);
+    --hero-photo: calc(var(--name-size) * 2.52);
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-paper: #070a09;
@@ -133,12 +145,6 @@
   html {
     background: var(--color-paper);
     scroll-padding-top: calc(var(--status-bar-h) + 1rem);
-  }
-
-  @media (max-width: 639px) {
-    html {
-      --status-bar-h: 4.75rem;
-    }
   }
 
   body {
@@ -332,47 +338,6 @@
     }
   }
 
-  /* ---------- Hero monitor waveform scroll ---------- */
-  @keyframes strip-scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  .strip-scroll {
-    animation: strip-scroll 5800ms linear infinite;
-    will-change: transform;
-  }
-
-  .monitor[data-paused] .strip-scroll,
-  .monitor[data-paused] .pulse-dot {
-    animation-play-state: paused;
-  }
-
-  .gauge-arc {
-    transition:
-      stroke-dashoffset 900ms var(--ease-out),
-      stroke 400ms ease;
-  }
-
-  @keyframes alert-blink {
-    0%,
-    55% {
-      opacity: 1;
-    }
-    56%,
-    100% {
-      opacity: 0.35;
-    }
-  }
-
-  .alert-blink {
-    animation: alert-blink 1000ms steps(1, end) infinite;
-  }
-
   /* ---------- Project row hover ---------- */
   .live-group .live-title {
     transition: color 150ms ease;
@@ -410,9 +375,7 @@
       display: none !important;
     }
 
-    .pulse-dot,
-    .strip-scroll,
-    .alert-blink {
+    .pulse-dot {
       animation: none !important;
     }
 

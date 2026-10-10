@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
       <HomeSection />
-      <ProjectsSection />
       <AboutSection />
+      <ProjectsSection />
       <ExperienceSection />
       <AchievementsSection />
       <CertificationsSection />
