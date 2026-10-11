@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { Mask } from "@/components/motion/mask";
+import { reveal } from "@/components/motion/reveal";
 import { Section } from "./section";
 import { SectionLabel } from "./section-label";
 
@@ -25,10 +27,16 @@ export function LogSectionShell({ id, label, title, intro, color, children }: Lo
     <Section id={id} className="py-20 sm:py-28">
       <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
         <div>
-          <SectionLabel color={color}>{label}</SectionLabel>
-          <h2 className="type-display mt-4 text-[clamp(2.75rem,10vw,6rem)]">{title}</h2>
+          <div {...reveal()}>
+            <SectionLabel color={color}>{label}</SectionLabel>
+          </div>
+          <h2 {...reveal(0, "mask")} className="type-display mt-4 text-[clamp(2.75rem,10vw,6rem)]">
+            <Mask>{title}</Mask>
+          </h2>
         </div>
-        <p className="max-w-xs pb-2 text-sm text-ink/60">{intro}</p>
+        <p {...reveal(2)} className="max-w-xs pb-2 text-sm text-ink/60">
+          {intro}
+        </p>
       </div>
       <ol className="mt-12 sm:mt-16">{children}</ol>
     </Section>

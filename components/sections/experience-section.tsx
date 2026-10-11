@@ -24,7 +24,7 @@ export function ExperienceSection() {
           kind={entry.kind}
           title={entry.title}
           subtitle={entry.organization}
-          photo
+          photo={entry.photo}
           isLast={index === entries.length - 1}
         >
           <p>{entry.body}</p>

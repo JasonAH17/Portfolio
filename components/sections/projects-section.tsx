@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { Mask } from "@/components/motion/mask";
+import { reveal } from "@/components/motion/reveal";
 import { Readout } from "@/components/signal/readout";
 import { Trace, channelVar } from "@/components/signal/trace";
 import { Section } from "@/components/ui/section";
@@ -35,11 +37,16 @@ function PrimaryChannel({ project }: { project: Project }) {
         <div className="lg:col-span-4">
           <ChannelTag project={project} />
           {project.badge && (
-            <p className="type-label mt-4 inline-block border border-current px-2 py-1 text-signal">{project.badge}</p>
+            <p className="type-label mt-4 inline-block rounded-chip border border-current px-2 py-1 text-signal">{project.badge}</p>
           )}
           <h3 className="live-title type-display mt-5 text-[clamp(2.75rem,8vw,4.75rem)]">{project.title}</h3>
           <p className="mt-3 max-w-sm text-lg leading-snug text-ink/75">{project.tagline}</p>
-          <p className="type-label mt-6 text-ink/55">Read case study →</p>
+          <p className="type-label mt-6 text-ink/55">
+            Read case study{" "}
+            <span aria-hidden="true" className="nudge nudge--right">
+              →
+            </span>
+          </p>
         </div>
         <div className="lg:col-span-8">
           <Trace
@@ -73,7 +80,12 @@ function SecondaryChannel({ project }: { project: Project }) {
           <p className="mt-5 max-w-md border-l-2 pl-4 font-serif text-lg leading-snug text-ink/70 italic" style={{ borderColor: "var(--channel)" }}>
             {firstSentence(project.problem)}
           </p>
-          <p className="type-label mt-6 text-ink/55">Read case study →</p>
+          <p className="type-label mt-6 text-ink/55">
+            Read case study{" "}
+            <span aria-hidden="true" className="nudge nudge--right">
+              →
+            </span>
+          </p>
         </div>
         <div className="lg:col-span-7">
           <Trace
@@ -102,7 +114,7 @@ function ChannelRow({ project }: { project: Project }) {
     >
       <div>
         <ChannelTag project={project} />
-        <h3 className="live-title mt-2 text-xl font-semibold" style={{ fontStretch: "85%" }}>{project.title}</h3>
+        <h3 className="live-title mt-2 text-xl type-title">{project.title}</h3>
       </div>
       <Readout
         {...project.readout}
@@ -127,23 +139,34 @@ export function ProjectsSection() {
 
   return (
     <Section id="projects" className="pt-20 pb-10 sm:pt-28">
-      <SectionLabel>{projects.length} channels</SectionLabel>
+      <div {...reveal()}>
+        <SectionLabel>{projects.length} channels</SectionLabel>
+      </div>
       <div className="mt-4 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
-        <h2 className="type-display text-[clamp(3.75rem,15vw,10rem)]">Projects</h2>
-        <p className="max-w-xs pb-2 text-sm text-ink/60">
+        <h2 {...reveal(0, "mask")} className="type-display text-[clamp(3.75rem,15vw,10rem)]">
+          <Mask>Projects</Mask>
+        </h2>
+        <p {...reveal(2)} className="max-w-xs pb-2 text-sm text-ink/60">
           Each trace is drawn from the kind of data the project worked with.
         </p>
       </div>
 
       <div className="mt-10">
+        {/* Reveal wrappers sit outside the links so the entrance transition never fights the press feedback. */}
         {primary.map((project) => (
-          <PrimaryChannel key={project.slug} project={project} />
+          <div key={project.slug} {...reveal()}>
+            <PrimaryChannel project={project} />
+          </div>
         ))}
         {secondary.map((project) => (
-          <SecondaryChannel key={project.slug} project={project} />
+          <div key={project.slug} {...reveal()}>
+            <SecondaryChannel project={project} />
+          </div>
         ))}
-        {rest.map((project) => (
-          <ChannelRow key={project.slug} project={project} />
+        {rest.map((project, index) => (
+          <div key={project.slug} {...reveal(index)}>
+            <ChannelRow project={project} />
+          </div>
         ))}
       </div>
     </Section>

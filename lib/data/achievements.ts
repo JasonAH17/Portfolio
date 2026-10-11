@@ -1,3 +1,4 @@
+import type { ImageAsset } from "./projects";
 import type { RichSegment } from "./rich-text";
 
 export type AchievementEntry = {
@@ -5,6 +6,7 @@ export type AchievementEntry = {
   title: string;
   category: string;
   paragraphs: RichSegment[][];
+  photo?: ImageAsset;
   /** Short name used in the linked pair, e.g. "Grand Final". */
   shortTitle?: string;
   /** Earlier event this achievement grew out of, drawn as a linked pair in the log. */
@@ -17,6 +19,7 @@ export const achievements: AchievementEntry[] = [
     title: "Grand Finalist, Hackathon Uzbekistan",
     category: "International AI Hackathon",
     shortTitle: "Grand Final",
+    photo: { src: "/images/achievements/grand-final.jpg", width: 800, height: 600 },
     precededBy: {
       date: "February 2026",
       label: "Elimination round · Sepsis Guard",

@@ -94,7 +94,7 @@ function Shapes({ signal, seed }: { signal: SignalKind; seed: number }) {
 export function Trace({ signal, color, seed = 11, className = "", mode = "reveal" }: TraceProps) {
   return (
     <InView
-      className={`trace ecg-grid ${className}`}
+      className={`trace ecg-grid rounded-card ${className}`}
       style={{ color: channelVar(color) } as CSSProperties}
       live={mode === "live"}
     >

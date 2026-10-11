@@ -1,3 +1,5 @@
+import type { ImageAsset } from "./projects";
+
 export type ExperienceKind = "Experience" | "Volunteer";
 
 export type ExperienceEntry = {
@@ -6,6 +8,7 @@ export type ExperienceEntry = {
   title: string;
   organization: string;
   body: string;
+  photo?: ImageAsset;
 };
 
 export const experience: ExperienceEntry[] = [
@@ -15,5 +18,11 @@ export const experience: ExperienceEntry[] = [
     title: "PAUD Teaching Volunteer",
     organization: "Teach For Indonesia (TFI)",
     body: "Volunteered as a Teaching Volunteer in Teach For Indonesia (TFI), conducting fun learning activities for preschool students (PAUD). Collaborated with team members and teachers to prepare interactive educational activities that created an engaging and supportive learning environment for young learners.",
+    photo: {
+      src: "/images/experience/paud-tfi.jpg",
+      width: 1280,
+      height: 960,
+      caption: "With the PAUD students and teachers.",
+    },
   },
 ];

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { Mask } from "@/components/motion/mask";
 import { SiteImage } from "@/components/ui/site-image";
 import { profile } from "@/lib/data/profile";
 
@@ -25,20 +26,21 @@ export function HomeSection() {
 
   return (
     <header id="home" className="mx-auto w-full max-w-6xl px-4 pt-8 pb-20 sm:px-6 sm:pt-14 sm:pb-28">
-      <p className="reveal type-label text-ink/55" style={delay(0)}>
+      <p className="reveal type-label text-signal" style={delay(0)}>
         Computer Science · Artificial Intelligence
         <span className="hidden sm:inline"> — {profile.university}</span>
       </p>
 
       {/* Desktop columns: name | photo sized to the name's height (see --hero-photo in globals.css). */}
       <div className="mt-5 grid grid-cols-[8.5rem_1fr] gap-x-5 gap-y-8 sm:mt-6 sm:grid-cols-[11rem_1fr] sm:gap-x-6 lg:grid-cols-[1fr_var(--hero-photo)] lg:gap-x-8 lg:gap-y-12">
-        <h1 className="reveal type-name col-span-2 lg:col-span-1" style={delay(80)}>
-          <span className="block">{first}</span>
-          <span className="block">{middle}</span>
-          <span className="block text-signal">{last}</span>
+        {/* Each name line rises from behind a mask on load (CSS only, so it never waits on JS). */}
+        <h1 className="mask--load type-name col-span-2 lg:col-span-1" aria-label={profile.name}>
+          <Mask line={0}>{first}</Mask>
+          <Mask line={1}>{middle}</Mask>
+          <Mask line={2}>{last}</Mask>
         </h1>
 
-        <div className="reveal lg:col-start-2 lg:row-start-1" style={delay(160)}>
+        <div className="wipe--load lg:col-start-2 lg:row-start-1" style={delay(320)}>
           <SiteImage
             src={profile.headshot.src}
             width={profile.headshot.width}
@@ -51,7 +53,7 @@ export function HomeSection() {
 
         <dl
           className="reveal self-end divide-y divide-border border-y border-border lg:col-start-2 lg:row-start-2 lg:self-start"
-          style={delay(220)}
+          style={delay(520)}
         >
           {meta.map(([term, value]) => (
             <div key={term} className="flex flex-col gap-0.5 py-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4 sm:py-2.5">
@@ -61,23 +63,24 @@ export function HomeSection() {
           ))}
         </dl>
 
-        <div className="reveal col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2" style={delay(280)}>
-          <p
-            className="font-serif text-[1.5rem] leading-[1.3] text-ink/90 italic sm:text-[2rem]"
-            style={{ fontVariationSettings: '"opsz" 60' }}
-          >
+        <div className="reveal col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2" style={delay(440)}>
+          <p className="max-w-2xl text-lg leading-relaxed text-ink/75 sm:text-xl">
             {profile.about}
           </p>
           <ul className="mt-8 flex flex-wrap gap-2">
-            {links.map(([label, href]) => (
-              <li key={label}>
+            {/* First link is the primary action (filled), the rest are outlined, as in the latte mockup. */}
+            {links.map(([label, href], index) => (
+              <li key={label} className="reveal" style={delay(620 + index * 60)}>
                 <a
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="type-label inline-flex items-center gap-2 border border-border px-3 py-2 text-signal transition-colors hover:border-signal"
+                  className={`press inline-flex items-center gap-2 rounded-control border px-4 py-2.5 text-[0.95rem] font-medium ${index === 0 ? "border-signal bg-signal text-paper hover:bg-ink hover:border-ink" : "border-ink/70 text-ink hover:bg-ink/5"}`}
                 >
-                  {label} <span aria-hidden="true">↗</span>
+                  {label}{" "}
+                  <span aria-hidden="true" className="nudge nudge--up">
+                    ↗
+                  </span>
                 </a>
               </li>
             ))}

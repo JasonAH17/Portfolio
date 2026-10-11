@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { CountUp } from "@/components/motion/count-up";
 import { channelVar, type ChannelColor } from "./trace";
 
 type ReadoutProps = {
@@ -36,7 +37,7 @@ export function Readout({
       <p className="mt-1 flex items-start gap-1.5">
         <span className={`type-readout ${sizes[size]}`}>
           {approx && <span className="opacity-60">≈</span>}
-          {value}
+          <CountUp value={value} />
         </span>
         <span className="type-label mt-1 opacity-80">{unit}</span>
       </p>

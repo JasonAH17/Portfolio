@@ -15,7 +15,7 @@
 **Solution:** We combined GRU-D with a Transformer into one hybrid model, trained on MIMIC-IV v3.1, a large real world ICU time series dataset. To handle the 90%+ missing values, we applied forward and backward fill imputation, letting the model learn physiological decline patterns end to end.
 
 - Year accomplished: February 2026
-- Type: Group Project (Elimination Round, International AI in Healthcare Hackathon, Central Asian University, Uzbekistan)
+- Type: Qualifier Round, International AI in Healthcare Hackathon, Central Asian University, Uzbekistan
 - Role: Conducted research, contributed to model development, and participated in training the AI model for early sepsis prediction
 - GitHub: https://github.com/Expanics/Sepsis-Prediction
 - HuggingFace Space: https://huggingface.co/spaces/Expanic/SEPSIS_ICU_MIMIC
@@ -34,18 +34,6 @@
 4. GRU-D + Transformer: GRU-D models longitudinal dependencies and explicitly accounts for missingness; the Transformer's attention learns long-range relationships across clinical variables.
 5. Feature mapping: fully connected layers fuse both representations into a compact feature space.
 6. Output: an estimated sepsis risk per patient, for continuous monitoring and early warning.
-
-**Training results** (10 epochs; validation loss plateaus between epochs 8 and 10)
-
-| Epoch | Train binary loss | Train regression loss | Val binary loss | Val regression loss |
-|---|---|---|---|---|
-| 6 | ~0.04 | ~0.24 | ~1.0 | ~0.97 |
-| 7 | ~0.03 | ~0.23 | ~0.95 | ~0.96 |
-| 8 | ~0.02 | ~0.22 | ~0.93 | ~0.97 |
-| 9 | 0.0395 | 0.2527 | 0.9835 | 0.9729 |
-| 10 | 0.0358 | 0.2443 | ~0.98 | ~0.97 |
-
-Epochs 1–5: losses fall from high and validation begins to plateau.
 
 **Dashboard views**
 - Patient Triage & Surveillance: ranks ICU patients by sepsis risk with a status (Critical, High risk, Moderate, Stable) and SOFA scores; the demo database holds 5,657 ICU stays.
@@ -122,7 +110,7 @@ Since then, I have become more curious, open minded, and committed to continuous
 **Solution:** We developed an NLP based system that predicts PHQ-8 scores directly from free text conversations. The final model combines all-MPNet-base-v2 sentence embeddings with 23 additional linguistic features to capture both what users say and how they express themselves.
 
 - Year accomplished: May 2026
-- Type: Group Project (Class Assignment)
+- Type: Group Project
 - Role: Contributed to dataset selection, experimented with various NLP models, optimized the final model through fine tuning, and developed a multi output system that predicts PHQ-1 to PHQ-8 scores and overall depression severity
 - GitHub: https://github.com/Expanics/MindCheck
 - HuggingFace Space: https://huggingface.co/spaces/Expanic/MindCheck
@@ -266,7 +254,7 @@ More importantly, Finan Smart reminded me that growth often comes from trying so
 **Solution:** We developed a YOLOv8 based object detection system trained on 764 curated images to classify riders wearing and not wearing helmets. The model was integrated into an interactive Streamlit application that supports image uploads, video analysis, and real time camera detection.
 
 - Year accomplished: December 2025
-- Type: Group Project (Class Assignment)
+- Type: Group Project
 - Role: Led the end to end AI development process, including dataset preparation, model training, evaluation, and deployment
 - GitHub: https://github.com/JasonAH17/HelmGuard-Vision
 - Demo video: (add your demo link here)
@@ -340,7 +328,7 @@ More importantly, this project sparked my interest in exploring more advanced AI
 **Solution:** I developed a machine learning system using the BRFSS 2015 dataset containing over 250,000 health records. After preprocessing the data, comparing multiple models, and applying hyperparameter tuning, I deployed the final XGBoost model into an interactive Streamlit application for real time diabetes risk prediction.
 
 - Year accomplished: October 2025
-- Type: Individual Project (Class Assignment)
+- Type: Individual Project
 - Role: Independently handled the entire project, including data preprocessing, model experimentation, hyperparameter tuning, application development, and deployment
 - GitHub: https://github.com/JasonAH17/Predict_Diabetes_UTSMLOps
 - Demo video: (add your demo link here)

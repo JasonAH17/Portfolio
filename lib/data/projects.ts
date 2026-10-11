@@ -4,13 +4,6 @@ export type ImageAsset = { src: string; width: number; height: number; caption?:
 
 export type PipelineStep = { title: string; detail: string };
 
-export type TrainingTable = {
-  summary: string;
-  columns: string[];
-  rows: string[][];
-  note?: string;
-};
-
 export type Feature = { title: string; detail: string };
 
 export type Dataset = {
@@ -58,7 +51,6 @@ export type Project = {
   pipelineLabel?: string;
   /** Interpretation of the results, shown under the impact bullets. */
   resultsNote?: string[];
-  training?: TrainingTable;
   stack?: string[];
   /** Heading for the stack block; defaults to "Tech stack". */
   stackLabel?: string;
@@ -139,19 +131,6 @@ export const projects: Project[] = [
         detail: "An estimated sepsis risk per patient, for continuous monitoring and early warning.",
       },
     ],
-    training: {
-      summary:
-        "Trained for 10 epochs. Training losses keep falling while validation losses plateau between epochs 8 and 10.",
-      columns: ["Epoch", "Train binary", "Train regression", "Val binary", "Val regression"],
-      rows: [
-        ["6", "~0.04", "~0.24", "~1.0", "~0.97"],
-        ["7", "~0.03", "~0.23", "~0.95", "~0.96"],
-        ["8", "~0.02", "~0.22", "~0.93", "~0.97"],
-        ["9", "0.0395", "0.2527", "0.9835", "0.9729"],
-        ["10", "0.0358", "0.2443", "~0.98", "~0.97"],
-      ],
-      note: "Epochs 1–5: losses fall from high and validation begins to plateau.",
-    },
     references: [
       "Zhang, D., Yin, C., Hunold, K. M., Jiang, X., Caterino, J. M., & Zhang, P. (2021). An interpretable deep-learning model for early prediction of sepsis in the emergency department. Patterns, 2(2), 100196.",
       "Bomrah, S., Uddin, M., Upadhyay, U., Komorowski, M., Priya, J., Dhar, E., Hsu, S.-C., & Syed-Abdul, S. (2024). A scoping review of machine learning for sepsis prediction: Feature engineering strategies and model performance—A step towards explainability. Critical Care, 28, Article 180.",
@@ -163,7 +142,7 @@ export const projects: Project[] = [
     solution:
       "We combined GRU-D with a Transformer into one hybrid model, trained on MIMIC-IV v3.1, a large real world ICU time series dataset. To handle the 90%+ missing values, we applied forward and backward fill imputation, letting the model learn physiological decline patterns end to end.",
     year: "February 2026",
-    type: "Group Project (Elimination Round, International AI in Healthcare Hackathon, Central Asian University, Uzbekistan)",
+    type: "Qualifier Round, International AI in Healthcare Hackathon, Central Asian University, Uzbekistan",
     role: "Conducted research, contributed to model development, and participated in training the AI model for early sepsis prediction",
     links: [
       { label: "GitHub", href: "https://github.com/Expanics/Sepsis-Prediction" },
@@ -298,7 +277,7 @@ export const projects: Project[] = [
     solution:
       "We developed an NLP based system that predicts PHQ-8 scores directly from free text conversations. The final model combines all-MPNet-base-v2 sentence embeddings with 23 additional linguistic features to capture both what users say and how they express themselves.",
     year: "May 2026",
-    type: "Group Project (Class Assignment)",
+    type: "Group Project",
     role: "Contributed to dataset selection, experimented with various NLP models, optimized the final model through fine tuning, and developed a multi output system that predicts PHQ-1 to PHQ-8 scores and overall depression severity",
     links: [
       { label: "GitHub", href: "https://github.com/Expanics/MindCheck" },
@@ -541,7 +520,7 @@ export const projects: Project[] = [
     solution:
       "We developed a YOLOv8 based object detection system trained on 764 curated images to classify riders wearing and not wearing helmets. The model was integrated into an interactive Streamlit application that supports image uploads, video analysis, and real time camera detection.",
     year: "December 2025",
-    type: "Group Project (Class Assignment)",
+    type: "Group Project",
     role: "Led the end to end AI development process, including dataset preparation, model training, evaluation, and deployment",
     links: [{ label: "GitHub", href: "https://github.com/JasonAH17/HelmGuard-Vision" }],
     impact: [
@@ -654,7 +633,7 @@ export const projects: Project[] = [
     solution:
       "I developed a machine learning system using the BRFSS 2015 dataset containing over 250,000 health records. After preprocessing the data, comparing multiple models, and applying hyperparameter tuning, I deployed the final XGBoost model into an interactive Streamlit application for real time diabetes risk prediction.",
     year: "October 2025",
-    type: "Individual Project (Class Assignment)",
+    type: "Individual Project",
     role: "Independently handled the entire project, including data preprocessing, model experimentation, hyperparameter tuning, application development, and deployment",
     links: [
       { label: "GitHub", href: "https://github.com/JasonAH17/Predict_Diabetes_UTSMLOps" },

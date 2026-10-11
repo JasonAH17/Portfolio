@@ -34,7 +34,7 @@ export function SiteImage({ src, width, height, alt, className = "", sizes, prio
       alt={alt}
       sizes={sizes}
       priority={priority}
-      className={`block h-auto w-full border border-border bg-panel ${className}`}
+      className={`block h-auto w-full rounded-card border border-border bg-panel ${className}`}
     />
   );
 }

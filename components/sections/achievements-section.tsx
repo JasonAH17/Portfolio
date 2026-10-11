@@ -6,7 +6,7 @@ import { achievements, type AchievementEntry } from "@/lib/data/achievements";
 
 function LinkedPair({ before, after }: { before: NonNullable<AchievementEntry["precededBy"]>; after: string }) {
   return (
-    <div className="type-label flex flex-wrap items-center gap-x-3 gap-y-1 border border-border px-3 py-2 text-ink/60">
+    <div className="type-label flex flex-wrap items-center gap-x-3 gap-y-1 rounded-chip border border-border bg-panel px-3 py-2 text-ink/60">
       <Link href={before.href} className="link-hover text-signal">
         {before.date} · {before.label}
       </Link>
@@ -34,7 +34,7 @@ export function AchievementsSection() {
           kind="Achievement"
           title={entry.title}
           subtitle={entry.category}
-          photo
+          photo={entry.photo}
           isLast={index === entries.length - 1}
         >
           {entry.precededBy && (

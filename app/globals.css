@@ -1,66 +1,104 @@
 @import "tailwindcss";
 
 /*
- * Vital Signs design system.
- * Light = the printed strip (warm paper, ECG-paper grid).
- * Dark  = the monitor screen (green-black glass, phosphor traces).
+ * Latte theme.
+ * Light = latte cream: warm cream page, lighter cards, espresso ink, roasted-brown accent.
+ * Dark  = espresso: the same palette inverted for prefers-color-scheme: dark.
+ * The ECG-paper grid stays as a quiet structural texture inside trace areas only.
  */
 :root {
-  --color-paper: #f5f0e8;
-  --color-panel: #ede6da;
-  --color-ink: #161616;
-  --color-border: #dcd2c4;
-  --color-grid: rgb(214 140 128 / 0.32);
-  --color-grid-major: rgb(214 140 128 / 0.55);
-  --color-signal: #0e7a4f;
-  --color-amber: #b4621b;
+  --color-paper: #f4ece2;
+  --color-panel: #fbf6ef;
+  --color-ink: #2b2119;
+  --color-border: #e2d4c3;
+  --color-grid: rgb(139 94 60 / 0.08);
+  --color-grid-major: rgb(139 94 60 / 0.15);
+  --color-signal: #8b5e3c;
+  --color-highlight: #c08a5b;
+  /* Inline stat text: a caramel dark enough for text contrast on cream. */
+  --color-amber: #9c6534;
 
-  --color-ch-ecg: #0e7a4f;
-  --color-ch-pleth: #0b6e99;
-  --color-ch-resp: #8a6a00;
-  --color-ch-nbp: #a3307f;
-  --color-ch-aux: #3a3a3a;
+  /* One earthy channel colour per project. */
+  --color-ch-ecg: #8b5e3c;
+  --color-ch-resp: #5e7a55;
+  --color-ch-pleth: #4e6a7e;
+  --color-ch-nbp: #b0583f;
+  --color-ch-aux: #6e5f52;
 
-  --grain-opacity: 0.06;
-  --vignette: rgb(255 255 255 / 0.55);
+  --grain-opacity: 0.05;
+  --vignette: rgb(255 250 243 / 0.7);
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --status-bar-h: 3.25rem;
-  --name-size: min(calc((100vw - 2.5rem) / 4.4), 13.5rem);
+  color-scheme: light;
+  --name-size: min(calc((100vw - 2.5rem) / 4.3), 13rem);
+}
+
+/* Phones: the status bar is two rows (name, clock and theme toggle, then nav), so anchor jumps need more offset. */
+@media (max-width: 639px) {
+  :root {
+    --status-bar-h: 5.25rem;
+  }
 }
 
 /*
  * Desktop: the photo sits beside the name and is exactly as tall as it
- * (3 lines × 0.84 line-height = 2.52em, square). "ALEXANDER" is ~4.25em wide,
- * so name + gap + photo fits the content width when size = (width - gap) / 6.9.
+ * (3 lines × 0.95 line-height = 2.85em, square). "Alexander" is ~3.92em wide in
+ * Fraunces, so name + gap + photo fits the content width when size = (width - gap) / 7.1.
  */
 @media (min-width: 1024px) {
   :root {
-    --name-size: min(calc((min(100vw, 72rem) - 3rem - 2rem) / 6.9), 10rem);
-    --hero-photo: calc(var(--name-size) * 2.52);
+    --name-size: min(calc((min(100vw, 72rem) - 3rem - 2rem) / 7.1), 10rem);
+    --hero-photo: calc(var(--name-size) * 2.85);
   }
 }
 
+/* Dark ("espresso"): follows the system unless the visitor picked light with the toggle. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: #070a09;
-    --color-panel: #0d1211;
-    --color-ink: #e6ede9;
-    --color-border: #1c2422;
-    --color-grid: rgb(57 229 140 / 0.05);
-    --color-grid-major: rgb(57 229 140 / 0.1);
-    --color-signal: #39e58c;
-    --color-amber: #ffb547;
+  :root:not([data-theme="light"]) {
+    --color-paper: #17110d;
+    --color-panel: #211913;
+    --color-ink: #f1e6d8;
+    --color-border: #382b22;
+    --color-grid: rgb(192 138 91 / 0.06);
+    --color-grid-major: rgb(192 138 91 / 0.12);
+    --color-signal: #d19a68;
+    --color-highlight: #c08a5b;
+    --color-amber: #e0ae7e;
 
-    --color-ch-ecg: #39e58c;
-    --color-ch-pleth: #4fd1ff;
-    --color-ch-resp: #f5d547;
-    --color-ch-nbp: #f07cd8;
-    --color-ch-aux: #e8ecea;
+    --color-ch-ecg: #d19a68;
+    --color-ch-resp: #9db88f;
+    --color-ch-pleth: #8fb0c6;
+    --color-ch-nbp: #e08f74;
+    --color-ch-aux: #cdbdae;
 
-    --grain-opacity: 0.045;
-    --vignette: rgb(57 229 140 / 0.06);
+    --grain-opacity: 0.04;
+    --vignette: rgb(192 138 91 / 0.07);
+    color-scheme: dark;
   }
+}
+
+/* Dark chosen explicitly with the theme toggle (data-theme is set by the head script). */
+:root[data-theme="dark"] {
+  --color-paper: #17110d;
+  --color-panel: #211913;
+  --color-ink: #f1e6d8;
+  --color-border: #382b22;
+  --color-grid: rgb(192 138 91 / 0.06);
+  --color-grid-major: rgb(192 138 91 / 0.12);
+  --color-signal: #d19a68;
+  --color-highlight: #c08a5b;
+  --color-amber: #e0ae7e;
+
+  --color-ch-ecg: #d19a68;
+  --color-ch-resp: #9db88f;
+  --color-ch-pleth: #8fb0c6;
+  --color-ch-nbp: #e08f74;
+  --color-ch-aux: #cdbdae;
+
+  --grain-opacity: 0.04;
+  --vignette: rgb(192 138 91 / 0.07);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -70,6 +108,7 @@
   --color-border: var(--color-border);
   --color-grid: var(--color-grid);
   --color-signal: var(--color-signal);
+  --color-highlight: var(--color-highlight);
   --color-amber: var(--color-amber);
   --color-ch-ecg: var(--color-ch-ecg);
   --color-ch-pleth: var(--color-ch-pleth);
@@ -79,45 +118,67 @@
 
   --font-sans: var(--font-archivo);
   --font-mono: var(--font-jetbrains-mono);
-  --font-serif: var(--font-newsreader);
+  --font-serif: var(--font-fraunces);
+
+  /* One radius system: cards and media, controls, small chips. */
+  --radius-card: 14px;
+  --radius-control: 8px;
+  --radius-chip: 6px;
 }
 
 /* ---------- Type roles ---------- */
 
+/* Soft display serif, set like the mockup: normal case, tight, slightly rounded terminals. */
 @utility type-name {
-  font-family: var(--font-archivo);
-  font-stretch: 62%;
-  font-weight: 760;
-  text-transform: uppercase;
-  line-height: 0.84;
-  letter-spacing: -0.005em;
-  /* Sized so "ALEXANDER" (about 4.2em wide at this width) always fits the container. */
+  font-family: var(--font-fraunces);
+  font-weight: 600;
+  font-variation-settings:
+    "opsz" 144,
+    "SOFT" 50;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
   font-size: var(--name-size);
+  /* Column flex so the masked lines' negative margins never collapse into extra line gap. */
+  display: flex;
+  flex-direction: column;
 }
 
 @utility type-display {
-  font-family: var(--font-archivo);
-  font-stretch: 66%;
-  font-weight: 720;
-  text-transform: uppercase;
-  line-height: 0.88;
-  letter-spacing: 0;
+  font-family: var(--font-fraunces);
+  font-weight: 600;
+  font-variation-settings:
+    "opsz" 144,
+    "SOFT" 50;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+@utility type-title {
+  font-family: var(--font-fraunces);
+  font-weight: 600;
+  font-variation-settings:
+    "opsz" 36,
+    "SOFT" 50;
+  letter-spacing: -0.01em;
 }
 
 @utility type-readout {
-  font-family: var(--font-archivo);
-  font-stretch: 72%;
+  font-family: var(--font-fraunces);
   font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  line-height: 0.85;
+  font-variation-settings:
+    "opsz" 96,
+    "SOFT" 50;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
 }
 
+/* Mono labels in sentence case, like the mockup's eyebrow and readout labels. */
 @utility type-label {
   font-family: var(--font-jetbrains-mono);
-  font-size: 0.6875rem;
-  line-height: 1.3;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
 }
 
 /* ---------- ECG grid (trace areas only) ---------- */
@@ -332,10 +393,61 @@
     overflow: visible;
   }
 
+  /* Phosphor glow on traces, dark theme only. */
   @media (prefers-color-scheme: dark) {
-    .phosphor {
+    :root:not([data-theme="light"]) .phosphor {
       filter: url(#phosphor);
     }
+  }
+
+  :root[data-theme="dark"] .phosphor {
+    filter: url(#phosphor);
+  }
+
+  /*
+   * ---------- Theme toggle ----------
+   * Both icons are stacked; CSS shows the one for the theme you would switch to,
+   * so the button renders correctly before React hydrates.
+   */
+  .theme-toggle__icon {
+    grid-area: 1 / 1;
+    transition:
+      opacity 250ms var(--ease-out),
+      transform 350ms var(--ease-out);
+  }
+
+  .theme-toggle__sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle__sun {
+      opacity: 1;
+      transform: none;
+    }
+
+    :root:not([data-theme="light"]) .theme-toggle__moon {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.6);
+    }
+  }
+
+  :root[data-theme="dark"] .theme-toggle__sun {
+    opacity: 1;
+    transform: none;
+  }
+
+  :root[data-theme="dark"] .theme-toggle__moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  /* Whole-page crossfade when switching themes (View Transitions, where supported). */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 320ms;
+    animation-timing-function: var(--ease-out);
   }
 
   /* ---------- Project row hover ---------- */
@@ -354,11 +466,231 @@
     outline-offset: 4px;
   }
 
+  /*
+   * ---------- Scroll reveals ----------
+   * Elements with [data-reveal] start hidden (only when JS can reveal them, via html.js)
+   * and RevealObserver sets [data-revealed] once they scroll into view. Stagger with
+   * style="--i: n" (capped by the caller). One-time only: content never re-hides.
+   */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  html.js [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Headlines slide up from behind a mask instead of fading in. */
+  html.js [data-reveal="mask"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mask {
+    display: block;
+    overflow: hidden;
+    /* Room for ascenders and descenders (g, y, j), since display type uses line-height ~1. */
+    padding-block: 0.12em 0.18em;
+    margin-block: -0.12em -0.18em;
+  }
+
+  .mask__inner {
+    display: block;
+  }
+
+  html.js [data-reveal="mask"] .mask__inner {
+    transform: translateY(110%);
+    transition: transform 900ms var(--ease-out);
+    transition-delay: calc(var(--line, 0) * 90ms);
+  }
+
+  html.js [data-reveal="mask"][data-revealed] .mask__inner {
+    transform: none;
+  }
+
+  /* Hero headline: same mask, but plays on load with no JS so it never delays LCP. */
+  @keyframes mask-up {
+    from {
+      transform: translateY(110%);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  .mask--load .mask__inner {
+    animation: mask-up 1000ms var(--ease-out) both;
+    animation-delay: calc(120ms + var(--line, 0) * 100ms);
+  }
+
+  /* Images wipe in top to bottom with a slight settle in scale. */
+  html.js [data-reveal="wipe"] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1000ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  html.js [data-reveal="wipe"][data-revealed] {
+    clip-path: inset(0 0 0 0);
+  }
+
+  html.js [data-reveal="wipe"] img {
+    transform: scale(1.06);
+    transition: transform 1400ms var(--ease-out);
+  }
+
+  html.js [data-reveal="wipe"][data-revealed] img {
+    transform: none;
+  }
+
+  @keyframes wipe-down {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes settle {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  .wipe--load {
+    animation: wipe-down 1100ms var(--ease-out) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  .wipe--load img {
+    animation: settle 1600ms var(--ease-out) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Timeline rail draws downward; marker settles in after it. */
+  html.js [data-reveal="rail"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js [data-reveal="rail"] .rail-line {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1200ms var(--ease-out) 200ms;
+  }
+
+  html.js [data-reveal="rail"] .rail-marker {
+    opacity: 0;
+    transform: scale(0.6) rotate(45deg);
+    transition:
+      opacity 400ms var(--ease-out),
+      transform 500ms var(--ease-out);
+  }
+
+  html.js [data-reveal="rail"][data-revealed] .rail-line {
+    transform: none;
+  }
+
+  html.js [data-reveal="rail"][data-revealed] .rail-marker {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---------- Press and hover feedback ---------- */
+  .press {
+    transition:
+      transform 160ms var(--ease-out),
+      border-color 150ms ease,
+      background-color 150ms ease;
+  }
+
+  .press:active {
+    transform: scale(0.97);
+  }
+
+  /* Full-width rows only dip slightly; a 0.97 scale would read as a jump. */
+  .live-group {
+    transition: transform 160ms var(--ease-out);
+  }
+
+  .live-group:active {
+    transform: scale(0.995);
+  }
+
+  .nudge {
+    display: inline-block;
+    transition: transform 200ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .press:hover .nudge--up,
+    .live-group:hover .nudge--up {
+      transform: translate(2px, -2px);
+    }
+
+    .press:hover .nudge--right,
+    .live-group:hover .nudge--right,
+    .link-hover:hover .nudge--right {
+      transform: translateX(4px);
+    }
+
+    .link-hover:hover .nudge--left {
+      transform: translateX(-4px);
+    }
+  }
+
   /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
     .reveal {
       animation-name: reveal-fade;
       animation-duration: 200ms;
+    }
+
+    /* Keep the fade, drop all movement. */
+    html.js [data-reveal] {
+      transform: none;
+      transition: opacity 300ms ease;
+      transition-delay: 0ms;
+    }
+
+    html.js [data-reveal="mask"] .mask__inner,
+    html.js [data-reveal="wipe"] img,
+    html.js [data-reveal="rail"] .rail-line,
+    html.js [data-reveal="rail"] .rail-marker {
+      transform: none;
+      transition: none;
+    }
+
+    html.js [data-reveal="wipe"] {
+      clip-path: none;
+      transition: none;
+    }
+
+    .mask--load .mask__inner,
+    .wipe--load,
+    .wipe--load img {
+      animation: reveal-fade 300ms ease both;
+    }
+
+    .press:active,
+    .live-group:active {
+      transform: none;
+    }
+
+    .theme-toggle__icon {
+      transition: opacity 150ms ease;
     }
 
     @keyframes reveal-fade {

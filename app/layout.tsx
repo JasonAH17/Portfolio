@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono, Newsreader } from "next/font/google";
+import { Archivo, Fraunces, JetBrains_Mono } from "next/font/google";
+import { RevealObserver } from "@/components/motion/reveal-observer";
 import { SignalDefs } from "@/components/signal/signal-defs";
 import { StatusBar } from "@/components/ui/status-bar";
 import "./globals.css";
@@ -15,11 +16,11 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz"],
+  axes: ["opsz", "SOFT"],
 });
 
 export const metadata: Metadata = {
@@ -29,13 +30,15 @@ export const metadata: Metadata = {
 };
 
 // Marks JS as available before first paint so sweep covers only hide traces when they can be revealed.
-const jsFlag = `document.documentElement.classList.add("js")`;
+// Runs before first paint: marks JS as available (sweep covers and reveals only hide content when
+// they can reveal it) and applies a saved light/dark choice so the page never flashes the wrong theme.
+const jsFlag = `document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${jetbrainsMono.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${archivo.variable} ${jetbrainsMono.variable} ${fraunces.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -45,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SignalDefs />
         <StatusBar />
         {children}
+        <RevealObserver />
       </body>
     </html>
   );

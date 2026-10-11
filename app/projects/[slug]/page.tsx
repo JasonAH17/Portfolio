@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
+import { Mask } from "@/components/motion/mask";
+import { reveal } from "@/components/motion/reveal";
 import { Readout } from "@/components/signal/readout";
 import { Trace, channelVar } from "@/components/signal/trace";
 import { ImpactBulletText } from "@/components/ui/impact-bullet";
@@ -14,6 +16,8 @@ function gallerySpan(image: ImageAsset) {
   if (ratio > 1.8) return "col-span-2 sm:col-span-4";
   return ratio < 1 ? "col-span-1" : "col-span-2";
 }
+
+const loadDelay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
 function Figure({ image, alt, sizes }: { image: ImageAsset; alt: string; sizes: string }) {
   return (
@@ -49,7 +53,7 @@ function Block({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="grid gap-4 border-t border-border py-10 sm:grid-cols-[11rem_1fr] sm:gap-8">
+    <section id={id} {...reveal()} className="grid gap-4 border-t border-border py-10 sm:grid-cols-[11rem_1fr] sm:gap-8">
       <h2 className="type-label pt-1 text-ink/55">{label}</h2>
       <div className={`min-w-0 ${wide ? "max-w-4xl" : "max-w-2xl"}`}>{children}</div>
     </section>
@@ -96,7 +100,6 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
     project.dataset && { id: "dataset", label: "Dataset" },
     project.pipeline && { id: "how-it-works", label: project.pipelineLabel ?? "How it works" },
     { id: "impact", label: "Impact & results" },
-    project.training && { id: "training", label: "Training" },
     { id: "role", label: "My role" },
     project.stack && { id: "stack", label: project.stackLabel ?? "Tech stack" },
     { id: "learned", label: "What I learned" },
@@ -112,20 +115,28 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
     <main className="flex flex-1 flex-col" style={{ "--channel": color } as CSSProperties}>
       {/* Header */}
       <div className="mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6 sm:pt-16">
-        <Link href="/#projects" className="type-label link-hover text-signal">
-          ← All projects
+        <Link href="/#projects" className="reveal type-label link-hover text-signal">
+          <span aria-hidden="true" className="nudge nudge--left">
+            ←
+          </span>{" "}
+          All projects
         </Link>
 
-        <p className="type-label mt-10 flex items-center gap-2" style={{ color }}>
+        <p className="reveal type-label mt-10 flex items-center gap-2" style={{ color, ...loadDelay(60) }}>
           <span className="inline-block h-2 w-2 bg-current" />
           {project.channel.label}
           {project.badge && <span className="text-ink/50">· {project.badge}</span>}
         </p>
-        <h1 className="type-display mt-4 text-[clamp(3.25rem,13vw,9rem)]">{project.title}</h1>
-        <p className="mt-4 max-w-2xl text-xl leading-snug text-ink/75 sm:text-2xl">{project.tagline}</p>
+        <h1 className="mask--load type-display mt-4 text-[clamp(3.25rem,13vw,9rem)]">
+          <Mask>{project.title}</Mask>
+        </h1>
+        <p className="reveal mt-4 max-w-2xl text-xl leading-snug text-ink/75 sm:text-2xl" style={loadDelay(320)}>
+          {project.tagline}
+        </p>
 
         <dl
-          className={`mt-10 grid border-t border-l border-border sm:grid-cols-2 ${meta.length > 3 ? "lg:grid-cols-[10rem_1fr_1fr_1.3fr]" : "lg:grid-cols-[12rem_1fr_1.4fr]"}`}
+          style={loadDelay(420)}
+          className={`reveal mt-10 grid overflow-hidden rounded-card border-t border-l border-border bg-panel sm:grid-cols-2 ${meta.length > 3 ? "lg:grid-cols-[10rem_1fr_1fr_1.3fr]" : "lg:grid-cols-[12rem_1fr_1.4fr]"}`}
         >
           {meta.map(([term, value]) => (
             <div key={term} className="border-r border-b border-border px-4 py-3">
@@ -157,14 +168,14 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         {/* Cover: the real image if present; the placeholder only when there's nothing else to show. */}
         {(hasImage(project.cover.src) || !gallery.length) && (
-          <div className="max-w-4xl">
+          <div {...reveal(0, "wipe")} className="max-w-4xl">
             <Figure image={project.cover} alt={`${project.title} cover`} sizes="(min-width: 1024px) 896px, 100vw" />
           </div>
         )}
         {gallery.length > 0 && (
           <div className="mt-8 grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 first:mt-0">
-            {gallery.map((image) => (
-              <div key={image.src} className={gallerySpan(image)}>
+            {gallery.map((image, index) => (
+              <div key={image.src} {...reveal(index, "wipe")} className={gallerySpan(image)}>
                 <Figure
                   image={image}
                   alt={image.caption ?? `${project.title} screenshot`}
@@ -176,7 +187,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         )}
 
         {/* Contents: jump links to each section on long case studies. */}
-        <nav aria-label="On this page" className="mt-14 border-t border-border pt-6">
+        <nav {...reveal()} aria-label="On this page" className="mt-14 border-t border-border pt-6">
           <p className="type-label text-ink/45">On this page</p>
           <ul className="type-label mt-3 flex flex-wrap gap-x-5 gap-y-2">
             {sections.map((section) => (
@@ -204,10 +215,10 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           {project.features && (
             <Block id="features" label="Key features" wide>
-              <ul className="grid gap-px border border-border bg-border sm:grid-cols-2">
-                {project.features.map((feature) => (
-                  <li key={feature.title} className="bg-paper p-5">
-                    <p className="flex items-center gap-2 font-semibold" style={{ fontStretch: "85%" }}>
+              <ul className="grid gap-px overflow-hidden rounded-card border border-border bg-border sm:grid-cols-2">
+                {project.features.map((feature, index) => (
+                  <li key={feature.title} {...reveal(index)} className="bg-panel p-5">
+                    <p className="flex items-center gap-2 type-title">
                       <span className="inline-block h-1.5 w-1.5 shrink-0" style={{ background: color }} />
                       {feature.title}
                     </p>
@@ -220,7 +231,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           {project.dataset && (
             <Block id="dataset" label="Dataset">
-              <p className="text-xl font-semibold" style={{ fontStretch: "85%" }}>
+              <p className="text-xl type-title">
                 {project.dataset.name}
               </p>
               <dl className="mt-4 divide-y divide-border border-y border-border">
@@ -274,43 +285,6 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
               </div>
             )}
           </Block>
-
-          {project.training && (
-            <Block id="training" label="Model training">
-              <p className="leading-relaxed text-ink/85">{project.training.summary}</p>
-              <div className="mt-5 overflow-x-auto">
-                <table className="w-full min-w-[30rem] border-collapse font-mono text-sm tabular-nums">
-                  <thead>
-                    <tr className="border-b border-border">
-                      {project.training.columns.map((column) => (
-                        <th key={column} scope="col" className="type-label py-2 pr-4 text-left font-normal text-ink/50">
-                          {column}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {project.training.rows.map((row, rowIndex) => {
-                      const isFinal = rowIndex === project.training!.rows.length - 1;
-                      return (
-                        <tr key={row[0]} className="border-b border-border">
-                          {row.map((cell, cellIndex) => (
-                            <td
-                              key={cellIndex}
-                              className={`py-2 pr-4 ${cellIndex === 0 ? "text-ink/50" : isFinal ? "text-ink" : "text-ink/75"}`}
-                            >
-                              {cell}
-                            </td>
-                          ))}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-              {project.training.note && <p className="mt-3 text-sm text-ink/55">{project.training.note}</p>}
-            </Block>
-          )}
 
           <Block id="role" label="My role">
             <p className="leading-relaxed text-ink/85">{project.role}.</p>
@@ -371,8 +345,8 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <h2 className="type-label text-ink/50">Other channels</h2>
           <ul className="mt-6 grid gap-x-8 sm:grid-cols-2">
-            {others.map((other) => (
-              <li key={other.slug}>
+            {others.map((other, index) => (
+              <li key={other.slug} {...reveal(index)}>
                 <Link
                   href={`/projects/${other.slug}`}
                   className="live-group grid grid-cols-[1fr_6rem] items-center gap-4 border-t border-border py-4"
@@ -382,7 +356,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                     <span className="type-label block" style={{ color: channelVar(other.channel.color) }}>
                       {other.channel.label}
                     </span>
-                    <span className="live-title mt-1 block text-lg font-semibold" style={{ fontStretch: "85%" }}>
+                    <span className="live-title mt-1 block text-lg type-title">
                       {other.title}
                     </span>
                   </span>
