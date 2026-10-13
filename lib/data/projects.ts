@@ -29,6 +29,7 @@ export type Project = {
   category: string;
   /** Short project type for cards, e.g. "Group project". */
   kind: string;
+  status: "Completed" | "In progress";
   /** Which gallery image to use as the card thumbnail (defaults to the cover, then the first screenshot). */
   thumbSrc?: string;
   /** CSS object-position for the thumbnail crop, e.g. "50% 70%" to keep a subject in frame. */
@@ -68,11 +69,12 @@ export const projects: Project[] = [
   {
     slug: "sepsis-guard",
     tier: "primary",
-    badge: "International AI Hackathon · Grand Finalist",
+    badge: "Grand Finalist, International AI Hackathon",
     accent: "ecg",
-    category: "Healthcare AI · Time series",
-    kind: "Hackathon project · Team of 4",
-    team: "ORCA Pura Pura Ninja · BINUS (4 members)",
+    category: "Healthcare AI",
+    kind: "Hackathon project, team of 4",
+    status: "Completed",
+    team: "ORCA Pura Pura Ninja, BINUS (4 members)",
     title: "Sepsis Guard",
     tagline: "Early Sepsis Detection with Explainable AI",
     cover: {
@@ -221,8 +223,9 @@ export const projects: Project[] = [
     slug: "mindcheck",
     tier: "secondary",
     accent: "resp",
-    category: "NLP · Mental health",
+    category: "NLP",
     kind: "Group project",
+    status: "Completed",
     title: "MindCheck",
     tagline: "AI Powered Mental Health Screening with NLP & Sentence Embeddings",
     cover: {
@@ -364,8 +367,9 @@ export const projects: Project[] = [
   {
     slug: "finansmart",
     accent: "aux",
-    category: "Product design · Personal finance",
-    kind: "Group project · Ongoing",
+    category: "Product design",
+    kind: "Group project",
+    status: "In progress",
     title: "FinanSmart",
     tagline: "AI Powered Personal Finance Assistant for Students & Young Professionals",
     cover: {
@@ -474,8 +478,9 @@ export const projects: Project[] = [
   {
     slug: "helmguard-vision",
     accent: "pleth",
-    category: "Computer vision · Road safety",
+    category: "Computer vision",
     kind: "Group project",
+    status: "Completed",
     thumbSrc: "/images/projects/helmguard/detection.jpg",
     thumbFocus: "50% 72%",
     title: "HelmGuard Vision",
@@ -580,8 +585,9 @@ export const projects: Project[] = [
   {
     slug: "diabetes-prediction",
     accent: "nbp",
-    category: "Machine learning · Healthcare",
+    category: "Machine learning",
     kind: "Individual project",
+    status: "Completed",
     thumbSrc: "/images/projects/diabetes-prediction/result.jpg",
     title: "Diabetes Prediction",
     tagline: "Early Diabetes Risk Prediction using Machine Learning",

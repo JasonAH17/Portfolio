@@ -6,6 +6,7 @@ import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
 import { ImpactBulletText } from "@/components/ui/impact-bullet";
 import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { SiteImage, hasImage } from "@/components/ui/site-image";
 import { projects, type ImageAsset } from "@/lib/data/projects";
 
@@ -22,7 +23,7 @@ function Figure({ image, alt, sizes }: { image: ImageAsset; alt: string; sizes: 
   return (
     <figure>
       <SiteImage src={image.src} width={image.width} height={image.height} alt={alt} sizes={sizes} />
-      {image.caption && <figcaption className="mt-2 text-sm leading-snug text-ink/60">{image.caption}</figcaption>}
+      {image.caption && <figcaption className="mt-2 text-sm leading-snug text-ink/70">{image.caption}</figcaption>}
     </figure>
   );
 }
@@ -35,7 +36,7 @@ export async function generateMetadata(props: PageProps<"/projects/[slug]">): Pr
   const { slug } = await props.params;
   const project = projects.find((p) => p.slug === slug);
   return project
-    ? { title: `${project.title} — Jason Alexander Harris`, description: project.tagline }
+    ? { title: `${project.title} | Jason Alexander Harris`, description: project.tagline }
     : {};
 }
 
@@ -53,7 +54,7 @@ function Block({
 }) {
   return (
     <section id={id} {...reveal()} className="grid gap-4 border-t border-border py-8 sm:grid-cols-[11rem_1fr] sm:gap-8">
-      <h2 className="type-label pt-1 text-ink/55">{label}</h2>
+      <h2 className="type-label pt-1 text-ink/70">{label}</h2>
       <div className={`min-w-0 ${wide ? "max-w-4xl" : "max-w-2xl"}`}>{children}</div>
     </section>
   );
@@ -126,7 +127,8 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         <p className="reveal type-label mt-8 flex flex-wrap items-center gap-x-2 gap-y-1" style={{ color, ...loadDelay(60) }}>
           <span className="inline-block h-2 w-2 rounded-full bg-current" />
           {project.category}
-          {project.badge && <span className="text-ink/50">· {project.badge}</span>}
+          <StatusBadge status={project.status} />
+          {project.badge && <span className="text-ink/70">{project.badge}</span>}
         </p>
         <h1 className="mask--load type-display mt-3 text-[clamp(2.75rem,9vw,6rem)]">
           <Mask>{project.title}</Mask>
@@ -141,7 +143,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         >
           {meta.map(([term, value]) => (
             <div key={term} className="border-r border-b border-border px-4 py-3">
-              <dt className="type-label text-ink/50">{term}</dt>
+              <dt className="type-label text-ink/70">{term}</dt>
               <dd className="mt-1.5 text-sm leading-snug text-ink/85">{value}</dd>
             </div>
           ))}
@@ -171,7 +173,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
         {/* Contents: jump links to each section on long case studies. */}
         <nav {...reveal()} aria-label="On this page" className="mt-10 border-t border-border pt-6 first:mt-0">
-          <p className="type-label text-ink/45">On this page</p>
+          <p className="type-label text-ink/70">On this page</p>
           <ul className="type-label mt-3 flex flex-wrap gap-x-5 gap-y-2">
             {sections.map((section) => (
               <li key={section.id}>
@@ -233,7 +235,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
               <dl className="mt-4 divide-y divide-border border-y border-border">
                 {project.dataset.facts.map(([term, value]) => (
                   <div key={term} className="grid grid-cols-[8rem_1fr] gap-4 py-2.5 sm:grid-cols-[10rem_1fr]">
-                    <dt className="type-label pt-0.5 text-ink/50">{term}</dt>
+                    <dt className="type-label pt-0.5 text-ink/70">{term}</dt>
                     <dd className="text-sm text-ink/85">{value}</dd>
                   </div>
                 ))}
@@ -255,7 +257,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                       style={{ borderColor: color }}
                     />
                     <p className="type-label" style={{ color }}>
-                      {String(index + 1).padStart(2, "0")} · {step.title}
+                      {String(index + 1).padStart(2, "0")} {step.title}
                     </p>
                     <p className="mt-1.5 leading-relaxed text-ink/80">{step.detail}</p>
                   </li>
@@ -279,7 +281,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           <Block id="role" label="My role">
             <p className="leading-relaxed text-ink/85">{project.role}.</p>
-            <p className="type-label mt-3 text-ink/50">{project.type}</p>
+            <p className="type-label mt-3 text-ink/70">{project.type}</p>
           </Block>
 
           {project.stack && (

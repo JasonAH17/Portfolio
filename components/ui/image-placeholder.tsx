@@ -14,7 +14,7 @@ export function ImagePlaceholder({ width, height, label, className = "", style }
       className={`flex items-center justify-center rounded-card border-2 border-dashed border-border bg-panel ${className}`}
       style={{ aspectRatio: `${width} / ${height}`, ...style }}
     >
-      <span className="font-mono text-xs tracking-wide text-ink/45">{label ?? `${width} × ${height}`}</span>
+      <span className="font-mono text-xs tracking-wide text-ink/70">{label ?? `${width} × ${height}`}</span>
     </div>
   );
 }

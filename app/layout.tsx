@@ -26,7 +26,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Jason Alexander Harris — Portfolio",
+  title: "Jason Alexander Harris | Portfolio",
   description:
     "Computer Science student majoring in Artificial Intelligence at Bina Nusantara University, building AI for healthcare.",
 };

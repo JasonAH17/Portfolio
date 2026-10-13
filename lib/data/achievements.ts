@@ -30,12 +30,12 @@ export const achievements: AchievementEntry[] = [
         src: "/images/achievements/hackathon-delegation.jpg",
         width: 1018,
         height: 833,
-        caption: "BINUS University students at the AI in Healthcare Hackathon 2026, Uzbekistan, 26–29 March 2026 (photo: BINUS SOCS).",
+        caption: "BINUS University students at the AI in Healthcare Hackathon 2026, Uzbekistan, 26-29 March 2026 (photo: BINUS SOCS).",
       },
     ],
     precededBy: {
       date: "February 2026",
-      label: "Elimination round · Sepsis Guard",
+      label: "Elimination round, Sepsis Guard",
       href: "/projects/sepsis-guard",
     },
     paragraphs: [

@@ -19,11 +19,11 @@ export function CertificationsSection() {
           // Monitor "no sensor attached" state: an empty channel with a --- readout. No flatline.
           <div {...reveal(1)} className="grid grid-cols-[1fr_auto] items-stretch gap-4 lg:col-span-9 sm:gap-8">
             <div className="ecg-grid flex min-h-24 items-center rounded-card border border-border px-4 py-5 sm:px-6">
-              <p className="type-label max-w-md rounded-chip bg-panel px-2 py-1 text-ink/65">
+              <p className="type-label max-w-md rounded-chip bg-panel px-2 py-1 text-ink/70">
                 No certifications yet. This channel goes live when I complete the first one.
               </p>
             </div>
-            <p className="type-readout self-center text-[clamp(3rem,8vw,4.5rem)] tracking-[0.08em] text-ink/30" aria-label="No reading">
+            <p className="type-display self-center text-[clamp(3rem,8vw,4.5rem)] tracking-[0.08em] text-ink/55" aria-label="No reading">
               ---
             </p>
           </div>
@@ -33,8 +33,8 @@ export function CertificationsSection() {
               <li key={cert.name} {...reveal(index + 1)} className="grid gap-4 py-5 sm:grid-cols-[8rem_1fr_auto] sm:items-center sm:gap-8">
                 <ImagePlaceholder width={cert.image.width} height={cert.image.height} className="w-32" />
                 <div>
-                  <p className="type-label text-ink/55">
-                    {cert.issuer} · {cert.date}
+                  <p className="type-label text-ink/70">
+                    {cert.issuer}, {cert.date}
                   </p>
                   <h3 className="mt-1 text-lg font-semibold">{cert.name}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-ink/75">{cert.description}</p>

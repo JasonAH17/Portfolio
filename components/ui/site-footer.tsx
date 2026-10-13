@@ -4,7 +4,7 @@ import { profile } from "@/lib/data/profile";
 import { GitHubIcon, HuggingFaceIcon, LinkedInIcon, MailIcon } from "./icons";
 
 const explore = [
-  { href: "/#about", label: "Education & skills" },
+  { href: "/#about", label: "About" },
   { href: "/#projects", label: "Projects" },
   { href: "/#experience", label: "Experience" },
   { href: "/#achievements", label: "Achievements" },
@@ -39,7 +39,7 @@ export function SiteFooter() {
           </div>
 
           <nav {...reveal(2)} aria-label="Footer" className="lg:col-span-3 lg:col-start-7">
-            <p className="type-label text-ink/50">Explore</p>
+            <p className="type-label text-ink/70">Explore</p>
             <ul className="mt-3 space-y-2">
               {explore.map((item) => (
                 <li key={item.href}>
@@ -52,7 +52,7 @@ export function SiteFooter() {
           </nav>
 
           <div {...reveal(3)} className="lg:col-span-3">
-            <p className="type-label text-ink/50">Elsewhere</p>
+            <p className="type-label text-ink/70">Elsewhere</p>
             <ul className="mt-3 flex flex-wrap gap-2">
               {socials.map(({ label, href, Icon }) => {
                 const external = href.startsWith("http");
@@ -76,7 +76,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
-          <p className="type-label text-ink/50">© 2026 {profile.name}</p>
+          <p className="type-label text-ink/70">© 2026 {profile.name}</p>
           <a
             href="#"
             className="press type-label inline-flex items-center gap-1.5 rounded-control border border-border px-3 py-1.5 text-ink/70 hover:text-ink"

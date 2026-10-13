@@ -19,6 +19,8 @@ export type Profile = {
   huggingface: string;
   headshot: { src: string; width: number; height: number };
   about: string;
+  /** One-line hero intro (taste rule: hero subtext stays under ~20 words). */
+  intro: string;
   education: EducationEntry[];
   skills: string[];
   /** Skills grouped for display. Tools come from what the projects actually used. */
@@ -40,20 +42,21 @@ export const profile: Profile = {
   github: "https://github.com/JasonAH17",
   huggingface: "https://huggingface.co/JAH17",
   headshot: { src: "/images/profile/headshot.jpg", width: 640, height: 640 },
+  intro: "AI student at Bina Nusantara University, building machine learning projects in healthcare, language and computer vision.",
   about:
     "I am a Computer Science student majoring in Artificial Intelligence at Bina Nusantara University with a passion for creating technology that makes a positive impact. I enjoy learning new things, collaborating with diverse teams, and exploring innovative ideas to address real-world challenges. Through academic and volunteer experiences, I have developed strong communication, teamwork, and problem solving skills while always striving to help others whenever I can contribute.",
   education: [
     {
       institution: "Bina Nusantara University",
       program: "Bachelor of Computer Science, Major in Artificial Intelligence",
-      dates: "2024 — Present (Expected 2028)",
+      dates: "2024 - Present (Expected 2028)",
       description:
         "Developing analytical thinking, problem solving, and collaboration skills through academic experiences while exploring AI driven solutions to real world challenges.",
     },
     {
       institution: "SMAS Santa Ursula BSD",
       program: "Senior High School Diploma, Natural Sciences Program",
-      dates: "Jul 2021 — Apr 2024",
+      dates: "Jul 2021 - Apr 2024",
       description:
         "Built a strong foundation in mathematics, science, and critical thinking.",
     },

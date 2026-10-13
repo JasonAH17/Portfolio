@@ -16,13 +16,13 @@
   --color-signal: #8b5e3c;
   --color-highlight: #c08a5b;
   /* Inline stat text: a caramel dark enough for text contrast on cream. */
-  --color-amber: #9c6534;
+  --color-amber: #87522a;
 
   /* One earthy channel colour per project. */
   --color-ch-ecg: #8b5e3c;
-  --color-ch-resp: #5e7a55;
+  --color-ch-resp: #4e6a46;
   --color-ch-pleth: #4e6a7e;
-  --color-ch-nbp: #b0583f;
+  --color-ch-nbp: #9a4a34;
   --color-ch-aux: #6e5f52;
 
   --grain-opacity: 0.05;
@@ -162,17 +162,6 @@
   letter-spacing: -0.01em;
 }
 
-@utility type-readout {
-  font-family: var(--font-fraunces);
-  font-weight: 600;
-  font-variation-settings:
-    "opsz" 96,
-    "SOFT" 50;
-  font-variant-numeric: lining-nums tabular-nums;
-  letter-spacing: -0.02em;
-  line-height: 0.9;
-}
-
 /* Mono labels in sentence case, like the mockup's eyebrow and readout labels. */
 @utility type-label {
   font-family: var(--font-jetbrains-mono);
@@ -278,7 +267,7 @@
   }
 
   .reveal {
-    animation: reveal 700ms var(--ease-out) both;
+    animation: reveal 500ms var(--ease-out) both;
     animation-delay: var(--reveal-delay, 0ms);
   }
 
@@ -296,30 +285,10 @@
     }
   }
 
-  /* ---------- Pulse dot (~72 bpm) ---------- */
-  @keyframes pulse-beat {
-    0%,
-    100% {
-      opacity: 0.25;
-      transform: scale(0.8);
-    }
-    8% {
-      opacity: 1;
-      transform: scale(1.15);
-    }
-    30% {
-      opacity: 0.4;
-      transform: scale(0.9);
-    }
-  }
-
-  .pulse-dot {
-    animation: pulse-beat 833ms linear infinite;
-  }
 
   /* ---------- Project thumbnails ---------- */
   .thumb__img {
-    transition: transform 600ms var(--ease-out);
+    transition: transform 400ms var(--ease-out);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -400,9 +369,9 @@
     opacity: 0;
     transform: translateY(24px);
     transition:
-      opacity 700ms var(--ease-out),
-      transform 700ms var(--ease-out);
-    transition-delay: calc(var(--i, 0) * 70ms);
+      opacity 500ms var(--ease-out),
+      transform 500ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 60ms);
   }
 
   html.js [data-reveal][data-revealed] {
@@ -430,8 +399,8 @@
 
   html.js [data-reveal="mask"] .mask__inner {
     transform: translateY(110%);
-    transition: transform 900ms var(--ease-out);
-    transition-delay: calc(var(--line, 0) * 90ms);
+    transition: transform 650ms var(--ease-out);
+    transition-delay: calc(var(--line, 0) * 80ms);
   }
 
   html.js [data-reveal="mask"][data-revealed] .mask__inner {
@@ -449,8 +418,8 @@
   }
 
   .mask--load .mask__inner {
-    animation: mask-up 1000ms var(--ease-out) both;
-    animation-delay: calc(120ms + var(--line, 0) * 100ms);
+    animation: mask-up 750ms var(--ease-out) both;
+    animation-delay: calc(80ms + var(--line, 0) * 80ms);
   }
 
   /* Images wipe in top to bottom with a slight settle in scale. */
@@ -458,8 +427,8 @@
     opacity: 1;
     transform: none;
     clip-path: inset(0 0 100% 0);
-    transition: clip-path 1000ms var(--ease-out);
-    transition-delay: calc(var(--i, 0) * 90ms);
+    transition: clip-path 700ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms);
   }
 
   html.js [data-reveal="wipe"][data-revealed] {
@@ -468,7 +437,7 @@
 
   html.js [data-reveal="wipe"] img {
     transform: scale(1.06);
-    transition: transform 1400ms var(--ease-out);
+    transition: transform 1000ms var(--ease-out);
   }
 
   html.js [data-reveal="wipe"][data-revealed] img {
@@ -494,12 +463,12 @@
   }
 
   .wipe--load {
-    animation: wipe-down 1100ms var(--ease-out) both;
+    animation: wipe-down 800ms var(--ease-out) both;
     animation-delay: var(--reveal-delay, 0ms);
   }
 
   .wipe--load img {
-    animation: settle 1600ms var(--ease-out) both;
+    animation: settle 1100ms var(--ease-out) both;
     animation-delay: var(--reveal-delay, 0ms);
   }
 
@@ -512,7 +481,7 @@
   html.js [data-reveal="rail"] .rail-line {
     transform: scaleY(0);
     transform-origin: top;
-    transition: transform 1200ms var(--ease-out) 200ms;
+    transition: transform 800ms var(--ease-out) 150ms;
   }
 
   html.js [data-reveal="rail"] .rail-marker {
@@ -721,12 +690,6 @@
       transition: none;
     }
 
-    .pulse-dot {
-      animation: none !important;
-    }
 
-    .pulse-dot {
-      opacity: 0.8;
-    }
   }
 }

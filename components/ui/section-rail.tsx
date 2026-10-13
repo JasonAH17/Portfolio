@@ -5,7 +5,7 @@ import { useActiveSection } from "./use-active-section";
 
 const sections = [
   { id: "home", label: "Intro" },
-  { id: "about", label: "Education & skills" },
+  { id: "about", label: "About" },
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "achievements", label: "Achievements" },

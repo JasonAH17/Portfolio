@@ -43,7 +43,7 @@ export function ContactSection() {
                   rel={isExternal ? "noopener noreferrer" : undefined}
                   className="press group block px-4 py-4 hover:bg-paper sm:px-5 sm:py-5"
                 >
-                  <span className="type-label text-ink/50">{entry.label}</span>
+                  <span className="type-label text-ink/70">{entry.label}</span>
                   <span className="mt-2 block font-mono text-sm break-all text-signal group-hover:underline group-hover:underline-offset-4">
                     {entry.value}
                   </span>

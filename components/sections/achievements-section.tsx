@@ -6,9 +6,9 @@ import { achievements, type AchievementEntry } from "@/lib/data/achievements";
 
 function LinkedPair({ before, after }: { before: NonNullable<AchievementEntry["precededBy"]>; after: string }) {
   return (
-    <div className="type-label flex flex-wrap items-center gap-x-3 gap-y-1 rounded-chip border border-border bg-panel px-3 py-2 text-ink/60">
+    <div className="type-label flex flex-wrap items-center gap-x-3 gap-y-1 rounded-chip border border-border bg-panel px-3 py-2 text-ink/70">
       <Link href={before.href} className="link-hover text-signal">
-        {before.date} · {before.label}
+        {before.date}: {before.label}
       </Link>
       <span aria-hidden="true">→</span>
       <span>{after}</span>
@@ -35,7 +35,7 @@ export function AchievementsSection() {
           isLast={index === entries.length - 1}
         >
           {entry.precededBy && (
-            <LinkedPair before={entry.precededBy} after={`${entry.date} · ${entry.shortTitle ?? entry.title}`} />
+            <LinkedPair before={entry.precededBy} after={`${entry.date}: ${entry.shortTitle ?? entry.title}`} />
           )}
           {entry.paragraphs.map((paragraph, i) => (
             <p key={i}>

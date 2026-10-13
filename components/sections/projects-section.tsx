@@ -4,24 +4,28 @@ import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
 import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
 import { Section } from "@/components/ui/section";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { projects, type Project } from "@/lib/data/projects";
 
 const accentStyle = (project: Project) => ({ "--channel": accentVar(project.accent) }) as CSSProperties;
 
 function Category({ project }: { project: Project }) {
   return (
-    <p className="type-label flex items-center gap-2" style={{ color: accentVar(project.accent) }}>
-      <span className="inline-block h-2 w-2 rounded-full bg-current" />
-      {project.category}
-    </p>
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+      <p className="type-label flex items-center gap-2" style={{ color: accentVar(project.accent) }}>
+        <span className="inline-block h-2 w-2 rounded-full bg-current" />
+        {project.category}
+      </p>
+      <StatusBadge status={project.status} />
+    </div>
   );
 }
 
-/** Project type and date, e.g. "Group project · May 2026". */
+/** Project type and date, e.g. "Group project, May 2026". */
 function Meta({ project }: { project: Project }) {
   return (
-    <p className="type-label text-ink/55">
-      {project.kind} · {project.year}
+    <p className="type-label text-ink/70">
+      {project.kind}, {project.year}
     </p>
   );
 }
@@ -41,7 +45,7 @@ function Tools({ project, limit = 4 }: { project: Project; limit?: number }) {
 
 function CaseStudyLink() {
   return (
-    <p className="type-label text-ink/60">
+    <p className="type-label text-ink/70">
       Read case study{" "}
       <span aria-hidden="true" className="nudge nudge--right">
         →
@@ -116,7 +120,7 @@ function ProjectRow({ project }: { project: Project }) {
       </div>
       <div className="flex items-center justify-between gap-6 sm:col-span-2 lg:col-span-1 lg:flex-col lg:items-end">
         <Tools project={project} limit={3} />
-        <span aria-hidden="true" className="nudge nudge--right type-label text-ink/60">
+        <span aria-hidden="true" className="nudge nudge--right type-label text-ink/70">
           →
         </span>
       </div>

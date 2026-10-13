@@ -15,7 +15,7 @@ export function HomeSection() {
 
   const meta: [string, string][] = [
     ["Location", profile.location],
-    ["Program", "B.CS — AI"],
+    ["Program", "B.CS, Artificial Intelligence"],
     ["Expected", "2028"],
   ];
 
@@ -28,13 +28,9 @@ export function HomeSection() {
 
   return (
     <header id="home" className="mx-auto w-full max-w-6xl px-4 pt-8 pb-14 sm:px-6 sm:pt-12 sm:pb-20">
-      <p className="reveal type-label text-signal" style={delay(0)}>
-        Computer Science · Artificial Intelligence
-        <span className="hidden sm:inline"> — {profile.university}</span>
-      </p>
 
       {/* Desktop columns: name | photo sized to the name's height (see --hero-photo in globals.css). */}
-      <div className="mt-5 grid grid-cols-[8.5rem_1fr] gap-x-5 gap-y-8 sm:mt-6 sm:grid-cols-[11rem_1fr] sm:gap-x-6 lg:grid-cols-[1fr_var(--hero-photo)] lg:gap-x-8 lg:gap-y-12">
+      <div className="grid grid-cols-[8.5rem_1fr] gap-x-5 gap-y-8 sm:mt-6 sm:grid-cols-[11rem_1fr] sm:gap-x-6 lg:grid-cols-[1fr_var(--hero-photo)] lg:gap-x-8 lg:gap-y-12">
         {/* Each name line rises from behind a mask on load (CSS only, so it never waits on JS). */}
         <h1 className="mask--load type-name col-span-2 lg:col-span-1" aria-label={profile.name}>
           <Mask line={0}>{first}</Mask>
@@ -42,7 +38,7 @@ export function HomeSection() {
           <Mask line={2}>{last}</Mask>
         </h1>
 
-        <div className="wipe--load lg:col-start-2 lg:row-start-1" style={delay(320)}>
+        <div className="wipe--load lg:col-start-2 lg:row-start-1" style={delay(200)}>
           <SiteImage
             src={profile.headshot.src}
             width={profile.headshot.width}
@@ -55,26 +51,26 @@ export function HomeSection() {
 
         <dl
           className="reveal self-end divide-y divide-border border-y border-border lg:col-start-2 lg:row-start-2 lg:self-start"
-          style={delay(520)}
+          style={delay(380)}
         >
           {meta.map(([term, value]) => (
             <div key={term} className="flex flex-col gap-0.5 py-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4 sm:py-2.5">
-              <dt className="type-label text-ink/50">{term}</dt>
+              <dt className="type-label text-ink/70">{term}</dt>
               <dd className="text-sm text-ink/85 sm:text-right">{value}</dd>
             </div>
           ))}
         </dl>
 
-        <div className="reveal col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2" style={delay(440)}>
+        <div className="reveal col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2" style={delay(300)}>
           <p className="max-w-2xl text-lg leading-relaxed text-ink/75 sm:text-xl">
-            {profile.about}
+            {profile.intro}
           </p>
           <ul className="mt-8 flex flex-wrap gap-2">
             {/* First link is the primary action (filled), the rest are outlined, as in the latte mockup. */}
             {links.map(({ label, href, Icon }, index) => {
               const external = href.startsWith("http");
               return (
-              <li key={label} className="reveal" style={delay(620 + index * 60)}>
+              <li key={label} className="reveal" style={delay(420 + index * 50)}>
                 <a
                   href={href}
                   target={external ? "_blank" : undefined}
