@@ -5,6 +5,8 @@ export type EducationEntry = {
   description: string;
 };
 
+export type SkillGroup = { label: string; items: string[] };
+
 export type Profile = {
   name: string;
   role: string;
@@ -19,6 +21,10 @@ export type Profile = {
   about: string;
   education: EducationEntry[];
   skills: string[];
+  /** Skills grouped for display. Tools come from what the projects actually used. */
+  skillGroups: SkillGroup[];
+  /** Soft skills named in the About paragraph. */
+  softSkills: string[];
   coreStrengths: string[];
   languages: string[];
 };
@@ -61,6 +67,19 @@ export const profile: Profile = {
     "Computer Vision",
     "Natural Language Processing (NLP)",
   ],
+  skillGroups: [
+    { label: "Programming", items: ["Python", "SQL", "C"] },
+    {
+      label: "AI & ML",
+      items: ["Machine Learning", "Deep Learning", "Computer Vision", "Natural Language Processing (NLP)"],
+    },
+    {
+      label: "Models & methods",
+      items: ["GRU-D", "Transformers", "YOLOv8", "XGBoost", "Random Forest", "Sentence embeddings"],
+    },
+    { label: "Tools & platforms", items: ["BigQuery", "Streamlit", "Hugging Face Spaces", "UI/UX design"] },
+  ],
+  softSkills: ["Communication", "Teamwork", "Problem solving"],
   coreStrengths: ["Dependability", "Empathy", "Willingness to Learn"],
   languages: ["Bahasa Indonesia (Native)", "English"],
 };

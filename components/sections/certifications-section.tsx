@@ -1,18 +1,16 @@
 import { reveal } from "@/components/motion/reveal";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section } from "@/components/ui/section";
-import { SectionLabel } from "@/components/ui/section-label";
 import { certifications } from "@/lib/data/certifications";
 
 export function CertificationsSection() {
   const isEmpty = certifications.length === 0;
 
   return (
-    <Section id="certifications" className="py-16 sm:py-20">
+    <Section id="certifications" className="py-12 sm:py-16">
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-8">
         <div {...reveal()} className="lg:col-span-3">
-          <SectionLabel color="var(--color-ch-aux)">Cert</SectionLabel>
-          <h2 className="mt-3 text-2xl type-title">
+          <h2 className="text-2xl type-title">
             Certifications
           </h2>
         </div>

@@ -22,10 +22,7 @@ export function AchievementsSection() {
   return (
     <LogSectionShell
       id="achievements"
-      label="Achievements"
       title="Achievements"
-      intro="Competitions and recognition, most recent first."
-      color="var(--color-signal)"
     >
       {entries.map((entry, index) => (
         <LogEntry
@@ -34,7 +31,7 @@ export function AchievementsSection() {
           kind="Achievement"
           title={entry.title}
           subtitle={entry.category}
-          photo={entry.photo}
+          photos={entry.photos}
           isLast={index === entries.length - 1}
         >
           {entry.precededBy && (

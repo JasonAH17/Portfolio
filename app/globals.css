@@ -4,7 +4,7 @@
  * Latte theme.
  * Light = latte cream: warm cream page, lighter cards, espresso ink, roasted-brown accent.
  * Dark  = espresso: the same palette inverted for prefers-color-scheme: dark.
- * The ECG-paper grid stays as a quiet structural texture inside trace areas only.
+ * The ECG-paper grid survives only as a quiet texture in the certifications empty state.
  */
 :root {
   --color-paper: #f4ece2;
@@ -181,7 +181,7 @@
   letter-spacing: 0.01em;
 }
 
-/* ---------- ECG grid (trace areas only) ---------- */
+/* ---------- ECG grid (certifications empty state) ---------- */
 
 @utility ecg-grid {
   background-color: var(--color-panel);
@@ -206,6 +206,12 @@
   html {
     background: var(--color-paper);
     scroll-padding-top: calc(var(--status-bar-h) + 1rem);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -311,97 +317,15 @@
     animation: pulse-beat 833ms linear infinite;
   }
 
-  /* ---------- Trace sweep ---------- */
-  .trace {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
+  /* ---------- Project thumbnails ---------- */
+  .thumb__img {
+    transition: transform 600ms var(--ease-out);
   }
 
-  .trace__cover,
-  .trace__gap {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* One-time reveal: a paper-colored block with a soft leading edge slides off to the right. */
-  .trace__cover {
-    display: none;
-    width: 110%;
-    background: linear-gradient(
-      90deg,
-      transparent 0,
-      var(--color-panel) 9%
-    );
-  }
-
-  @keyframes sweep-reveal {
-    from {
-      transform: translateX(-9%);
+  @media (hover: hover) and (pointer: fine) {
+    .live-group:hover .thumb__img {
+      transform: scale(1.03);
     }
-    to {
-      transform: translateX(100%);
-    }
-  }
-
-  html.js .trace[data-sweep] .trace__cover {
-    display: block;
-    transform: translateX(-9%);
-  }
-
-  html.js .trace[data-sweep][data-inview] .trace__cover {
-    animation: sweep-reveal 1600ms linear forwards;
-  }
-
-  /* Looping erase gap: runs on hover/focus for rows, always for "live" traces. */
-  .trace__gap {
-    width: 7%;
-    left: 0;
-    opacity: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      var(--color-panel) 35%,
-      var(--color-panel) 100%
-    );
-  }
-
-  @keyframes sweep-gap {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(1430%);
-    }
-  }
-
-  .trace[data-live] .trace__gap,
-  .live-group:hover .trace__gap,
-  .live-group:focus-visible .trace__gap {
-    opacity: 1;
-    animation: sweep-gap 3200ms linear infinite;
-  }
-
-  .trace__svg {
-    position: relative;
-    z-index: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  /* Phosphor glow on traces, dark theme only. */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .phosphor {
-      filter: url(#phosphor);
-    }
-  }
-
-  :root[data-theme="dark"] .phosphor {
-    filter: url(#phosphor);
   }
 
   /*
@@ -651,6 +575,91 @@
     }
   }
 
+  /* ---------- Back to top ---------- */
+  .back-to-top {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+    pointer-events: none;
+    transition:
+      opacity 200ms var(--ease-out),
+      transform 250ms var(--ease-out),
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .back-to-top[data-visible] {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  /*
+   * ---------- Scroll progress line ----------
+   * A hairline under the status bar that fills as you read. Pure CSS, driven by the
+   * scroll timeline, so it runs off the main thread. Browsers without scroll-driven
+   * animations simply don't show it.
+   */
+  .scroll-progress {
+    display: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: block;
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    @keyframes scroll-progress {
+      to {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  /* ---------- Section rail (desktop) ---------- */
+  .rail-dot {
+    background-color: var(--color-paper);
+    border-color: color-mix(in oklab, var(--color-ink) 30%, transparent);
+    transition:
+      transform 250ms var(--ease-out),
+      background-color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .rail-link[aria-current] .rail-dot {
+    transform: scale(1.35);
+    background-color: var(--color-signal);
+    border-color: var(--color-signal);
+  }
+
+  .rail-label {
+    opacity: 0;
+    transform: translateX(6px);
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 220ms var(--ease-out);
+  }
+
+  .rail-link[aria-current] .rail-label,
+  .rail-link:focus-visible .rail-label {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .rail-link:hover .rail-label {
+      opacity: 1;
+      transform: none;
+    }
+
+    .rail-link:hover .rail-dot {
+      border-color: var(--color-signal);
+    }
+  }
+
   /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
     .reveal {
@@ -693,6 +702,12 @@
       transition: opacity 150ms ease;
     }
 
+    .back-to-top,
+    .rail-label,
+    .rail-dot {
+      transform: none !important;
+    }
+
     @keyframes reveal-fade {
       from {
         opacity: 0;
@@ -702,9 +717,8 @@
       }
     }
 
-    html.js .trace[data-sweep] .trace__cover,
-    .trace__gap {
-      display: none !important;
+    .thumb__img {
+      transition: none;
     }
 
     .pulse-dot {

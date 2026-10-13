@@ -1,5 +1,3 @@
-import type { SignalKind } from "@/lib/signals";
-
 export type ImageAsset = { src: string; width: number; height: number; caption?: string };
 
 export type PipelineStep = { title: string; detail: string };
@@ -15,16 +13,6 @@ export type Dataset = {
 
 export type ChannelColor = "ecg" | "pleth" | "resp" | "nbp" | "aux";
 
-export type Channel = {
-  /** Short modality label, shown like a monitor channel name. */
-  label: string;
-  color: ChannelColor;
-  signal: SignalKind;
-  seed: number;
-};
-
-/** Headline figure for a project. Real stats only; never invent a metric. */
-export type Readout = { value: string; unit: string; approx?: boolean };
 
 export type ProjectLink = { label: string; href: string };
 
@@ -35,8 +23,16 @@ export type Project = {
   slug: string;
   tier?: "primary" | "secondary";
   badge?: string;
-  channel: Channel;
-  readout: Readout;
+  /** Accent colour for the project's labels. */
+  accent: ChannelColor;
+  /** Plain-language field, e.g. "Healthcare AI · Time series". */
+  category: string;
+  /** Short project type for cards, e.g. "Group project". */
+  kind: string;
+  /** Which gallery image to use as the card thumbnail (defaults to the cover, then the first screenshot). */
+  thumbSrc?: string;
+  /** CSS object-position for the thumbnail crop, e.g. "50% 70%" to keep a subject in frame. */
+  thumbFocus?: string;
   /** Team name, shown in the case-study meta strip. */
   team?: string;
   /** Paragraphs after `problem` that give the wider background. */
@@ -49,16 +45,10 @@ export type Project = {
   pipeline?: PipelineStep[];
   /** Heading for the pipeline block; defaults to "How it works". */
   pipelineLabel?: string;
-  /** Interpretation of the results, shown under the impact bullets. */
-  resultsNote?: string[];
   stack?: string[];
   /** Heading for the stack block; defaults to "Tech stack". */
   stackLabel?: string;
   references?: string[];
-  /** Short technical spec line shown on the primary channel. */
-  specLine?: string;
-  /** Additional real figures, shown on the secondary card. */
-  extraReadouts?: Readout[];
   title: string;
   tagline: string;
   cover: ImageAsset;
@@ -79,9 +69,9 @@ export const projects: Project[] = [
     slug: "sepsis-guard",
     tier: "primary",
     badge: "International AI Hackathon · Grand Finalist",
-    channel: { label: "ICU·TS", color: "ecg", signal: "sparse", seed: 41 },
-    readout: { value: "134", unit: "Features" },
-    specLine: "MIMIC-IV · 90%+ missing values · GRU-D + Transformer",
+    accent: "ecg",
+    category: "Healthcare AI · Time series",
+    kind: "Hackathon project · Team of 4",
     team: "ORCA Pura Pura Ninja · BINUS (4 members)",
     title: "Sepsis Guard",
     tagline: "Early Sepsis Detection with Explainable AI",
@@ -220,11 +210,7 @@ export const projects: Project[] = [
         "Handcrafted feature extraction would compress these signals into static summaries and risk losing the early deterioration patterns that matter most. The team kept the original time structure and let the model learn directly from the raw sequences.",
       ],
     },
-    resultsNote: [
-      "After 10 epochs, training binary loss fell to 0.0358 and regression loss to 0.2443. Validation losses decreased in the early epochs and plateaued between epochs 8 and 10, which suggests the model balanced learning capacity and generalization without significant overfitting.",
-      "The hybrid combines GRU-D's sequential memory with the Transformer's global attention, letting it pick up subtle deterioration trends that come before a clinical sepsis diagnosis. That supports its potential as a decision-support tool for continuous monitoring and earlier intervention.",
-    ],
-    stack: ["MIMIC-IV v3.1", "PhysioNet", "BigQuery", "SQL", "GRU-D", "Transformer", "Hugging Face Spaces"],
+    stack: ["GRU-D", "Transformer", "MIMIC-IV v3.1", "BigQuery", "SQL", "PhysioNet", "Hugging Face Spaces"],
     whatILearned: [
       "Sepsis Guard was more than just a competition project. It became a turning point in my personal growth. Before this project, I often felt comfortable with my existing abilities and became easily satisfied after completing projects.",
       "Working on a real healthcare problem completely changed that mindset. I realized that AI is much broader and more impactful than I had imagined, and that there is always something new to learn. Being exposed to medical concepts, clinical data, and interdisciplinary collaboration pushed me out of my comfort zone.",
@@ -234,9 +220,9 @@ export const projects: Project[] = [
   {
     slug: "mindcheck",
     tier: "secondary",
-    channel: { label: "NLP", color: "resp", signal: "envelope", seed: 23 },
-    readout: { value: "3.81", unit: "MAE" },
-    extraReadouts: [{ value: "23", unit: "Ling. features" }],
+    accent: "resp",
+    category: "NLP · Mental health",
+    kind: "Group project",
     title: "MindCheck",
     tagline: "AI Powered Mental Health Screening with NLP & Sentence Embeddings",
     cover: {
@@ -288,9 +274,8 @@ export const projects: Project[] = [
       [
         "Compared multiple approaches, from TF-IDF baselines to transformer based architectures, before selecting the final MPNet based model",
       ],
-      ["Achieved an ", { stat: "MAE of 3.81" }, ", outperforming traditional baseline methods"],
       [
-        "Enhanced prediction quality by incorporating ",
+        "Combined sentence embeddings with ",
         { stat: "23 additional linguistic features" },
         " beyond text semantics",
       ],
@@ -369,9 +354,6 @@ export const projects: Project[] = [
         detail: "A privacy-focused web app, hosted on Hugging Face Spaces.",
       },
     ],
-    resultsNote: [
-      "An MAE of 3.81 means the predicted total lands, on average, within about 3.8 points of the true score on the 0 to 24 PHQ-8 scale.",
-    ],
     stack: ["DAIC-WOZ", "all-MPNet-base-v2", "Sentence embeddings", "TF-IDF", "NLP", "Hugging Face Spaces"],
     whatILearned: [
       "MindCheck was the first project that genuinely made me proud of how far I had grown. Unlike my previous projects, I no longer felt satisfied once a model was working. Instead, I kept asking myself how much further I could improve it.",
@@ -381,8 +363,9 @@ export const projects: Project[] = [
   },
   {
     slug: "finansmart",
-    channel: { label: "UX", color: "aux", signal: "steps", seed: 5 },
-    readout: { value: "UI/UX", unit: "Role" },
+    accent: "aux",
+    category: "Product design · Personal finance",
+    kind: "Group project · Ongoing",
     title: "FinanSmart",
     tagline: "AI Powered Personal Finance Assistant for Students & Young Professionals",
     cover: {
@@ -490,8 +473,11 @@ export const projects: Project[] = [
   },
   {
     slug: "helmguard-vision",
-    channel: { label: "Vision", color: "pleth", signal: "bars", seed: 9 },
-    readout: { value: "81.1", unit: "mAP@50" },
+    accent: "pleth",
+    category: "Computer vision · Road safety",
+    kind: "Group project",
+    thumbSrc: "/images/projects/helmguard/detection.jpg",
+    thumbFocus: "50% 72%",
     title: "HelmGuard Vision",
     tagline: "Real-Time Helmet Detection using Deep Learning and Computer Vision",
     cover: {
@@ -526,7 +512,6 @@ export const projects: Project[] = [
     impact: [
       ["Developed a real time helmet detection system using YOLOv8 Nano"],
       ["Trained the model on ", { stat: "764 curated images" }, " with diverse traffic scenarios"],
-      ["Achieved an ", { stat: "81.1% mAP@50" }, " and ", { stat: "80.0% precision" }],
       ["Built an interactive Streamlit application supporting images, videos, and live camera feeds"],
       ["Demonstrated how computer vision can improve safety monitoring in real world environments"],
     ],
@@ -578,15 +563,12 @@ export const projects: Project[] = [
       },
       {
         title: "Evaluation",
-        detail: "Measuring mAP@50 and precision to check detection quality.",
+        detail: "Checking how reliably the model finds riders and tells helmet from no helmet.",
       },
       {
         title: "Deployment",
         detail: "A Streamlit app with image, video and live camera modes.",
       },
-    ],
-    resultsNote: [
-      "mAP@50 counts a detection as correct when its box overlaps the true box by at least 50%, then averages precision across both classes: here, 81.1%. A precision of 80.0% means four in five of the model's detections are correct.",
     ],
     stack: ["YOLOv8 Nano", "Object detection", "Computer vision", "Streamlit"],
     whatILearned: [
@@ -597,8 +579,10 @@ export const projects: Project[] = [
   },
   {
     slug: "diabetes-prediction",
-    channel: { label: "Risk", color: "nbp", signal: "sigmoid", seed: 3 },
-    readout: { value: "85", unit: "% Acc", approx: true },
+    accent: "nbp",
+    category: "Machine learning · Healthcare",
+    kind: "Individual project",
+    thumbSrc: "/images/projects/diabetes-prediction/result.jpg",
     title: "Diabetes Prediction",
     tagline: "Early Diabetes Risk Prediction using Machine Learning",
     cover: {
@@ -641,7 +625,7 @@ export const projects: Project[] = [
     impact: [
       ["Developed an end to end machine learning pipeline from data preprocessing to deployment"],
       ["Compared Random Forest and XGBoost models before selecting the final optimized model"],
-      ["Achieved approximately ", { stat: "85% accuracy" }, " after hyperparameter tuning"],
+      ["Tuned the hyperparameters of the final XGBoost model"],
       ["Built and deployed an interactive web application with risk visualizations and a BMI calculator"],
     ],
     background: [
@@ -649,7 +633,7 @@ export const projects: Project[] = [
     ],
     solutionDetail: [
       "Users answer a short questionnaire about their health indicators. The model returns the probability of three outcomes (no diabetes, prediabetes and diabetes) and an overall diabetes risk percentage, shown as a chart and a gauge.",
-      "XGBoost was chosen over Random Forest after comparing the two, then tuned to reach about 85% accuracy.",
+      "XGBoost was chosen over Random Forest after comparing the two, then its hyperparameters were tuned.",
     ],
     features: [
       {
@@ -700,7 +684,7 @@ export const projects: Project[] = [
       },
       {
         title: "Hyperparameter tuning",
-        detail: "Tuning the chosen XGBoost model to about 85% accuracy.",
+        detail: "Tuning the hyperparameters of the chosen XGBoost model.",
       },
       {
         title: "Deployment",

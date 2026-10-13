@@ -1,23 +1,19 @@
 import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
 import { Section } from "@/components/ui/section";
-import { SectionLabel } from "@/components/ui/section-label";
 import { profile } from "@/lib/data/profile";
 
-/** Education, skills, strengths and languages; the intro and photo live in the hero. */
+/** Education, strengths, languages and grouped skills; the intro and photo live in the hero. */
 export function AboutSection() {
   return (
-    <Section id="about" className="py-20 sm:py-28">
-      <div {...reveal()}>
-        <SectionLabel>Background</SectionLabel>
-      </div>
-      <h2 {...reveal(0, "mask")} className="type-display mt-4 text-[clamp(2.75rem,10vw,6rem)]">
+    <Section id="about" className="py-14 sm:py-20">
+      <h2 {...reveal(0, "mask")} className="type-display text-[clamp(2.5rem,7vw,4.5rem)]">
         <Mask>
           Education <span className="whitespace-nowrap">&amp; Skills</span>
         </Mask>
       </h2>
 
-      <div className="mt-12 grid gap-14 sm:mt-16 lg:grid-cols-12 lg:gap-8">
+      <div className="mt-8 grid gap-10 sm:mt-10 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-7">
           <h3 {...reveal()} className="type-label text-ink/50">
             Education
@@ -40,30 +36,43 @@ export function AboutSection() {
 
         <div className="space-y-10 lg:col-span-4 lg:col-start-9">
           <div {...reveal(1)}>
-            <h3 className="type-label text-ink/50">Skills</h3>
-            <ul className="mt-4 flex flex-wrap gap-1.5">
-              {profile.skills.map((skill) => (
-                <li key={skill} className="rounded-chip border border-border bg-panel px-2.5 py-1 font-mono text-xs text-ink/85">
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div {...reveal(2)}>
             <h3 className="type-label text-ink/50">Core strengths</h3>
             <ul className="mt-3 space-y-1.5 text-lg text-ink/85">
               {profile.coreStrengths.map((strength) => (
                 <li key={strength} className="flex items-center gap-2.5">
-                  <span className="inline-block h-1.5 w-1.5 bg-signal" />
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-signal" />
                   {strength}
                 </li>
               ))}
             </ul>
           </div>
+          <div {...reveal(2)}>
+            <h3 className="type-label text-ink/50">Soft skills</h3>
+            <p className="mt-3 text-ink/85">{profile.softSkills.join(" · ")}</p>
+          </div>
           <div {...reveal(3)}>
             <h3 className="type-label text-ink/50">Languages</h3>
             <p className="mt-3 text-ink/85">{profile.languages.join(" · ")}</p>
           </div>
+        </div>
+      </div>
+
+      {/* Technical skills, grouped. Tools listed are the ones the projects actually used. */}
+      <div {...reveal()} className="mt-10 rounded-card border border-border bg-panel p-6 sm:p-8">
+        <h3 className="type-title text-2xl">Skills</h3>
+        <div className="mt-6 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          {profile.skillGroups.map((group, index) => (
+            <div key={group.label} {...reveal(index + 1)}>
+              <p className="type-label text-signal">{group.label}</p>
+              <ul className="mt-3 flex flex-wrap gap-1.5">
+                {group.items.map((item) => (
+                  <li key={item} className="rounded-chip border border-border bg-paper px-2.5 py-1 font-mono text-xs text-ink/85">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </Section>

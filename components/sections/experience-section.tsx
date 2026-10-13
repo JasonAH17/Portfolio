@@ -8,14 +8,11 @@ export function ExperienceSection() {
   return (
     <LogSectionShell
       id="experience"
-      label="Experience"
       title={
         <>
           Experience <span className="whitespace-nowrap">&amp; Volunteer</span>
         </>
       }
-      intro="Work and volunteering, most recent first."
-      color="var(--color-ch-pleth)"
     >
       {entries.map((entry, index) => (
         <LogEntry
@@ -24,7 +21,7 @@ export function ExperienceSection() {
           kind={entry.kind}
           title={entry.title}
           subtitle={entry.organization}
-          photo={entry.photo}
+          photos={entry.photo && [entry.photo]}
           isLast={index === entries.length - 1}
         >
           <p>{entry.body}</p>

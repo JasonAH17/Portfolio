@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { Mask } from "@/components/motion/mask";
+import { GitHubIcon, HuggingFaceIcon, LinkedInIcon, MailIcon } from "@/components/ui/icons";
 import { SiteImage } from "@/components/ui/site-image";
 import { profile } from "@/lib/data/profile";
 
@@ -18,14 +19,15 @@ export function HomeSection() {
     ["Expected", "2028"],
   ];
 
-  const links: [string, string][] = [
-    ["LinkedIn", profile.linkedin],
-    ["GitHub", profile.github],
-    ["Hugging Face", profile.huggingface],
+  const links = [
+    { label: "LinkedIn", href: profile.linkedin, Icon: LinkedInIcon },
+    { label: "GitHub", href: profile.github, Icon: GitHubIcon },
+    { label: "Hugging Face", href: profile.huggingface, Icon: HuggingFaceIcon },
+    { label: "Email", href: `mailto:${profile.email}`, Icon: MailIcon },
   ];
 
   return (
-    <header id="home" className="mx-auto w-full max-w-6xl px-4 pt-8 pb-20 sm:px-6 sm:pt-14 sm:pb-28">
+    <header id="home" className="mx-auto w-full max-w-6xl px-4 pt-8 pb-14 sm:px-6 sm:pt-12 sm:pb-20">
       <p className="reveal type-label text-signal" style={delay(0)}>
         Computer Science · Artificial Intelligence
         <span className="hidden sm:inline"> — {profile.university}</span>
@@ -69,21 +71,27 @@ export function HomeSection() {
           </p>
           <ul className="mt-8 flex flex-wrap gap-2">
             {/* First link is the primary action (filled), the rest are outlined, as in the latte mockup. */}
-            {links.map(([label, href], index) => (
+            {links.map(({ label, href, Icon }, index) => {
+              const external = href.startsWith("http");
+              return (
               <li key={label} className="reveal" style={delay(620 + index * 60)}>
                 <a
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
                   className={`press inline-flex items-center gap-2 rounded-control border px-4 py-2.5 text-[0.95rem] font-medium ${index === 0 ? "border-signal bg-signal text-paper hover:bg-ink hover:border-ink" : "border-ink/70 text-ink hover:bg-ink/5"}`}
                 >
-                  {label}{" "}
-                  <span aria-hidden="true" className="nudge nudge--up">
-                    ↗
-                  </span>
+                  <Icon className="text-[1.05em]" />
+                  {label}
+                  {external && (
+                    <span aria-hidden="true" className="nudge nudge--up text-[0.85em] opacity-70">
+                      ↗
+                    </span>
+                  )}
                 </a>
               </li>
-            ))}
+              );
+            })}
           </ul>
         </div>
       </div>

@@ -40,6 +40,16 @@ Built a strong foundation in mathematics, science, and critical thinking.
 - Computer Vision
 - Natural Language Processing (NLP)
 
+## Skill groups (for the site)
+
+Grouped from the skills above plus the tools each project used (see projects.md):
+
+- Programming: Python, SQL, C
+- AI & ML: Machine Learning, Deep Learning, Computer Vision, Natural Language Processing (NLP)
+- Models & methods: GRU-D, Transformers, YOLOv8, XGBoost, Random Forest, Sentence embeddings
+- Tools & platforms: BigQuery, Streamlit, Hugging Face Spaces, UI/UX design
+- Soft skills (from the About paragraph): Communication, Teamwork, Problem solving
+
 ## Core Strengths
 
 - Dependability

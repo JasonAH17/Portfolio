@@ -1,5 +1,6 @@
 import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
+import { MailIcon } from "@/components/ui/icons";
 import { Section } from "@/components/ui/section";
 import { SectionLabel } from "@/components/ui/section-label";
 import { contact } from "@/lib/data/contact";
@@ -8,18 +9,30 @@ import { profile } from "@/lib/data/profile";
 export function ContactSection() {
   return (
     <>
-      <Section id="contact" className="pt-20 pb-16 sm:pt-28 sm:pb-24">
+      <Section id="contact" className="py-14 sm:py-20">
         <div {...reveal()}>
           <SectionLabel>Get in touch</SectionLabel>
         </div>
-        <h2 {...reveal(0, "mask")} className="type-display mt-4 text-[clamp(4rem,17vw,11rem)]">
+        <h2 {...reveal(0, "mask")} className="type-display mt-3 text-[clamp(3rem,10vw,6rem)]">
           <Mask>Let&apos;s talk.</Mask>
         </h2>
         <p {...reveal(2)} className="mt-6 max-w-md text-lg leading-snug text-ink/70">
           Open to internships, research collaborations, and interesting problems in AI.
         </p>
+        <div {...reveal(3)} className="mt-8">
+          <a
+            href={`mailto:${profile.email}`}
+            className="press inline-flex items-center gap-2.5 rounded-control border border-signal bg-signal px-5 py-3 font-medium text-paper hover:border-ink hover:bg-ink"
+          >
+            <MailIcon className="text-lg" />
+            Email me
+            <span aria-hidden="true" className="nudge nudge--right">
+              →
+            </span>
+          </a>
+        </div>
 
-        <ul className="mt-12 grid overflow-hidden rounded-card border-t border-l border-border bg-panel sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid overflow-hidden rounded-card border-t border-l border-border bg-panel sm:grid-cols-2 lg:grid-cols-3">
           {contact.map((entry, index) => {
             const isExternal = entry.href.startsWith("http");
             return (
@@ -41,12 +54,6 @@ export function ContactSection() {
         </ul>
       </Section>
 
-      <footer className="border-t border-border">
-        <div className="type-label mx-auto flex w-full max-w-6xl flex-wrap justify-between gap-x-6 gap-y-2 px-4 py-5 text-ink/45 sm:px-6">
-          <span>© 2026 · {profile.name}</span>
-          <span>{profile.location} · Built with Next.js</span>
-        </div>
-      </footer>
     </>
   );
 }

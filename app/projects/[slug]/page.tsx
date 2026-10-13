@@ -4,9 +4,8 @@ import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
-import { Readout } from "@/components/signal/readout";
-import { Trace, channelVar } from "@/components/signal/trace";
 import { ImpactBulletText } from "@/components/ui/impact-bullet";
+import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
 import { SiteImage, hasImage } from "@/components/ui/site-image";
 import { projects, type ImageAsset } from "@/lib/data/projects";
 
@@ -53,7 +52,7 @@ function Block({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} {...reveal()} className="grid gap-4 border-t border-border py-10 sm:grid-cols-[11rem_1fr] sm:gap-8">
+    <section id={id} {...reveal()} className="grid gap-4 border-t border-border py-8 sm:grid-cols-[11rem_1fr] sm:gap-8">
       <h2 className="type-label pt-1 text-ink/55">{label}</h2>
       <div className={`min-w-0 ${wide ? "max-w-4xl" : "max-w-2xl"}`}>{children}</div>
     </section>
@@ -88,10 +87,12 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
     notFound();
   }
 
-  const color = channelVar(project.channel.color);
+  const color = accentVar(project.accent);
   const others = projects.filter((p) => p.slug !== project.slug);
-  const readouts = [project.readout, ...(project.extraReadouts ?? [])];
   const gallery = (project.gallery ?? []).filter((image) => hasImage(image.src));
+  const showCover = hasImage(project.cover.src) || !gallery.length;
+  // Phone screenshots only (no cover): show them beside the overview so they don't leave a half-empty row.
+  const phoneGallery = !showCover && gallery.length > 0 && gallery.every((image) => image.height > image.width);
   const sections = [
     { id: "overview", label: "Overview" },
     { id: "background", label: "Background" },
@@ -114,7 +115,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   return (
     <main className="flex flex-1 flex-col" style={{ "--channel": color } as CSSProperties}>
       {/* Header */}
-      <div className="mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6 sm:pt-16">
+      <div className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 sm:pt-12">
         <Link href="/#projects" className="reveal type-label link-hover text-signal">
           <span aria-hidden="true" className="nudge nudge--left">
             ←
@@ -122,12 +123,12 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
           All projects
         </Link>
 
-        <p className="reveal type-label mt-10 flex items-center gap-2" style={{ color, ...loadDelay(60) }}>
-          <span className="inline-block h-2 w-2 bg-current" />
-          {project.channel.label}
+        <p className="reveal type-label mt-8 flex flex-wrap items-center gap-x-2 gap-y-1" style={{ color, ...loadDelay(60) }}>
+          <span className="inline-block h-2 w-2 rounded-full bg-current" />
+          {project.category}
           {project.badge && <span className="text-ink/50">· {project.badge}</span>}
         </p>
-        <h1 className="mask--load type-display mt-4 text-[clamp(3.25rem,13vw,9rem)]">
+        <h1 className="mask--load type-display mt-3 text-[clamp(2.75rem,9vw,6rem)]">
           <Mask>{project.title}</Mask>
         </h1>
         <p className="reveal mt-4 max-w-2xl text-xl leading-snug text-ink/75 sm:text-2xl" style={loadDelay(320)}>
@@ -136,7 +137,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
         <dl
           style={loadDelay(420)}
-          className={`reveal mt-10 grid overflow-hidden rounded-card border-t border-l border-border bg-panel sm:grid-cols-2 ${meta.length > 3 ? "lg:grid-cols-[10rem_1fr_1fr_1.3fr]" : "lg:grid-cols-[12rem_1fr_1.4fr]"}`}
+          className={`reveal mt-8 grid overflow-hidden rounded-card border-t border-l border-border bg-panel sm:grid-cols-2 ${meta.length > 3 ? "lg:grid-cols-[10rem_1fr_1fr_1.3fr]" : "lg:grid-cols-[12rem_1fr_1.4fr]"}`}
         >
           {meta.map(([term, value]) => (
             <div key={term} className="border-r border-b border-border px-4 py-3">
@@ -147,32 +148,14 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         </dl>
       </div>
 
-      {/* Signal band */}
-      <div className="mt-10 border-y border-border">
-        <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-6 sm:grid-cols-[1fr_auto] sm:items-end sm:px-6">
-          <Trace
-            signal={project.channel.signal}
-            color={project.channel.color}
-            seed={project.channel.seed}
-            mode="live"
-            className="h-32 border border-border sm:h-44"
-          />
-          <div className="flex flex-wrap gap-x-10 gap-y-4 sm:flex-col">
-            {readouts.map((readout) => (
-              <Readout key={readout.unit} {...readout} color={project.channel.color} size="lg" />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
         {/* Cover: the real image if present; the placeholder only when there's nothing else to show. */}
-        {(hasImage(project.cover.src) || !gallery.length) && (
+        {showCover && (
           <div {...reveal(0, "wipe")} className="max-w-4xl">
             <Figure image={project.cover} alt={`${project.title} cover`} sizes="(min-width: 1024px) 896px, 100vw" />
           </div>
         )}
-        {gallery.length > 0 && (
+        {gallery.length > 0 && !phoneGallery && (
           <div className="mt-8 grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 first:mt-0">
             {gallery.map((image, index) => (
               <div key={image.src} {...reveal(index, "wipe")} className={gallerySpan(image)}>
@@ -187,7 +170,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         )}
 
         {/* Contents: jump links to each section on long case studies. */}
-        <nav {...reveal()} aria-label="On this page" className="mt-14 border-t border-border pt-6">
+        <nav {...reveal()} aria-label="On this page" className="mt-10 border-t border-border pt-6 first:mt-0">
           <p className="type-label text-ink/45">On this page</p>
           <ul className="type-label mt-3 flex flex-wrap gap-x-5 gap-y-2">
             {sections.map((section) => (
@@ -201,8 +184,21 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         </nav>
 
         <div className="mt-8">
-          <Block id="overview" label="Overview">
-            <p className="text-lg leading-relaxed text-ink/85 sm:text-xl">{project.about}</p>
+          <Block id="overview" label="Overview" wide={phoneGallery}>
+            {phoneGallery ? (
+              <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
+                <p className="text-lg leading-relaxed text-ink/85 sm:text-xl">{project.about}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  {gallery.map((image, index) => (
+                    <div key={image.src} {...reveal(index, "wipe")}>
+                      <Figure image={image} alt={image.caption ?? `${project.title} screenshot`} sizes="192px" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <p className="text-lg leading-relaxed text-ink/85 sm:text-xl">{project.about}</p>
+            )}
           </Block>
 
           <Block id="background" label="Background problem">
@@ -279,11 +275,6 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                 </li>
               ))}
             </ul>
-            {project.resultsNote && (
-              <div className="mt-6 border-l-2 pl-4" style={{ borderColor: color }}>
-                <Prose paragraphs={project.resultsNote} muted />
-              </div>
-            )}
           </Block>
 
           <Block id="role" label="My role">
@@ -295,7 +286,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
             <Block id="stack" label={project.stackLabel ?? "Tech stack"}>
               <ul className="flex flex-wrap gap-1.5">
                 {project.stack.map((item) => (
-                  <li key={item} className="border border-border px-2 py-1 font-mono text-xs text-ink/85">
+                  <li key={item} className="rounded-chip border border-border bg-panel px-2.5 py-1 font-mono text-xs text-ink/85">
                     {item}
                   </li>
                 ))}
@@ -340,42 +331,31 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         </div>
       </div>
 
-      {/* Other channels: no prev/next, so no implied order */}
+      {/* More projects: no prev/next, so no implied order */}
       <section className="border-t border-border">
-        <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-          <h2 className="type-label text-ink/50">Other channels</h2>
-          <ul className="mt-6 grid gap-x-8 sm:grid-cols-2">
+        <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
+          <h2 className="type-title text-2xl">More projects</h2>
+          <ul className="mt-6 grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {others.map((other, index) => (
               <li key={other.slug} {...reveal(index)}>
                 <Link
                   href={`/projects/${other.slug}`}
-                  className="live-group grid grid-cols-[1fr_6rem] items-center gap-4 border-t border-border py-4"
-                  style={{ "--channel": channelVar(other.channel.color) } as CSSProperties}
+                  className="live-group grid grid-cols-[7rem_1fr] items-center gap-4 border-t border-border py-4"
+                  style={{ "--channel": accentVar(other.accent) } as CSSProperties}
                 >
+                  <ProjectThumb project={other} sizes="112px" />
                   <span>
-                    <span className="type-label block" style={{ color: channelVar(other.channel.color) }}>
-                      {other.channel.label}
+                    <span className="type-label block" style={{ color: accentVar(other.accent) }}>
+                      {other.category}
                     </span>
-                    <span className="live-title mt-1 block text-lg type-title">
-                      {other.title}
-                    </span>
+                    <span className="live-title type-title mt-1 block text-lg">{other.title}</span>
                   </span>
-                  <Trace
-                    signal={other.channel.signal}
-                    color={other.channel.color}
-                    seed={other.channel.seed}
-                    className="h-10 border border-border"
-                  />
                 </Link>
               </li>
             ))}
           </ul>
         </div>
       </section>
-
-      <footer className="border-t border-border">
-        <div className="type-label mx-auto w-full max-w-6xl px-4 py-5 text-ink/45 sm:px-6">© 2026 · Jason Alexander Harris</div>
-      </footer>
     </main>
   );
 }
