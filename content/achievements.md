@@ -10,4 +10,4 @@ Advanced to the Semi-Final of an international AI hackathon as one of two teams 
 
 Source for the participant count: https://centralasian.uz/university_community/yj5sskdoy1-cau-tech-hackathon-2026-how-one-of-the-r (CAU Tech Hackathon 2026, all tracks combined)
 
-This ties directly to the Sepsis Guard project, which was the elimination round submission for this hackathon. See the Projects page for full details.
+This ties directly to the Sepsis Guard project, which was the qualifier round submission that earned the team its place in the semi-final. See the Projects page for full details.

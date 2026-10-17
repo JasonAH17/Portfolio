@@ -1,46 +1,82 @@
+import Image from "next/image";
+import Link from "next/link";
 import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section } from "@/components/ui/section";
-import { certifications } from "@/lib/data/certifications";
+import { hasImage } from "@/components/ui/site-image";
+import { certificationGroups, type CertificationEntry } from "@/lib/data/certifications";
+
+/** The certificate itself, letterboxed in a landscape frame. Opens the full image in a new tab. */
+function CertificateThumb({ entry }: { entry: CertificationEntry }) {
+  const { image } = entry;
+  if (!hasImage(image.src)) return <ImagePlaceholder width={image.width} height={image.height} />;
+
+  return (
+    <a
+      href={image.src}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`View certificate: ${entry.name}`}
+      className="live-group press block"
+    >
+      <span className="thumb relative block overflow-hidden rounded-card border border-border bg-panel" style={{ aspectRatio: "7 / 5" }}>
+        <Image src={image.src} alt="" fill sizes="(min-width: 640px) 160px, 112px" className="thumb__img object-contain p-1.5" />
+      </span>
+    </a>
+  );
+}
+
+function CertificateRow({ entry, index }: { entry: CertificationEntry; index: number }) {
+  return (
+    <li {...reveal(index)} className="grid grid-cols-[7rem_1fr] items-center gap-4 py-5 first:pt-0 sm:grid-cols-[10rem_1fr] sm:gap-6">
+      <CertificateThumb entry={entry} />
+      <div className="min-w-0">
+        <p className="type-label text-ink/70">
+          {entry.issuer}, {entry.date}
+        </p>
+        <h4 className="type-title mt-1 text-lg sm:text-xl">{entry.name}</h4>
+        {entry.detail && (
+          <p className="mt-1 text-sm text-ink/70">
+            {entry.detailHref ? (
+              <Link href={entry.detailHref} className="link-hover text-signal">
+                {entry.detail}
+              </Link>
+            ) : (
+              entry.detail
+            )}
+          </p>
+        )}
+        {entry.link && (
+          <a href={entry.link} target="_blank" rel="noopener noreferrer" className="type-label link-hover mt-2 inline-block text-signal">
+            Verify credential ↗
+          </a>
+        )}
+      </div>
+    </li>
+  );
+}
 
 export function CertificationsSection() {
-  const isEmpty = certifications.length === 0;
-
   return (
     <Section id="certifications" className="py-14 sm:py-20">
       <h2 {...reveal(0, "mask")} className="type-display text-[clamp(2.5rem,7vw,4.5rem)]">
         <Mask>Certifications</Mask>
       </h2>
-      <div className="mt-8">
 
-        {isEmpty ? (
-          // Empty state: a quiet dashed card until the first certificate is added.
-          <div {...reveal(1)} className="max-w-2xl rounded-card border-2 border-dashed border-border bg-panel px-6 py-6">
-            <p className="type-title text-lg">No certifications yet</p>
-            <p className="mt-1 text-ink/70">They will be listed here as I complete them.</p>
+      <div className="mt-10 space-y-12 sm:space-y-14">
+        {certificationGroups.map((group) => (
+          <div key={group.title} className="grid gap-6 border-t border-border pt-6 lg:grid-cols-[14rem_1fr] lg:gap-12">
+            <h3 {...reveal()} className="type-title text-2xl sm:text-3xl">
+              {group.title}
+            </h3>
+            <ul className="divide-y divide-border">
+              {group.entries.map((entry, index) => (
+                <CertificateRow key={entry.name} entry={entry} index={index} />
+              ))}
+            </ul>
           </div>
-        ) : (
-          <ul className="divide-y divide-border border-y border-border">
-            {certifications.map((cert, index) => (
-              <li key={cert.name} {...reveal(index + 1)} className="grid gap-4 py-5 sm:grid-cols-[8rem_1fr_auto] sm:items-center sm:gap-8">
-                <ImagePlaceholder width={cert.image.width} height={cert.image.height} className="w-32" />
-                <div>
-                  <p className="type-label text-ink/70">
-                    {cert.issuer}, {cert.date}
-                  </p>
-                  <h3 className="mt-1 text-lg font-semibold">{cert.name}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-ink/75">{cert.description}</p>
-                </div>
-                {cert.link && (
-                  <a href={cert.link} target="_blank" rel="noopener noreferrer" className="type-label link-hover text-signal">
-                    View credential ↗
-                  </a>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
+        ))}
       </div>
     </Section>
   );

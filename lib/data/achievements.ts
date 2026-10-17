@@ -35,7 +35,7 @@ export const achievements: AchievementEntry[] = [
     ],
     precededBy: {
       date: "February 2026",
-      label: "Elimination round, Sepsis Guard",
+      label: "Qualifier round, Sepsis Guard",
       href: "/projects/sepsis-guard",
     },
     paragraphs: [
@@ -45,7 +45,7 @@ export const achievements: AchievementEntry[] = [
       [
         "This ties directly to the ",
         { label: "Sepsis Guard", href: "/projects/sepsis-guard" },
-        " project, which was the elimination round submission for this hackathon. See the Projects page for full details.",
+        " project, which was the qualifier round submission that earned the team its place in the semi-final. See the Projects page for full details.",
       ],
     ],
   },
