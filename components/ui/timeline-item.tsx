@@ -35,10 +35,13 @@ export function LogEntry({ id, date, kind, title, subtitle, photos, isLast = fal
       </div>
       <div {...reveal(1)} className={isLast ? "" : "pb-12"}>
         <p className="type-label text-ink/70 sm:hidden">{date}</p>
-        <p className="type-label mt-1 sm:mt-0" style={{ color: kindColor[kind] }}>
-          {kind}
-        </p>
-        <h3 className="mt-2 text-2xl type-title sm:text-3xl">
+        {/* The tag only adds information where a section mixes kinds (Experience vs Volunteer). */}
+        {kind !== "Achievement" && (
+          <p className="type-label mb-2 mt-1 sm:mt-0" style={{ color: kindColor[kind] }}>
+            {kind}
+          </p>
+        )}
+        <h3 className="text-2xl type-title sm:text-3xl">
           {title}
         </h3>
         {subtitle && <p className="mt-1 text-ink/70">{subtitle}</p>}

@@ -38,10 +38,8 @@ export function StatusBar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-paper/85 backdrop-blur-md">
-      {/* Reading progress: fills as the page scrolls (CSS scroll timeline). */}
-      <span aria-hidden="true" className="scroll-progress absolute inset-x-0 -bottom-px h-0.5 bg-signal" />
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1.5 px-4 py-2.5 sm:h-[var(--status-bar-h)] sm:flex-nowrap sm:px-6 sm:py-0">
-        <Link href="/" className="type-label text-ink/80 hover:text-ink">
+        <Link href="/" className="type-title text-lg text-ink transition-colors hover:text-signal">
           Jason A. H.
         </Link>
 

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
+import { GitHubIcon, HuggingFaceIcon } from "@/components/ui/icons";
 import { ImpactBulletText } from "@/components/ui/impact-bullet";
 import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -19,10 +20,10 @@ function gallerySpan(image: ImageAsset) {
 
 const loadDelay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
-function Figure({ image, alt, sizes }: { image: ImageAsset; alt: string; sizes: string }) {
+function Figure({ image, alt, sizes, priority = false }: { image: ImageAsset; alt: string; sizes: string; priority?: boolean }) {
   return (
     <figure>
-      <SiteImage src={image.src} width={image.width} height={image.height} alt={alt} sizes={sizes} />
+      <SiteImage src={image.src} width={image.width} height={image.height} alt={alt} sizes={sizes} priority={priority} />
       {image.caption && <figcaption className="mt-2 text-sm leading-snug text-ink/70">{image.caption}</figcaption>}
     </figure>
   );
@@ -154,7 +155,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         {/* Cover: the real image if present; the placeholder only when there's nothing else to show. */}
         {showCover && (
           <div {...reveal(0, "wipe")} className="max-w-4xl">
-            <Figure image={project.cover} alt={`${project.title} cover`} sizes="(min-width: 1024px) 896px, 100vw" />
+            <Figure image={project.cover} alt={`${project.title} cover`} sizes="(min-width: 1024px) 896px, 100vw" priority />
           </div>
         )}
         {gallery.length > 0 && !phoneGallery && (
@@ -281,7 +282,6 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           <Block id="role" label="My role">
             <p className="leading-relaxed text-ink/85">{project.role}.</p>
-            <p className="type-label mt-3 text-ink/70">{project.type}</p>
           </Block>
 
           {project.stack && (
@@ -298,14 +298,26 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           {project.links.length > 0 && (
             <Block id="links" label="Links">
-              <ul className="type-label flex flex-wrap gap-x-6 gap-y-2 text-signal">
-                {project.links.map((link) => (
-                  <li key={link.href}>
-                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="link-hover">
-                      {link.label} ↗
-                    </a>
-                  </li>
-                ))}
+              <ul className="flex flex-wrap gap-2">
+                {project.links.map((link) => {
+                  const Icon = link.label.toLowerCase().includes("github") ? GitHubIcon : HuggingFaceIcon;
+                  return (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="press inline-flex items-center gap-2 rounded-control border border-ink/70 px-4 py-2.5 text-[0.95rem] font-medium text-ink hover:bg-ink/5"
+                      >
+                        <Icon className="text-[1.05em]" />
+                        {link.label}
+                        <span aria-hidden="true" className="nudge nudge--up text-[0.85em] opacity-70">
+                          ↗
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </Block>
           )}

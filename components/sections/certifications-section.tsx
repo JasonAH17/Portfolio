@@ -1,3 +1,4 @@
+import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section } from "@/components/ui/section";
@@ -7,28 +8,20 @@ export function CertificationsSection() {
   const isEmpty = certifications.length === 0;
 
   return (
-    <Section id="certifications" className="py-12 sm:py-16">
-      <div className="grid gap-8 lg:grid-cols-12 lg:gap-8">
-        <div {...reveal()} className="lg:col-span-3">
-          <h2 className="text-2xl type-title">
-            Certifications
-          </h2>
-        </div>
+    <Section id="certifications" className="py-14 sm:py-20">
+      <h2 {...reveal(0, "mask")} className="type-display text-[clamp(2.5rem,7vw,4.5rem)]">
+        <Mask>Certifications</Mask>
+      </h2>
+      <div className="mt-8">
 
         {isEmpty ? (
-          // Monitor "no sensor attached" state: an empty channel with a --- readout. No flatline.
-          <div {...reveal(1)} className="grid grid-cols-[1fr_auto] items-stretch gap-4 lg:col-span-9 sm:gap-8">
-            <div className="ecg-grid flex min-h-24 items-center rounded-card border border-border px-4 py-5 sm:px-6">
-              <p className="type-label max-w-md rounded-chip bg-panel px-2 py-1 text-ink/70">
-                No certifications yet. This channel goes live when I complete the first one.
-              </p>
-            </div>
-            <p className="type-display self-center text-[clamp(3rem,8vw,4.5rem)] tracking-[0.08em] text-ink/55" aria-label="No reading">
-              ---
-            </p>
+          // Empty state: a quiet dashed card until the first certificate is added.
+          <div {...reveal(1)} className="max-w-2xl rounded-card border-2 border-dashed border-border bg-panel px-6 py-6">
+            <p className="type-title text-lg">No certifications yet</p>
+            <p className="mt-1 text-ink/70">They will be listed here as I complete them.</p>
           </div>
         ) : (
-          <ul className="divide-y divide-border border-y border-border lg:col-span-9">
+          <ul className="divide-y divide-border border-y border-border">
             {certifications.map((cert, index) => (
               <li key={cert.name} {...reveal(index + 1)} className="grid gap-4 py-5 sm:grid-cols-[8rem_1fr_auto] sm:items-center sm:gap-8">
                 <ImagePlaceholder width={cert.image.width} height={cert.image.height} className="w-32" />

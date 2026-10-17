@@ -4,15 +4,12 @@
  * Latte theme.
  * Light = latte cream: warm cream page, lighter cards, espresso ink, roasted-brown accent.
  * Dark  = espresso: the same palette inverted for prefers-color-scheme: dark.
- * The ECG-paper grid survives only as a quiet texture in the certifications empty state.
  */
 :root {
   --color-paper: #f4ece2;
   --color-panel: #fbf6ef;
   --color-ink: #2b2119;
   --color-border: #e2d4c3;
-  --color-grid: rgb(139 94 60 / 0.08);
-  --color-grid-major: rgb(139 94 60 / 0.15);
   --color-signal: #8b5e3c;
   --color-highlight: #c08a5b;
   /* Inline stat text: a caramel dark enough for text contrast on cream. */
@@ -60,8 +57,6 @@
     --color-panel: #211913;
     --color-ink: #f1e6d8;
     --color-border: #382b22;
-    --color-grid: rgb(192 138 91 / 0.06);
-    --color-grid-major: rgb(192 138 91 / 0.12);
     --color-signal: #d19a68;
     --color-highlight: #c08a5b;
     --color-amber: #e0ae7e;
@@ -84,8 +79,6 @@
   --color-panel: #211913;
   --color-ink: #f1e6d8;
   --color-border: #382b22;
-  --color-grid: rgb(192 138 91 / 0.06);
-  --color-grid-major: rgb(192 138 91 / 0.12);
   --color-signal: #d19a68;
   --color-highlight: #c08a5b;
   --color-amber: #e0ae7e;
@@ -106,7 +99,6 @@
   --color-panel: var(--color-panel);
   --color-ink: var(--color-ink);
   --color-border: var(--color-border);
-  --color-grid: var(--color-grid);
   --color-signal: var(--color-signal);
   --color-highlight: var(--color-highlight);
   --color-amber: var(--color-amber);
@@ -168,23 +160,6 @@
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.01em;
-}
-
-/* ---------- ECG grid (certifications empty state) ---------- */
-
-@utility ecg-grid {
-  background-color: var(--color-panel);
-  background-image:
-    linear-gradient(var(--color-grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-grid-major) 1px, transparent 1px),
-    linear-gradient(var(--color-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
-  background-size:
-    40px 40px,
-    40px 40px,
-    8px 8px,
-    8px 8px;
-  background-position: -1px -1px;
 }
 
 @layer base {
@@ -285,6 +260,22 @@
     }
   }
 
+
+  /* ---------- Project row arrow ---------- */
+  .row-arrow {
+    transition:
+      transform 200ms var(--ease-out),
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .live-group:hover .row-arrow {
+      border-color: var(--channel);
+      color: var(--channel);
+      transform: translateX(4px);
+    }
+  }
 
   /* ---------- Project thumbnails ---------- */
   .thumb__img {
@@ -562,73 +553,6 @@
     pointer-events: auto;
   }
 
-  /*
-   * ---------- Scroll progress line ----------
-   * A hairline under the status bar that fills as you read. Pure CSS, driven by the
-   * scroll timeline, so it runs off the main thread. Browsers without scroll-driven
-   * animations simply don't show it.
-   */
-  .scroll-progress {
-    display: none;
-  }
-
-  @supports (animation-timeline: scroll()) {
-    .scroll-progress {
-      display: block;
-      transform-origin: left;
-      transform: scaleX(0);
-      animation: scroll-progress linear both;
-      animation-timeline: scroll(root block);
-    }
-
-    @keyframes scroll-progress {
-      to {
-        transform: scaleX(1);
-      }
-    }
-  }
-
-  /* ---------- Section rail (desktop) ---------- */
-  .rail-dot {
-    background-color: var(--color-paper);
-    border-color: color-mix(in oklab, var(--color-ink) 30%, transparent);
-    transition:
-      transform 250ms var(--ease-out),
-      background-color 200ms ease,
-      border-color 200ms ease;
-  }
-
-  .rail-link[aria-current] .rail-dot {
-    transform: scale(1.35);
-    background-color: var(--color-signal);
-    border-color: var(--color-signal);
-  }
-
-  .rail-label {
-    opacity: 0;
-    transform: translateX(6px);
-    transition:
-      opacity 180ms var(--ease-out),
-      transform 220ms var(--ease-out);
-  }
-
-  .rail-link[aria-current] .rail-label,
-  .rail-link:focus-visible .rail-label {
-    opacity: 1;
-    transform: none;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .rail-link:hover .rail-label {
-      opacity: 1;
-      transform: none;
-    }
-
-    .rail-link:hover .rail-dot {
-      border-color: var(--color-signal);
-    }
-  }
-
   /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
     .reveal {
@@ -671,9 +595,7 @@
       transition: opacity 150ms ease;
     }
 
-    .back-to-top,
-    .rail-label,
-    .rail-dot {
+    .back-to-top {
       transform: none !important;
     }
 

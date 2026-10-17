@@ -7,7 +7,7 @@ export type AchievementEntry = {
   category: string;
   paragraphs: RichSegment[][];
   photos?: ImageAsset[];
-  /** Short name used in the linked pair, e.g. "Grand Final". */
+  /** Short name used in the linked pair, e.g. "Semi-Final". */
   shortTitle?: string;
   /** Earlier event this achievement grew out of, drawn as a linked pair in the log. */
   precededBy?: { date: string; label: string; href: string };
@@ -16,9 +16,9 @@ export type AchievementEntry = {
 export const achievements: AchievementEntry[] = [
   {
     date: "March 2026",
-    title: "Grand Finalist, Hackathon Uzbekistan",
+    title: "Semi-Finalist, Hackathon Uzbekistan",
     category: "International AI Hackathon",
-    shortTitle: "Grand Final",
+    shortTitle: "Semi-Final",
     photos: [
       {
         src: "/images/achievements/grand-final.jpg",
@@ -40,7 +40,7 @@ export const achievements: AchievementEntry[] = [
     },
     paragraphs: [
       [
-        "Advanced to the Grand Final of an international AI hackathon as one of two teams from Indonesia. Collaborated to develop an AI powered solution under time constraints while competing alongside participants from various countries.",
+        "Advanced to the Semi-Final of an international AI hackathon as one of two teams from Indonesia. Collaborated to develop an AI powered solution under time constraints while competing alongside 1,200 participants from 17 countries.",
       ],
       [
         "This ties directly to the ",

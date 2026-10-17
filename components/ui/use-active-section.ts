@@ -7,7 +7,7 @@ const FOOTER_ID = "site-footer";
 
 /**
  * Returns the id of the section currently crossing the middle of the viewport.
- * Shared by the status bar nav and the desktop section rail.
+ * Used by the status bar nav to highlight the current section.
  */
 export function useActiveSection(ids: string[], enabled = true) {
   const [active, setActive] = useState<string | null>(null);

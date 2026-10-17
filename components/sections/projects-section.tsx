@@ -73,7 +73,7 @@ function PrimaryProject({ project }: { project: Project }) {
             <CaseStudyLink />
           </div>
         </div>
-        <ProjectThumb project={project} sizes="(min-width: 1024px) 640px, 100vw" className="lg:col-span-7" />
+        <ProjectThumb project={project} sizes="(min-width: 1024px) 640px, 100vw" className="order-first lg:order-none lg:col-span-7" />
       </div>
     </Link>
   );
@@ -106,24 +106,25 @@ function ProjectRow({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="live-group grid gap-5 border-t border-border py-7 sm:grid-cols-[12rem_1fr] sm:items-center sm:gap-8 lg:grid-cols-[12rem_1fr_auto]"
+      className="live-group grid gap-5 border-t border-border py-7 sm:grid-cols-[12rem_1fr_auto] sm:items-center sm:gap-8"
       style={accentStyle(project)}
     >
       <ProjectThumb project={project} sizes="(min-width: 640px) 192px, 100vw" />
-      <div>
+      <div className="min-w-0">
         <Category project={project} />
         <h3 className="live-title type-title mt-2 text-2xl">{project.title}</h3>
-        <p className="mt-1 text-ink/70">{project.tagline}</p>
-        <div className="mt-3">
+        <p className="mt-1 text-ink/75">{project.tagline}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
           <Meta project={project} />
+          <Tools project={project} limit={3} />
         </div>
       </div>
-      <div className="flex items-center justify-between gap-6 sm:col-span-2 lg:col-span-1 lg:flex-col lg:items-end">
-        <Tools project={project} limit={3} />
-        <span aria-hidden="true" className="nudge nudge--right type-label text-ink/70">
-          →
-        </span>
-      </div>
+      <span
+        aria-hidden="true"
+        className="row-arrow hidden h-10 w-10 place-items-center rounded-full border border-border text-ink/70 sm:grid"
+      >
+        →
+      </span>
     </Link>
   );
 }
@@ -135,7 +136,7 @@ export function ProjectsSection() {
 
   return (
     <Section id="projects" className="pt-14 pb-6 sm:pt-20">
-      <h2 {...reveal(0, "mask")} className="type-display text-[clamp(2.75rem,8vw,5rem)]">
+      <h2 {...reveal(0, "mask")} className="type-display text-[clamp(2.5rem,7vw,4.5rem)]">
         <Mask>Projects</Mask>
       </h2>
 

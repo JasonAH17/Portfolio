@@ -23,10 +23,7 @@ export function SiteFooter() {
   return (
     <footer id="site-footer" className="border-t border-border bg-panel">
       <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-8 sm:px-6 sm:pt-14">
-        <p {...reveal()} className="type-label text-signal">
-          The end
-        </p>
-        <p {...reveal(1)} className="type-display mt-3 text-[clamp(2rem,5vw,3.25rem)]">
+        <p {...reveal()} className="type-display text-[clamp(2rem,5vw,3.25rem)]">
           Thanks for reading.
         </p>
 

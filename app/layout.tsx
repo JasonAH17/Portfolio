@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Archivo, Fraunces, JetBrains_Mono } from "next/font/google";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { BackToTop } from "@/components/ui/back-to-top";
-import { SectionRail } from "@/components/ui/section-rail";
 import { SiteFooter } from "@/components/ui/site-footer";
 import { StatusBar } from "@/components/ui/status-bar";
 import "./globals.css";
@@ -50,7 +49,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {children}
         <SiteFooter />
         <BackToTop />
-        <SectionRail />
         <RevealObserver />
       </body>
     </html>

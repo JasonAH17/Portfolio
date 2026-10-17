@@ -69,7 +69,7 @@ export const projects: Project[] = [
   {
     slug: "sepsis-guard",
     tier: "primary",
-    badge: "Grand Finalist, International AI Hackathon",
+    badge: "Semi-Finalist, International AI Hackathon",
     accent: "ecg",
     category: "Healthcare AI",
     kind: "Hackathon project, team of 4",

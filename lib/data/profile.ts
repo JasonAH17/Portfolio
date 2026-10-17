@@ -74,7 +74,7 @@ export const profile: Profile = {
     { label: "Programming", items: ["Python", "SQL", "C"] },
     {
       label: "AI & ML",
-      items: ["Machine Learning", "Deep Learning", "Computer Vision", "Natural Language Processing (NLP)"],
+      items: ["Machine Learning", "Deep Learning", "Computer Vision", "Natural Language Processing"],
     },
     {
       label: "Models & methods",
