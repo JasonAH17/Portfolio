@@ -49,7 +49,8 @@ export function ThemeToggle() {
       root.setProperty("--vt-x", `${x}px`);
       root.setProperty("--vt-y", `${y}px`);
       root.setProperty("--vt-r", `${radius}px`);
-      document.startViewTransition(apply);
+      // A quick second click skips this transition, which rejects `ready`; that is expected.
+      document.startViewTransition(apply).ready.catch(() => {});
     } else {
       apply();
     }
