@@ -48,7 +48,7 @@ function CertificateRow({ entry, index }: { entry: CertificationEntry; index: nu
           </p>
         )}
         {entry.link && (
-          <a href={entry.link} target="_blank" rel="noopener noreferrer" className="type-label link-hover mt-2 inline-block text-signal">
+          <a href={entry.link} target="_blank" rel="noopener noreferrer" className="link-hover mt-2 inline-block text-sm text-signal">
             Verify credential ↗
           </a>
         )}

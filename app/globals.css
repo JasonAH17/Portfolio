@@ -114,7 +114,7 @@
   --color-ch-aux: var(--color-ch-aux);
 
   --font-sans: var(--font-archivo);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-mono: var(--font-plex-mono);
   --font-serif: var(--font-fraunces);
 
   /* One radius system: cards and media, controls, small chips. */
@@ -161,7 +161,9 @@
 
 /* Mono labels in sentence case, like the mockup's eyebrow and readout labels. */
 @utility type-label {
-  font-family: var(--font-jetbrains-mono);
+  font-family: var(--font-plex-mono);
+  /* Plex Mono is loaded at 400 only; pin it so labels on headings never get a synthesized bold. */
+  font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.01em;

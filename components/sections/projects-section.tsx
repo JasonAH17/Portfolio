@@ -35,7 +35,7 @@ function Tools({ project, limit = 4 }: { project: Project; limit?: number }) {
   return (
     <ul className="flex flex-wrap gap-1.5">
       {project.stack.slice(0, limit).map((item) => (
-        <li key={item} className="rounded-chip border border-border bg-panel px-2 py-0.5 font-mono text-[0.7rem] text-ink/75">
+        <li key={item} className="rounded-chip border border-border bg-panel px-2 py-0.5 text-xs text-ink/75">
           {item}
         </li>
       ))}
@@ -45,7 +45,7 @@ function Tools({ project, limit = 4 }: { project: Project; limit?: number }) {
 
 function CaseStudyLink() {
   return (
-    <p className="type-label text-ink/70">
+    <p className="text-sm text-ink/70">
       Read case study{" "}
       <span aria-hidden="true" className="nudge nudge--right">
         →

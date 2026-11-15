@@ -118,7 +118,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
     <main className="flex flex-1 flex-col" style={{ "--channel": color } as CSSProperties}>
       {/* Header */}
       <div className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 sm:pt-12">
-        <Link href="/#projects" className="reveal type-label link-hover text-signal">
+        <Link href="/#projects" className="reveal link-hover text-sm text-signal">
           <span aria-hidden="true" className="nudge nudge--left">
             ←
           </span>{" "}
@@ -175,7 +175,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         {/* Contents: jump links to each section on long case studies. */}
         <nav {...reveal()} aria-label="On this page" className="mt-10 border-t border-border pt-6 first:mt-0">
           <p className="type-label text-ink/70">On this page</p>
-          <ul className="type-label mt-3 flex flex-wrap gap-x-5 gap-y-2">
+          <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             {sections.map((section) => (
               <li key={section.id}>
                 <a href={`#${section.id}`} className="link-hover text-ink/70 hover:text-ink">
@@ -257,8 +257,8 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                       className="absolute top-1.5 -left-[29.5px] h-2.5 w-2.5 border-2 bg-paper"
                       style={{ borderColor: color }}
                     />
-                    <p className="type-label" style={{ color }}>
-                      {String(index + 1).padStart(2, "0")} {step.title}
+                    <p className="font-medium" style={{ color }}>
+                      {index + 1}. {step.title}
                     </p>
                     <p className="mt-1.5 leading-relaxed text-ink/80">{step.detail}</p>
                   </li>
@@ -288,7 +288,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
             <Block id="stack" label={project.stackLabel ?? "Tech stack"}>
               <ul className="flex flex-wrap gap-1.5">
                 {project.stack.map((item) => (
-                  <li key={item} className="rounded-chip border border-border bg-panel px-2.5 py-1 font-mono text-xs text-ink/85">
+                  <li key={item} className="rounded-chip border border-border bg-panel px-2.5 py-1 text-sm text-ink/85">
                     {item}
                   </li>
                 ))}

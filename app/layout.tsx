@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Archivo, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { SiteFooter } from "@/components/ui/site-footer";
@@ -12,9 +12,11 @@ const archivo = Archivo({
   axes: ["wdth"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+// Not a variable font, so the weight is required.
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400"],
 });
 
 const fraunces = Fraunces({
@@ -38,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${jetbrainsMono.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${archivo.variable} ${plexMono.variable} ${fraunces.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

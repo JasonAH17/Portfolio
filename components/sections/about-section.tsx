@@ -70,7 +70,7 @@ export function AboutSection() {
               <p className="type-label text-signal">{group.label}</p>
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {group.items.map((item) => (
-                  <li key={item} className="rounded-chip border border-border bg-paper px-2.5 py-1 font-mono text-xs text-ink/85">
+                  <li key={item} className="rounded-chip border border-border bg-paper px-2.5 py-1 text-sm text-ink/85">
                     {item}
                   </li>
                 ))}

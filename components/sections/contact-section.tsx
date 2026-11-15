@@ -43,7 +43,7 @@ export function ContactSection() {
                   className="group flex flex-col gap-1 px-5 py-4 transition-colors hover:bg-paper/60 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
                 >
                   <span className="type-label shrink-0 text-ink/70">{entry.label}</span>
-                  <span className="min-w-0 font-mono text-sm break-all text-signal group-hover:underline group-hover:underline-offset-4 sm:truncate sm:break-normal">
+                  <span className="min-w-0 text-sm break-all text-signal group-hover:underline group-hover:underline-offset-4 sm:truncate sm:break-normal">
                     {entry.value}
                   </span>
                 </a>
