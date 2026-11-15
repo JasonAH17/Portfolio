@@ -76,7 +76,7 @@ export function HomeSection() {
                   href={href}
                   target={external ? "_blank" : undefined}
                   rel={external ? "noopener noreferrer" : undefined}
-                  className={`press inline-flex items-center gap-2 rounded-control border px-4 py-2.5 text-[0.95rem] font-medium ${index === 0 ? "border-signal bg-glow text-on-glow hover:border-ink hover:bg-ink hover:text-paper" : "border-ink/70 text-ink hover:bg-ink/5"}`}
+                  className={`press inline-flex items-center gap-2 rounded-control border px-4 py-2.5 text-[0.95rem] font-medium ${index === 0 ? "sheen border-signal bg-glow text-on-glow hover:border-ink hover:bg-ink hover:text-paper" : "border-ink/70 text-ink hover:bg-ink/5"}`}
                 >
                   <Icon className="text-[1.05em]" />
                   {label}

@@ -348,10 +348,53 @@
   }
 
   /* Whole-page crossfade when switching themes (View Transitions, where supported). */
-  ::view-transition-old(root),
+  /*
+   * Theme switch spreads from the toggle: the new theme grows as a circle from the button
+   * (--vt-x, --vt-y and --vt-r are set by theme-toggle.tsx) while the old view holds still.
+   */
+  ::view-transition-old(root) {
+    animation: none;
+  }
+
   ::view-transition-new(root) {
-    animation-duration: 320ms;
-    animation-timing-function: var(--ease-out);
+    animation: theme-reveal 450ms var(--ease-out);
+  }
+
+  @keyframes theme-reveal {
+    from {
+      clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0%));
+    }
+    to {
+      clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0%));
+    }
+  }
+
+  /*
+   * ---------- Gold sheen (the two Email buttons only) ----------
+   * A soft light crosses the button once per hover. It sits above the fill and below the
+   * label (isolation keeps the z-index local), and snaps back invisibly when the hover ends.
+   */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 30%, rgb(255 246 214 / 0.6) 50%, transparent 70%);
+    transform: translateX(-120%);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .sheen:hover::after {
+      transform: translateX(120%);
+      transition: transform 600ms var(--ease-out);
+    }
   }
 
   /* ---------- Project row hover ---------- */
@@ -575,6 +618,10 @@
 
   /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
+    .sheen::after {
+      display: none;
+    }
+
     .reveal {
       animation-name: reveal-fade;
       animation-duration: 200ms;

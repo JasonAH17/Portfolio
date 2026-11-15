@@ -4,7 +4,14 @@ type Theme = "light" | "dark";
 
 const STORAGE_KEY = "theme";
 
+/**
+ * The theme last asked for. The view transition applies data-theme a frame or two later,
+ * so a quick second click must read this rather than the attribute.
+ */
+let requested: Theme | null = null;
+
 function currentTheme(): Theme {
+  if (requested) return requested;
   const set = document.documentElement.dataset.theme;
   if (set === "light" || set === "dark") return set;
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -17,10 +24,12 @@ function currentTheme(): Theme {
  * (see .theme-toggle in globals.css), so nothing depends on hydration.
  */
 export function ThemeToggle() {
-  function toggle() {
+  function toggle(event: React.MouseEvent<HTMLButtonElement>) {
     const next: Theme = currentTheme() === "dark" ? "light" : "dark";
+    requested = next;
+    // Always the latest request: a skipped transition's callback can run after a newer one.
     const apply = () => {
-      document.documentElement.dataset.theme = next;
+      document.documentElement.dataset.theme = requested ?? next;
     };
 
     try {
@@ -31,6 +40,15 @@ export function ThemeToggle() {
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (document.startViewTransition && !reduceMotion) {
+      // The new theme spreads out from the toggle (see ::view-transition-new in globals.css).
+      const box = event.currentTarget.getBoundingClientRect();
+      const x = box.left + box.width / 2;
+      const y = box.top + box.height / 2;
+      const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+      const root = document.documentElement.style;
+      root.setProperty("--vt-x", `${x}px`);
+      root.setProperty("--vt-y", `${y}px`);
+      root.setProperty("--vt-r", `${radius}px`);
       document.startViewTransition(apply);
     } else {
       apply();
