@@ -24,7 +24,7 @@ export function SiteFooter() {
     <footer id="site-footer" className="border-t border-border bg-panel">
       <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-8 sm:px-6 sm:pt-14">
         <p {...reveal()} className="type-display text-[clamp(2rem,5vw,3.25rem)]">
-          Thanks for reading.
+          Thanks for reading
         </p>
 
         <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
@@ -74,15 +74,6 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
           <p className="type-label text-ink/70">© 2026 {profile.name}</p>
-          <a
-            href="#"
-            className="press type-label inline-flex items-center gap-1.5 rounded-control border border-border px-3 py-1.5 text-ink/70 hover:text-ink"
-          >
-            Back to top
-            <span aria-hidden="true" className="nudge nudge--up">
-              ↑
-            </span>
-          </a>
         </div>
       </div>
     </footer>

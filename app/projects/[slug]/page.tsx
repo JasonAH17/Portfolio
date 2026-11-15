@@ -323,7 +323,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           <Block id="learned" label="What I learned">
             <div
-              className="space-y-5 font-serif text-[1.3rem] leading-[1.4] text-ink italic sm:text-[1.5rem]"
+              className="space-y-5 font-serif text-[1.3rem] leading-[1.4] text-ink sm:text-[1.5rem]"
               style={{ fontVariationSettings: '"opsz" 40' }}
             >
               {project.whatILearned.map((paragraph) => (

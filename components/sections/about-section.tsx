@@ -22,9 +22,9 @@ export function AboutSection() {
           <h3 {...reveal()} className="type-label text-ink/70">
             Education
           </h3>
-          <ol className="mt-5 divide-y divide-border border-y border-border">
+          <ol className="mt-6 space-y-8">
             {profile.education.map((entry, index) => (
-              <li key={entry.institution} {...reveal(index + 1)} className="grid gap-2 py-6 sm:grid-cols-[11rem_1fr] sm:gap-6">
+              <li key={entry.institution} {...reveal(index + 1)} className="grid gap-2 sm:grid-cols-[11rem_1fr] sm:gap-6">
                 <p className="type-label pt-1 text-ink/70">{entry.dates}</p>
                 <div>
                   <p className="text-xl type-title">
@@ -67,14 +67,8 @@ export function AboutSection() {
         <div className="mt-6 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
           {profile.skillGroups.map((group, index) => (
             <div key={group.label} {...reveal(index + 1)}>
-              <p className="type-label text-signal">{group.label}</p>
-              <ul className="mt-3 flex flex-wrap gap-1.5">
-                {group.items.map((item) => (
-                  <li key={item} className="rounded-chip border border-border bg-paper px-2.5 py-1 text-sm text-ink/85">
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <p className="type-label text-ink/70">{group.label}</p>
+              <p className="mt-2 leading-relaxed text-ink/85">{group.items.join(", ")}</p>
             </div>
           ))}
         </div>

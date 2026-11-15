@@ -22,7 +22,7 @@ const plexMono = IBM_Plex_Mono({
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   axes: ["opsz", "SOFT"],
 });
 

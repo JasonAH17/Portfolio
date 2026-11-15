@@ -19,11 +19,12 @@ export function HomeSection() {
     ["Expected", "2028"],
   ];
 
+  // Email is the main action, so it comes first and is the only filled button.
   const links = [
+    { label: "Email", href: `mailto:${profile.email}`, Icon: MailIcon },
     { label: "LinkedIn", href: profile.linkedin, Icon: LinkedInIcon },
     { label: "GitHub", href: profile.github, Icon: GitHubIcon },
     { label: "Hugging Face", href: profile.huggingface, Icon: HuggingFaceIcon },
-    { label: "Email", href: `mailto:${profile.email}`, Icon: MailIcon },
   ];
 
   return (
