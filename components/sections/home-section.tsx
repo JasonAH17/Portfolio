@@ -62,7 +62,7 @@ export function HomeSection() {
         </dl>
 
         <div className="reveal col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2" style={delay(300)}>
-          <p className="max-w-2xl text-lg leading-relaxed text-ink/75 sm:text-xl">
+          <p className="max-w-2xl text-lg leading-relaxed text-ink/85 sm:text-xl">
             {profile.intro}
           </p>
           <ul className="mt-8 flex flex-wrap gap-2">

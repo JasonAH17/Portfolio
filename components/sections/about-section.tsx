@@ -13,7 +13,7 @@ export function AboutSection() {
         </Mask>
       </h2>
 
-      <p {...reveal(1)} className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/80 sm:text-xl">
+      <p {...reveal(1)} className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/85 sm:text-xl">
         {profile.about}
       </p>
 
@@ -31,7 +31,7 @@ export function AboutSection() {
                     {entry.institution}
                   </p>
                   <p className="text-sm text-ink/70">{entry.program}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/75">{entry.description}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ink/85">{entry.description}</p>
                 </div>
               </li>
             ))}

@@ -56,7 +56,7 @@ function PrimaryProject({ project }: { project: Project }) {
             <p className="mt-3 text-sm font-medium text-signal">{project.badge}</p>
           )}
           <h3 className="live-title type-display mt-4 text-[clamp(2.25rem,5vw,3.5rem)]">{project.title}</h3>
-          <p className="mt-3 text-lg leading-snug text-ink/75">{project.tagline}</p>
+          <p className="mt-3 text-lg leading-snug text-ink/85">{project.tagline}</p>
           <p className="mt-3 leading-relaxed text-ink/70">{project.about}</p>
           <div className="mt-5 space-y-4">
             <Meta project={project} />
@@ -79,7 +79,7 @@ function SecondaryProject({ project }: { project: Project }) {
         <div className="lg:col-span-7">
           <Category project={project} />
           <h3 className="live-title type-display mt-4 text-[clamp(2rem,4.5vw,3rem)]">{project.title}</h3>
-          <p className="mt-3 text-lg leading-snug text-ink/75">{project.tagline}</p>
+          <p className="mt-3 text-lg leading-snug text-ink/85">{project.tagline}</p>
           <p className="mt-3 leading-relaxed text-ink/70">{project.about}</p>
           <div className="mt-5 space-y-4">
             <Meta project={project} />
@@ -104,7 +104,7 @@ function ProjectRow({ project }: { project: Project }) {
       <div className="min-w-0">
         <Category project={project} />
         <h3 className="live-title type-title mt-2 text-2xl">{project.title}</h3>
-        <p className="mt-1 text-ink/75">{project.tagline}</p>
+        <p className="mt-1 text-ink/85">{project.tagline}</p>
         <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
           <Meta project={project} />
           <Tools project={project} limit={3} />

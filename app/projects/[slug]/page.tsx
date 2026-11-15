@@ -69,8 +69,8 @@ function Prose({ paragraphs, lead = false, muted = false }: { paragraphs: string
           key={paragraph.slice(0, 32)}
           className={
             lead && index === 0
-              ? "text-lg leading-relaxed text-ink/90"
-              : `leading-relaxed ${muted ? "text-sm text-ink/70" : "text-ink/75"}`
+              ? "text-lg leading-relaxed text-ink/85"
+              : `leading-relaxed ${muted ? "text-sm text-ink/70" : "text-ink/85"}`
           }
         >
           {paragraph}
@@ -133,7 +133,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         <h1 className="mask--load type-display mt-3 text-[clamp(2.75rem,9vw,6rem)]">
           <Mask>{project.title}</Mask>
         </h1>
-        <p className="reveal mt-4 max-w-2xl text-xl leading-snug text-ink/75 sm:text-2xl" style={loadDelay(320)}>
+        <p className="reveal mt-4 max-w-2xl text-xl leading-snug text-ink/85 sm:text-2xl" style={loadDelay(320)}>
           {project.tagline}
         </p>
 
@@ -220,7 +220,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                       <span className="inline-block h-1.5 w-1.5 shrink-0" style={{ background: color }} />
                       {feature.title}
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-ink/75">{feature.detail}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-ink/85">{feature.detail}</p>
                   </li>
                 ))}
               </ul>
@@ -259,7 +259,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                     <p className="font-medium" style={{ color }}>
                       {index + 1}. {step.title}
                     </p>
-                    <p className="mt-1.5 leading-relaxed text-ink/80">{step.detail}</p>
+                    <p className="mt-1.5 leading-relaxed text-ink/85">{step.detail}</p>
                   </li>
                 ))}
               </ol>
@@ -323,7 +323,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           <Block id="learned" label="What I learned">
             <div
-              className="space-y-5 font-serif text-[1.3rem] leading-[1.4] text-ink/90 italic sm:text-[1.5rem]"
+              className="space-y-5 font-serif text-[1.3rem] leading-[1.4] text-ink italic sm:text-[1.5rem]"
               style={{ fontVariationSettings: '"opsz" 40' }}
             >
               {project.whatILearned.map((paragraph) => (

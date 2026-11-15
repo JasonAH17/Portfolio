@@ -40,7 +40,7 @@ export function SiteFooter() {
             <ul className="mt-3 space-y-2">
               {explore.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="link-hover text-sm text-ink/80 hover:text-ink">
+                  <Link href={item.href} className="link-hover text-sm text-ink/85 hover:text-ink">
                     {item.label}
                   </Link>
                 </li>
@@ -61,7 +61,7 @@ export function SiteFooter() {
                       rel={external ? "noopener noreferrer" : undefined}
                       aria-label={label}
                       title={label}
-                      className="press grid h-10 w-10 place-items-center rounded-control border border-border bg-paper text-ink/80 hover:border-signal hover:text-signal"
+                      className="press grid h-10 w-10 place-items-center rounded-control border border-border bg-paper text-ink/70 hover:border-signal hover:text-signal"
                     >
                       <Icon className="text-base" />
                     </a>

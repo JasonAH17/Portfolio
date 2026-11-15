@@ -43,7 +43,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label="Toggle dark mode"
       title="Toggle dark mode"
-      className="theme-toggle press grid h-8 w-8 place-items-center rounded-control border border-border text-ink/75 hover:border-ink/40 hover:text-ink"
+      className="theme-toggle press grid h-8 w-8 place-items-center rounded-control border border-border text-ink/70 hover:border-ink/40 hover:text-ink"
     >
       {/* Moon: shown in light mode (switch to dark). */}
       <svg className="theme-toggle__icon theme-toggle__moon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">

@@ -14,7 +14,7 @@ export function ContactSection() {
           <h2 {...reveal(0, "mask")} className="type-display text-[clamp(3rem,8vw,5.5rem)]">
             <Mask>Let&apos;s talk.</Mask>
           </h2>
-          <p {...reveal(1)} className="mt-5 max-w-md text-lg leading-snug text-ink/75">
+          <p {...reveal(1)} className="mt-5 max-w-md text-lg leading-snug text-ink/85">
             Open to internships, research collaborations, and interesting problems in AI.
           </p>
           <div {...reveal(2)} className="mt-8">
