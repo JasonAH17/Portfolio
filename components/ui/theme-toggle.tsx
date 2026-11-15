@@ -11,7 +11,7 @@ function currentTheme(): Theme {
 }
 
 /**
- * Switches between the latte (light) and espresso (dark) themes. The choice is
+ * Switches between the light (pale gold) and dark (espresso brown) themes. The choice is
  * stored and applied before paint by the head script in app/layout.tsx; until the
  * visitor picks one, the site follows the system setting. Icons are shown by CSS
  * (see .theme-toggle in globals.css), so nothing depends on hydration.

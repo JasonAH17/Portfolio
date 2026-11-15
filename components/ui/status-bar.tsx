@@ -56,7 +56,7 @@ export function StatusBar() {
                   <Link
                     href={`/#${link.id}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`link-hover text-[0.9rem] transition-colors ${isActive ? "text-signal" : "text-ink/70 hover:text-ink"}`}
+                    className={`link-hover text-[0.9rem] transition-colors ${isActive ? "text-ink" : "text-ink/70 hover:text-ink"}`}
                   >
                     {link.label}
                   </Link>

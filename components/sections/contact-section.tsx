@@ -20,7 +20,7 @@ export function ContactSection() {
           <div {...reveal(2)} className="mt-8">
             <a
               href={`mailto:${profile.email}`}
-              className="press inline-flex items-center gap-2.5 rounded-control border border-signal bg-signal px-5 py-3 font-medium text-paper hover:border-ink hover:bg-ink"
+              className="press inline-flex items-center gap-2.5 rounded-control border border-signal bg-glow px-5 py-3 font-medium text-on-glow hover:border-ink hover:bg-ink hover:text-paper"
             >
               <MailIcon className="text-lg" />
               Email me

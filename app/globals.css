@@ -1,29 +1,31 @@
 @import "tailwindcss";
 
 /*
- * Latte theme.
- * Light = latte cream: warm cream page, lighter cards, espresso ink, roasted-brown accent.
- * Dark  = espresso: the same palette inverted for prefers-color-scheme: dark.
+ * Brown and gold theme.
+ * Light = pale gold page, lighter cards, brown ink, deep gold-brown text accent, glowing gold fills.
+ * Dark  = espresso brown page, pale gold ink, glowing gold accent.
+ * Glow gold is a fill colour in light mode (too faint for text there); text on it uses on-glow.
  */
 :root {
-  --color-paper: #f4ece2;
-  --color-panel: #fbf6ef;
-  --color-ink: #2b2119;
-  --color-border: #e2d4c3;
-  --color-signal: #8b5e3c;
-  --color-highlight: #c08a5b;
-  /* Inline stat text: a caramel dark enough for text contrast on cream. */
+  --color-paper: #f4ead2;
+  --color-panel: #fbf5e4;
+  --color-ink: #2a1c12;
+  --color-border: #e6d5a6;
+  --color-signal: #7a4f1e;
+  --color-glow: #e0a526;
+  --color-on-glow: #2a1c12;
+  /* Inline stat text: a caramel dark enough for text contrast on pale gold. */
   --color-amber: #87522a;
 
-  /* One earthy channel colour per project. */
-  --color-ch-ecg: #8b5e3c;
-  --color-ch-resp: #4e6a46;
-  --color-ch-pleth: #4e6a7e;
-  --color-ch-nbp: #9a4a34;
-  --color-ch-aux: #6e5f52;
+  /* One channel colour per project, distinct from the accent and from meta text. */
+  --color-ch-ecg: #7a4f1e;
+  --color-ch-resp: #55692f;
+  --color-ch-pleth: #3e6878;
+  --color-ch-nbp: #a03e2a;
+  --color-ch-aux: #6f4b6a;
 
   --grain-opacity: 0.05;
-  --vignette: rgb(255 250 243 / 0.7);
+  --vignette: rgb(255 246 220 / 0.8);
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --status-bar-h: 3.25rem;
@@ -31,7 +33,7 @@
   --name-size: min(calc((100vw - 2.5rem) / 4.3), 13rem);
 }
 
-/* Phones: the status bar is two rows (name, clock and theme toggle, then nav), so anchor jumps need more offset. */
+/* Phones: the status bar is two rows (name and theme toggle, then nav), so anchor jumps need more offset. */
 @media (max-width: 639px) {
   :root {
     --status-bar-h: 5.25rem;
@@ -50,47 +52,49 @@
   }
 }
 
-/* Dark ("espresso"): follows the system unless the visitor picked light with the toggle. */
+/* Dark (espresso brown and glowing gold): follows the system unless the visitor picked light with the toggle. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-paper: #17110d;
-    --color-panel: #211913;
-    --color-ink: #f1e6d8;
-    --color-border: #382b22;
-    --color-signal: #d19a68;
-    --color-highlight: #c08a5b;
+    --color-paper: #1a120b;
+    --color-panel: #251a11;
+    --color-ink: #f3e6c4;
+    --color-border: #3d2c18;
+    --color-signal: #f2b93b;
+    --color-glow: #f2b93b;
+    --color-on-glow: #1a120b;
     --color-amber: #e0ae7e;
 
-    --color-ch-ecg: #d19a68;
-    --color-ch-resp: #9db88f;
-    --color-ch-pleth: #8fb0c6;
-    --color-ch-nbp: #e08f74;
-    --color-ch-aux: #cdbdae;
+    --color-ch-ecg: #f2b93b;
+    --color-ch-resp: #b5c47a;
+    --color-ch-pleth: #8dbacb;
+    --color-ch-nbp: #ee9478;
+    --color-ch-aux: #cfa9c9;
 
     --grain-opacity: 0.04;
-    --vignette: rgb(192 138 91 / 0.07);
+    --vignette: rgb(242 185 59 / 0.08);
     color-scheme: dark;
   }
 }
 
 /* Dark chosen explicitly with the theme toggle (data-theme is set by the head script). */
 :root[data-theme="dark"] {
-  --color-paper: #17110d;
-  --color-panel: #211913;
-  --color-ink: #f1e6d8;
-  --color-border: #382b22;
-  --color-signal: #d19a68;
-  --color-highlight: #c08a5b;
+  --color-paper: #1a120b;
+  --color-panel: #251a11;
+  --color-ink: #f3e6c4;
+  --color-border: #3d2c18;
+  --color-signal: #f2b93b;
+  --color-glow: #f2b93b;
+  --color-on-glow: #1a120b;
   --color-amber: #e0ae7e;
 
-  --color-ch-ecg: #d19a68;
-  --color-ch-resp: #9db88f;
-  --color-ch-pleth: #8fb0c6;
-  --color-ch-nbp: #e08f74;
-  --color-ch-aux: #cdbdae;
+  --color-ch-ecg: #f2b93b;
+  --color-ch-resp: #b5c47a;
+  --color-ch-pleth: #8dbacb;
+  --color-ch-nbp: #ee9478;
+  --color-ch-aux: #cfa9c9;
 
   --grain-opacity: 0.04;
-  --vignette: rgb(192 138 91 / 0.07);
+  --vignette: rgb(242 185 59 / 0.08);
   color-scheme: dark;
 }
 
@@ -100,7 +104,8 @@
   --color-ink: var(--color-ink);
   --color-border: var(--color-border);
   --color-signal: var(--color-signal);
-  --color-highlight: var(--color-highlight);
+  --color-glow: var(--color-glow);
+  --color-on-glow: var(--color-on-glow);
   --color-amber: var(--color-amber);
   --color-ch-ecg: var(--color-ch-ecg);
   --color-ch-pleth: var(--color-ch-pleth);
@@ -218,8 +223,8 @@
   }
 
   ::selection {
-    background: var(--color-signal);
-    color: var(--color-paper);
+    background: var(--color-glow);
+    color: var(--color-on-glow);
   }
 
   :focus-visible {
@@ -258,6 +263,12 @@
     .link-hover:hover {
       text-decoration-color: currentColor;
     }
+  }
+
+  /* Active nav link: a steady 2px accent underline (deep gold-brown in light, glowing gold in dark), kept on hover. */
+  .link-hover[aria-current] {
+    text-decoration-color: var(--color-signal);
+    text-decoration-thickness: 2px;
   }
 
 
