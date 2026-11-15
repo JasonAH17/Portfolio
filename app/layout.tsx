@@ -26,10 +26,29 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT"],
 });
 
+// Link previews need absolute image URLs. On Vercel this is the production domain; locally it is the dev server.
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
+const description =
+  "Computer Science student majoring in Artificial Intelligence at Bina Nusantara University, building AI for healthcare.";
+
+const siteName = "Jason Alexander Harris";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Jason Alexander Harris | Portfolio",
-  description:
-    "Computer Science student majoring in Artificial Intelligence at Bina Nusantara University, building AI for healthcare.",
+  description,
+  // The preview image is a real screenshot of the hero (1200 × 630).
+  openGraph: {
+    type: "website",
+    siteName,
+    title: "Jason Alexander Harris | Portfolio",
+    description,
+    images: [{ url: "/images/og/home.jpg", width: 1200, height: 630, alt: "Jason Alexander Harris, AI student at Bina Nusantara University" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 // Runs before first paint: marks JS as available (sweep covers and reveals only hide content when

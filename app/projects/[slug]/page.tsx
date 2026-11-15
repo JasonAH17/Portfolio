@@ -6,7 +6,7 @@ import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
 import { GitHubIcon, HuggingFaceIcon } from "@/components/ui/icons";
 import { ImpactBulletText } from "@/components/ui/impact-bullet";
-import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
+import { ProjectThumb, accentVar, projectImage } from "@/components/ui/project-thumb";
 import { SiteImage, hasImage } from "@/components/ui/site-image";
 import { projects, type ImageAsset } from "@/lib/data/projects";
 
@@ -35,9 +35,21 @@ export function generateStaticParams() {
 export async function generateMetadata(props: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const project = projects.find((p) => p.slug === slug);
-  return project
-    ? { title: `${project.title} | Jason Alexander Harris`, description: project.tagline }
-    : {};
+  if (!project) return {};
+  const title = `${project.title} | Jason Alexander Harris`;
+  const image = projectImage(project);
+  // A child's openGraph replaces the root one entirely, so the site name and type are repeated here.
+  return {
+    title,
+    description: project.tagline,
+    openGraph: {
+      type: "article",
+      siteName: "Jason Alexander Harris",
+      title,
+      description: project.tagline,
+      images: image ? [{ url: image.src, width: image.width, height: image.height, alt: project.title }] : undefined,
+    },
+  };
 }
 
 function Block({
