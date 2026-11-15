@@ -7,7 +7,6 @@ import { reveal } from "@/components/motion/reveal";
 import { GitHubIcon, HuggingFaceIcon } from "@/components/ui/icons";
 import { ImpactBulletText } from "@/components/ui/impact-bullet";
 import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
-import { StatusBadge } from "@/components/ui/status-badge";
 import { SiteImage, hasImage } from "@/components/ui/site-image";
 import { projects, type ImageAsset } from "@/lib/data/projects";
 
@@ -128,7 +127,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         <p className="reveal type-label mt-8 flex flex-wrap items-center gap-x-2 gap-y-1" style={{ color, ...loadDelay(60) }}>
           <span className="inline-block h-2 w-2 rounded-full bg-current" />
           {project.category}
-          <StatusBadge status={project.status} />
+          {project.status === "In progress" && <span className="text-ink/70">In progress</span>}
           {project.badge && <span className="text-ink/70">{project.badge}</span>}
         </p>
         <h1 className="mask--load type-display mt-3 text-[clamp(2.75rem,9vw,6rem)]">

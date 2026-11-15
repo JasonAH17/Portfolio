@@ -4,28 +4,25 @@ import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
 import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
 import { Section } from "@/components/ui/section";
-import { StatusBadge } from "@/components/ui/status-badge";
 import { projects, type Project } from "@/lib/data/projects";
 
 const accentStyle = (project: Project) => ({ "--channel": accentVar(project.accent) }) as CSSProperties;
 
 function Category({ project }: { project: Project }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-      <p className="type-label flex items-center gap-2" style={{ color: accentVar(project.accent) }}>
-        <span className="inline-block h-2 w-2 rounded-full bg-current" />
-        {project.category}
-      </p>
-      <StatusBadge status={project.status} />
-    </div>
+    <p className="type-label flex items-center gap-2" style={{ color: accentVar(project.accent) }}>
+      <span className="inline-block h-2 w-2 rounded-full bg-current" />
+      {project.category}
+    </p>
   );
 }
 
-/** Project type and date, e.g. "Group project, May 2026". */
+/** Project type and date, e.g. "Group project, May 2026"; unfinished projects add "in progress". */
 function Meta({ project }: { project: Project }) {
   return (
     <p className="type-label text-ink/70">
       {project.kind}, {project.year}
+      {project.status === "In progress" && ", in progress"}
     </p>
   );
 }
@@ -33,13 +30,7 @@ function Meta({ project }: { project: Project }) {
 function Tools({ project, limit = 4 }: { project: Project; limit?: number }) {
   if (!project.stack) return null;
   return (
-    <ul className="flex flex-wrap gap-1.5">
-      {project.stack.slice(0, limit).map((item) => (
-        <li key={item} className="rounded-chip border border-border bg-panel px-2 py-0.5 text-xs text-ink/75">
-          {item}
-        </li>
-      ))}
-    </ul>
+    <p className="text-sm text-ink/70">{project.stack.slice(0, limit).join(", ")}</p>
   );
 }
 
@@ -62,7 +53,7 @@ function PrimaryProject({ project }: { project: Project }) {
         <div className="lg:col-span-5">
           <Category project={project} />
           {project.badge && (
-            <p className="type-label mt-3 inline-block rounded-chip border border-current px-2 py-1 text-signal">{project.badge}</p>
+            <p className="mt-3 text-sm font-medium text-signal">{project.badge}</p>
           )}
           <h3 className="live-title type-display mt-4 text-[clamp(2.25rem,5vw,3.5rem)]">{project.title}</h3>
           <p className="mt-3 text-lg leading-snug text-ink/75">{project.tagline}</p>
