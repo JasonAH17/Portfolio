@@ -51,10 +51,6 @@ export function AboutSection() {
             </ul>
           </div>
           <div {...reveal(2)}>
-            <h3 className="type-label text-ink/70">Soft skills</h3>
-            <p className="mt-3 text-ink/85">{profile.softSkills.join(", ")}</p>
-          </div>
-          <div {...reveal(3)}>
             <h3 className="type-label text-ink/70">Languages</h3>
             <p className="mt-3 text-ink/85">{profile.languages.join(", ")}</p>
           </div>

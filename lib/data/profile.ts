@@ -25,8 +25,6 @@ export type Profile = {
   skills: string[];
   /** Skills grouped for display. Tools come from what the projects actually used. */
   skillGroups: SkillGroup[];
-  /** Soft skills named in the About paragraph. */
-  softSkills: string[];
   coreStrengths: string[];
   languages: string[];
 };
@@ -82,7 +80,6 @@ export const profile: Profile = {
     },
     { label: "Tools & platforms", items: ["BigQuery", "Streamlit", "Hugging Face Spaces", "UI/UX design"] },
   ],
-  softSkills: ["Communication", "Teamwork", "Problem solving"],
   coreStrengths: ["Dependability", "Empathy", "Willingness to Learn"],
   languages: ["Bahasa Indonesia (Native)", "English"],
 };
