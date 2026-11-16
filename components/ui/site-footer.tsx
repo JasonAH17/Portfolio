@@ -8,6 +8,7 @@ const explore = [
   { href: "/#projects", label: "Projects" },
   { href: "/#experience", label: "Experience" },
   { href: "/#achievements", label: "Achievements" },
+  { href: "/#certifications", label: "Certifications" },
   { href: "/#contact", label: "Contact" },
 ];
 
@@ -61,7 +62,7 @@ export function SiteFooter() {
                       rel={external ? "noopener noreferrer" : undefined}
                       aria-label={label}
                       title={label}
-                      className="press grid h-10 w-10 place-items-center rounded-control border border-border bg-paper text-ink/70 hover:border-signal hover:text-signal"
+                      className="press grid h-11 w-11 place-items-center rounded-control border border-border bg-paper text-ink/70 hover:border-signal hover:text-signal"
                     >
                       <Icon className="text-base" />
                     </a>

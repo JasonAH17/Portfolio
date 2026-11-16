@@ -1,5 +1,6 @@
 import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
+import { CopyButton } from "@/components/ui/copy-button";
 import { MailIcon } from "@/components/ui/icons";
 import { Section } from "@/components/ui/section";
 import { contact } from "@/lib/data/contact";
@@ -35,18 +36,20 @@ export function ContactSection() {
           {contact.map((entry) => {
             const isExternal = entry.href.startsWith("http");
             return (
-              <li key={entry.label}>
+              <li key={entry.label} className="flex">
                 <a
                   href={entry.href}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
-                  className="group flex flex-col gap-1 px-5 py-4 transition-colors focus-visible:-outline-offset-2 hover:bg-paper/60 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                  className="group flex min-w-0 flex-1 flex-col gap-1 px-5 py-4 transition-colors focus-visible:-outline-offset-2 hover:bg-paper/60 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
                 >
                   <span className="type-label shrink-0 text-ink/70">{entry.label}</span>
                   <span className="min-w-0 text-sm break-all text-ink group-hover:text-signal group-hover:underline group-hover:underline-offset-4 sm:truncate sm:break-normal">
                     {entry.value}
                   </span>
                 </a>
+                {/* A mailto link does nothing without a mail app, so the address can also be copied. */}
+                {entry.label === "Email" && <CopyButton value={entry.value} label="Copy email address" />}
               </li>
             );
           })}

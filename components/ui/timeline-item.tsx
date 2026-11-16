@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import type { ImageAsset } from "@/lib/data/projects";
 import { reveal } from "@/components/motion/reveal";
-import { SiteImage } from "./site-image";
+import { PhotoStack } from "./photo-stack";
+import { hasImage, SiteImage } from "./site-image";
 
 type LogEntryProps = {
   id?: string;
@@ -11,6 +12,8 @@ type LogEntryProps = {
   subtitle?: string;
   /** Photos for the entry, stacked in the side column; each renders a placeholder at the same size until the file exists. */
   photos?: ImageAsset[];
+  /** Show the photos as one stack (first on top) that opens a viewer, instead of side by side. */
+  stacked?: boolean;
   isLast?: boolean;
   children: ReactNode;
 };
@@ -22,7 +25,11 @@ const kindColor = {
 };
 
 /** One event in the log: timestamp column, rail with marker, entry content. */
-export function LogEntry({ id, date, kind, title, subtitle, photos, isLast = false, children }: LogEntryProps) {
+export function LogEntry({ id, date, kind, title, subtitle, photos, stacked = false, isLast = false, children }: LogEntryProps) {
+  // A stack needs at least two real files; otherwise the entry falls back to the plain layouts.
+  const present = stacked ? (photos ?? []).filter((photo) => hasImage(photo.src)) : [];
+  const stack = present.length > 1 ? present : null;
+
   return (
     <li id={id} className="grid grid-cols-[1rem_1fr] gap-x-5 sm:grid-cols-[10rem_1rem_1fr] sm:gap-x-6">
       <p {...reveal()} className="type-label hidden pt-1 text-ink/70 sm:block">
@@ -45,7 +52,16 @@ export function LogEntry({ id, date, kind, title, subtitle, photos, isLast = fal
           {title}
         </h3>
         {subtitle && <p className="mt-1 text-ink/70">{subtitle}</p>}
-        {photos && photos.length > 1 ? (
+        {stack ? (
+          <div className="mt-5 grid gap-6 md:grid-cols-[1fr_20rem]">
+            <div className="max-w-xl space-y-3 leading-relaxed text-ink/85">{children}</div>
+            {/* Extra right and bottom room for the photo that peeks out behind. */}
+            <figure {...reveal(2)} className="w-full max-w-sm pr-3 md:max-w-none">
+              <PhotoStack photos={stack} alt={title} />
+              {stack[0].caption && <figcaption className="mt-4 text-sm leading-snug text-ink/70">{stack[0].caption}</figcaption>}
+            </figure>
+          </div>
+        ) : photos && photos.length > 1 ? (
           <>
             <div className="mt-5 max-w-2xl space-y-3 leading-relaxed text-ink/85">{children}</div>
             {/* Several photos: one row under the text, all the same height, each as wide as its aspect ratio allows. */}

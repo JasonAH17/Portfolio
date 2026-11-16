@@ -56,7 +56,8 @@ export function StatusBar() {
                   <Link
                     href={`/#${link.id}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`link-hover text-[0.9rem] transition-colors ${isActive ? "text-ink" : "text-ink/70 hover:text-ink"}`}
+                    // Padding (cancelled by the margin) makes the tap area taller without moving anything.
+                    className={`link-hover -my-2 inline-block py-2 text-[0.9rem] transition-colors ${isActive ? "text-ink" : "text-ink/70 hover:text-ink"}`}
                   >
                     {link.label}
                   </Link>

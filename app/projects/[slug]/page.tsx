@@ -139,9 +139,18 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         <p className="reveal type-label mt-8 flex flex-wrap items-center gap-x-2 gap-y-1" style={{ color, ...loadDelay(60) }}>
           <span className="inline-block h-2 w-2 rounded-full bg-current" />
           {project.category}
-          {project.status === "In progress" && <span className="text-ink/70">In progress</span>}
-          {project.badge && <span className="text-ink/70">{project.badge}</span>}
         </p>
+        {/* The badge and an unfinished status each get their own plain line, as on the home cards. */}
+        {project.badge && (
+          <p className="reveal mt-3 text-sm font-medium text-signal" style={loadDelay(60)}>
+            {project.badge}
+          </p>
+        )}
+        {project.status === "In progress" && (
+          <p className="reveal mt-3 text-sm text-ink/70" style={loadDelay(60)}>
+            In progress
+          </p>
+        )}
         <h1 className="mask--load type-display mt-3 text-[clamp(2.75rem,9vw,6rem)]">
           <Mask>{project.title}</Mask>
         </h1>
@@ -297,13 +306,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
           {project.stack && (
             <Block id="stack" label={project.stackLabel ?? "Tech stack"}>
-              <ul className="flex flex-wrap gap-1.5">
-                {project.stack.map((item) => (
-                  <li key={item} className="rounded-chip border border-border bg-panel px-2.5 py-1 text-sm text-ink/85">
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <p className="leading-relaxed text-ink/85">{project.stack.join(", ")}</p>
             </Block>
           )}
 

@@ -21,7 +21,8 @@ export function ExperienceSection() {
           kind={entry.kind}
           title={entry.title}
           subtitle={entry.organization}
-          photos={entry.photo && [entry.photo]}
+          photos={entry.photo && [entry.photo, ...(entry.morePhotos ?? [])]}
+          stacked={Boolean(entry.morePhotos?.length)}
           isLast={index === entries.length - 1}
         >
           <p>{entry.body}</p>

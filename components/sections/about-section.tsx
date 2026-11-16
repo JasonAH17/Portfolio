@@ -1,12 +1,27 @@
 import { Mask } from "@/components/motion/mask";
 import { reveal } from "@/components/motion/reveal";
+import { Lanyard } from "@/components/ui/lanyard";
 import { Section } from "@/components/ui/section";
+import { hasImage } from "@/components/ui/site-image";
 import { profile } from "@/lib/data/profile";
+
+/** The real student card (ID numbers covered); the originals stay out of git. */
+const LANYARD_CARD = "/images/profile/lanyard-card.jpg";
+const LANYARD_ALT = "My BINUS University student card on its lanyard";
 
 /** Education, strengths, languages and grouped skills; the intro and photo live in the hero. */
 export function AboutSection() {
+  const showLanyard = hasImage(LANYARD_CARD);
+
   return (
-    <Section id="about" className="py-14 sm:py-20">
+    <Section id="about" className="relative py-14 sm:py-20" outerClassName="overflow-x-clip">
+      {/* From xl the lanyard hangs from the section's top edge, in the free space beside the paragraph. */}
+      {showLanyard && (
+        <div {...reveal(2)} className="pointer-events-none absolute top-0 right-6 z-20 hidden xl:block">
+          <Lanyard strap={140} width={320} interactive src={LANYARD_CARD} alt={LANYARD_ALT} />
+        </div>
+      )}
+
       <h2 {...reveal(0, "mask")} className="type-display text-[clamp(2.5rem,7vw,4.5rem)]">
         <Mask>
           About me
@@ -16,6 +31,13 @@ export function AboutSection() {
       <p {...reveal(1)} className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/85 sm:text-xl">
         {profile.about}
       </p>
+
+      {/* Below xl there is no room beside the paragraph, so the card hangs still under it, from a hairline. */}
+      {showLanyard && (
+        <div {...reveal(2)} className="mt-8 border-t border-border xl:hidden">
+          <Lanyard strap={56} src={LANYARD_CARD} alt={LANYARD_ALT} />
+        </div>
+      )}
 
       <div className="mt-10 grid gap-10 sm:mt-12 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-7">

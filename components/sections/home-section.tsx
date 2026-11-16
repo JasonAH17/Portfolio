@@ -67,7 +67,7 @@ export function HomeSection() {
             {profile.intro}
           </p>
           <ul className="mt-8 flex flex-wrap gap-2">
-            {/* First link is the primary action (filled), the rest are outlined, as in the latte mockup. */}
+            {/* First link is the primary action (filled), the rest are outlined. */}
             {links.map(({ label, href, Icon }, index) => {
               const external = href.startsWith("http");
               return (

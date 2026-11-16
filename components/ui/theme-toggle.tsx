@@ -12,15 +12,14 @@ let requested: Theme | null = null;
 
 function currentTheme(): Theme {
   if (requested) return requested;
-  const set = document.documentElement.dataset.theme;
-  if (set === "light" || set === "dark") return set;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  // Brown is the default; light only applies once the visitor has picked it.
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
 
 /**
- * Switches between the light (pale gold) and dark (espresso brown) themes. The choice is
- * stored and applied before paint by the head script in app/layout.tsx; until the
- * visitor picks one, the site follows the system setting. Icons are shown by CSS
+ * Switches between the default brown theme ("dark") and the pale gold one ("light"). The
+ * choice is stored and applied before paint by the head script in app/layout.tsx; until
+ * the visitor picks one, the site is brown. Icons are shown by CSS
  * (see .theme-toggle in globals.css), so nothing depends on hydration.
  */
 export function ThemeToggle() {
@@ -60,9 +59,9 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label="Toggle dark mode"
-      title="Toggle dark mode"
-      className="theme-toggle press grid h-8 w-8 place-items-center rounded-control border border-border text-ink/70 hover:border-ink/40 hover:text-ink"
+      aria-label="Switch between the brown and pale gold themes"
+      title="Switch theme"
+      className="theme-toggle press relative after:absolute after:-inset-1.5 after:content-[''] grid h-8 w-8 place-items-center rounded-control border border-border text-ink/70 hover:border-ink/40 hover:text-ink"
     >
       {/* Moon: shown in light mode (switch to dark). */}
       <svg className="theme-toggle__icon theme-toggle__moon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">

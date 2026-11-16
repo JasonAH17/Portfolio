@@ -2,34 +2,45 @@
 
 /*
  * Brown and gold theme.
- * Light = pale gold page, lighter cards, brown ink, deep gold-brown text accent, glowing gold fills.
- * Dark  = espresso brown page, pale gold ink, glowing gold accent.
+ * Default = brown page lit by a gold glow, pale gold ink, glowing gold accent.
+ * Light (picked with the toggle) = pale gold page, brown ink, deep gold-brown text accent, glowing gold fills.
  * Glow gold is a fill colour in light mode (too faint for text there); text on it uses on-glow.
  */
 :root {
-  --color-paper: #f4ead2;
-  --color-panel: #fbf5e4;
-  --color-ink: #2a1c12;
-  --color-border: #e6d5a6;
-  --color-signal: #7a4f1e;
-  --color-glow: #e0a526;
-  --color-on-glow: #2a1c12;
-  /* Inline stat text: a caramel dark enough for text contrast on pale gold. */
-  --color-amber: #87522a;
+  --color-paper: #2b1a0c;
+  --color-panel: #38240f;
+  --color-ink: #f5e3b8;
+  --color-border: #5a3f1e;
+  --color-signal: #ffc34d;
+  --color-glow: #ffc34d;
+  --color-on-glow: #2b1a0c;
 
   /* One channel colour per project, distinct from the accent and from meta text. */
-  --color-ch-ecg: #7a4f1e;
-  --color-ch-resp: #55692f;
-  --color-ch-pleth: #3e6878;
-  --color-ch-nbp: #a03e2a;
-  --color-ch-aux: #6f4b6a;
+  --color-ch-ecg: #ffc34d;
+  --color-ch-resp: #b5c47a;
+  --color-ch-pleth: #8dbacb;
+  --color-ch-nbp: #ee9478;
+  --color-ch-aux: #cfa9c9;
 
   --grain-opacity: 0.05;
-  --vignette: rgb(255 246 220 / 0.8);
+  /* The page backdrop: gold light falling from the top right onto brown. Fixed to the viewport.
+     Two layers: a bright core tucked into the corner, outside the text column, and a wide soft
+     halo across the page. The halo is what sits behind text, so keep it faint enough to read on. */
+  --backdrop:
+    radial-gradient(36% 42% at 102% -6%, rgb(255 195 77 / 0.62), transparent 75%),
+    radial-gradient(105% 100% at 95% -10%, rgb(255 195 77 / 0.24), transparent 72%),
+    radial-gradient(48% 42% at 0% 100%, rgb(255 195 77 / 0.09), transparent 70%),
+    linear-gradient(160deg, #553619 0%, #2b1a0c 55%, #1e1208 100%);
+  /* Big serif headings: pale gold running into glowing gold. */
+  --heading-fill: linear-gradient(180deg, #fff3d1 0%, #f1d9a8 48%, #ffc34d 100%);
+  /* Soft gold light around the main (Email) button. */
+  --button-glow: 0 0 32px -4px rgb(255 195 77 / 0.5);
+  /* The lanyard strap (navy black, as on the real one). */
+  --strap: #343d54;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --status-bar-h: 3.25rem;
-  color-scheme: light;
+  color-scheme: dark;
   --name-size: min(calc((100vw - 2.5rem) / 4.3), 13rem);
 }
 
@@ -52,50 +63,31 @@
   }
 }
 
-/* Dark (espresso brown and glowing gold): follows the system unless the visitor picked light with the toggle. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-paper: #1a120b;
-    --color-panel: #251a11;
-    --color-ink: #f3e6c4;
-    --color-border: #3d2c18;
-    --color-signal: #f2b93b;
-    --color-glow: #f2b93b;
-    --color-on-glow: #1a120b;
-    --color-amber: #e0ae7e;
+/* Light (pale gold): only when the visitor picks it with the theme toggle (data-theme is set by the head script). */
+:root[data-theme="light"] {
+  --color-paper: #f4ead2;
+  --color-panel: #fbf5e4;
+  --color-ink: #2a1c12;
+  --color-border: #e6d5a6;
+  --color-signal: #7a4f1e;
+  --color-glow: #e0a526;
+  --color-on-glow: #2a1c12;
 
-    --color-ch-ecg: #f2b93b;
-    --color-ch-resp: #b5c47a;
-    --color-ch-pleth: #8dbacb;
-    --color-ch-nbp: #ee9478;
-    --color-ch-aux: #cfa9c9;
+  --color-ch-ecg: #7a4f1e;
+  --color-ch-resp: #55692f;
+  --color-ch-pleth: #3e6878;
+  --color-ch-nbp: #a03e2a;
+  --color-ch-aux: #6f4b6a;
 
-    --grain-opacity: 0.04;
-    --vignette: rgb(242 185 59 / 0.08);
-    color-scheme: dark;
-  }
-}
-
-/* Dark chosen explicitly with the theme toggle (data-theme is set by the head script). */
-:root[data-theme="dark"] {
-  --color-paper: #1a120b;
-  --color-panel: #251a11;
-  --color-ink: #f3e6c4;
-  --color-border: #3d2c18;
-  --color-signal: #f2b93b;
-  --color-glow: #f2b93b;
-  --color-on-glow: #1a120b;
-  --color-amber: #e0ae7e;
-
-  --color-ch-ecg: #f2b93b;
-  --color-ch-resp: #b5c47a;
-  --color-ch-pleth: #8dbacb;
-  --color-ch-nbp: #ee9478;
-  --color-ch-aux: #cfa9c9;
-
-  --grain-opacity: 0.04;
-  --vignette: rgb(242 185 59 / 0.08);
-  color-scheme: dark;
+  --backdrop:
+    radial-gradient(36% 42% at 102% -6%, rgb(255 195 77 / 0.55), transparent 75%),
+    radial-gradient(105% 100% at 95% -10%, rgb(255 195 77 / 0.26), transparent 72%),
+    radial-gradient(48% 42% at 0% 100%, rgb(224 165 38 / 0.12), transparent 70%),
+    linear-gradient(160deg, #fdf6e2 0%, #f4ead2 50%, #efe0bd 100%);
+  --heading-fill: linear-gradient(180deg, #2a1c12 25%, #6b4317 100%);
+  --button-glow: 0 6px 26px -6px rgb(224 165 38 / 0.6);
+  --strap: #1d2231;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -106,7 +98,6 @@
   --color-signal: var(--color-signal);
   --color-glow: var(--color-glow);
   --color-on-glow: var(--color-on-glow);
-  --color-amber: var(--color-amber);
   --color-ch-ecg: var(--color-ch-ecg);
   --color-ch-pleth: var(--color-ch-pleth);
   --color-ch-resp: var(--color-ch-resp);
@@ -191,13 +182,16 @@
     position: relative;
     color: var(--color-ink);
     font-family: var(--font-sans);
-    background:
-      radial-gradient(
-        120% 70% at 18% 0%,
-        var(--vignette),
-        transparent 60%
-      ),
-      var(--color-paper);
+  }
+
+  /* The lit backdrop stays put while the page scrolls, so the light source never moves. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--backdrop);
   }
 
   /* Film grain: stops gradient banding and gives the dark screen texture. */
@@ -320,34 +314,22 @@
       transform 350ms var(--ease-out);
   }
 
-  .theme-toggle__sun {
-    opacity: 0;
-    transform: rotate(-90deg) scale(0.6);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .theme-toggle__sun {
-      opacity: 1;
-      transform: none;
-    }
-
-    :root:not([data-theme="light"]) .theme-toggle__moon {
-      opacity: 0;
-      transform: rotate(90deg) scale(0.6);
-    }
-  }
-
-  :root[data-theme="dark"] .theme-toggle__sun {
-    opacity: 1;
-    transform: none;
-  }
-
-  :root[data-theme="dark"] .theme-toggle__moon {
+  /* Brown is the default, so the sun (switch to light) shows unless light was picked. */
+  .theme-toggle__moon {
     opacity: 0;
     transform: rotate(90deg) scale(0.6);
   }
 
-  /* Whole-page crossfade when switching themes (View Transitions, where supported). */
+  :root[data-theme="light"] .theme-toggle__moon {
+    opacity: 1;
+    transform: none;
+  }
+
+  :root[data-theme="light"] .theme-toggle__sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+
   /*
    * Theme switch spreads from the toggle: the new theme grows as a circle from the button
    * (--vt-x, --vt-y and --vt-r are set by theme-toggle.tsx) while the old view holds still.
@@ -378,6 +360,8 @@
     position: relative;
     overflow: hidden;
     isolation: isolate;
+    /* The one glow on the site: gold light around the main action. */
+    box-shadow: var(--button-glow);
   }
 
   .sheen::after {
@@ -459,6 +443,23 @@
 
   html.js [data-reveal="mask"][data-revealed] .mask__inner {
     transform: none;
+  }
+
+  /*
+   * Masked display headings (the name, section heads, case-study titles) are filled with a
+   * gold gradient. The padding gives the fill room for ascenders and descenders, which sit
+   * outside the tight line box; the negative margin keeps the layout unchanged.
+   */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .type-name .mask__inner,
+    .type-display .mask__inner {
+      padding-block: 0.12em 0.18em;
+      margin-block: -0.12em -0.18em;
+      background: var(--heading-fill);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
   }
 
   /* Hero headline: same mask, but plays on load with no JS so it never delays LCP. */
@@ -565,6 +566,25 @@
 
   .press:active {
     transform: scale(0.97);
+  }
+
+  /* Photo stack: the second photo sits tilted behind the first and fans out a little on hover. */
+  .photo-stack:active {
+    transform: scale(0.99);
+  }
+
+  .photo-stack__behind {
+    transform: translate(10px, 8px) rotate(3deg);
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .photo-stack__behind {
+      transition: transform 400ms var(--ease-out);
+    }
+
+    .photo-stack:hover .photo-stack__behind {
+      transform: translate(16px, 12px) rotate(5deg);
+    }
   }
 
   /* Full-width rows only dip slightly; a 0.97 scale would read as a jump. */
