@@ -10,6 +10,9 @@ const STORAGE_KEY = "theme";
  */
 let requested: Theme | null = null;
 
+/** The most recent theme-switch transition, so an older one finishing late does not clear its mark. */
+let latest: ViewTransition | null = null;
+
 function currentTheme(): Theme {
   if (requested) return requested;
   // Brown is the default; light only applies once the visitor has picked it.
@@ -48,8 +51,17 @@ export function ThemeToggle() {
       root.setProperty("--vt-x", `${x}px`);
       root.setProperty("--vt-y", `${y}px`);
       root.setProperty("--vt-r", `${radius}px`);
+      // Marks this as a theme switch so the circle reveal does not also play on page navigations.
+      document.documentElement.dataset.themeSwitch = "";
+      const transition = document.startViewTransition(apply);
       // A quick second click skips this transition, which rejects `ready`; that is expected.
-      document.startViewTransition(apply).ready.catch(() => {});
+      transition.ready.catch(() => {});
+      latest = transition;
+      const clear = () => {
+        // Only the latest switch clears the mark; an earlier, skipped one must leave it for its successor.
+        if (latest === transition) delete document.documentElement.dataset.themeSwitch;
+      };
+      transition.finished.then(clear, clear);
     } else {
       apply();
     }

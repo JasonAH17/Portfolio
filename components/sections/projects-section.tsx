@@ -1,10 +1,13 @@
-import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Mask } from "@/components/motion/mask";
+import { MorphLink } from "@/components/motion/morph-link";
 import { reveal } from "@/components/motion/reveal";
 import { ProjectThumb, accentVar } from "@/components/ui/project-thumb";
 import { Section } from "@/components/ui/section";
 import { projects, type Project } from "@/lib/data/projects";
+
+/** Each project link grows its screenshot into the same screenshot on the case-study page. */
+const morph = { from: "[data-morph-thumb]", to: "[data-morph-hero]" };
 
 const accentStyle = (project: Project) => ({ "--channel": accentVar(project.accent) }) as CSSProperties;
 
@@ -48,7 +51,7 @@ function CaseStudyLink() {
 /** Sepsis Guard: text on the left, its dashboard on the right. */
 function PrimaryProject({ project }: { project: Project }) {
   return (
-    <Link href={`/projects/${project.slug}`} className="live-group block border-t border-border py-10" style={accentStyle(project)}>
+    <MorphLink {...morph} href={`/projects/${project.slug}`} className="live-group block border-t border-border py-10" style={accentStyle(project)}>
       <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
           <Category project={project} />
@@ -66,14 +69,14 @@ function PrimaryProject({ project }: { project: Project }) {
         </div>
         <ProjectThumb project={project} sizes="(min-width: 1024px) 640px, 100vw" className="order-first lg:order-none lg:col-span-7" />
       </div>
-    </Link>
+    </MorphLink>
   );
 }
 
 /** MindCheck: mirrored, with the screenshot on the left. */
 function SecondaryProject({ project }: { project: Project }) {
   return (
-    <Link href={`/projects/${project.slug}`} className="live-group block border-t border-border py-10" style={accentStyle(project)}>
+    <MorphLink {...morph} href={`/projects/${project.slug}`} className="live-group block border-t border-border py-10" style={accentStyle(project)}>
       <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
         <ProjectThumb project={project} sizes="(min-width: 1024px) 460px, 100vw" className="lg:col-span-5" />
         <div className="lg:col-span-7">
@@ -88,14 +91,15 @@ function SecondaryProject({ project }: { project: Project }) {
           </div>
         </div>
       </div>
-    </Link>
+    </MorphLink>
   );
 }
 
 /** Everything else: a compact row with a small screenshot. */
 function ProjectRow({ project }: { project: Project }) {
   return (
-    <Link
+    <MorphLink
+      {...morph}
       href={`/projects/${project.slug}`}
       className="live-group grid gap-5 border-t border-border py-7 sm:grid-cols-[12rem_1fr_auto] sm:items-center sm:gap-8"
       style={accentStyle(project)}
@@ -116,7 +120,7 @@ function ProjectRow({ project }: { project: Project }) {
       >
         →
       </span>
-    </Link>
+    </MorphLink>
   );
 }
 

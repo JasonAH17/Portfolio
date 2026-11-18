@@ -28,7 +28,9 @@ export function ProjectThumb({ project, aspect = "16 / 10", sizes, className = "
   if (!image) return <ImagePlaceholder width={1600} height={1000} className={className} />;
 
   return (
+    // data-morph-thumb: MorphLink grows this picture into the case-study screenshot, and back.
     <div
+      data-morph-thumb={project.slug}
       className={`thumb relative overflow-hidden rounded-card border border-border bg-panel ${className}`}
       style={{ aspectRatio: aspect }}
     >

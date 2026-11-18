@@ -57,7 +57,7 @@ export function PhotoStack({ photos, alt }: { photos: ImageAsset[]; alt: string 
           if (event.key === "ArrowRight") step(1);
           if (event.key === "ArrowLeft") step(-1);
         }}
-        className="m-auto max-h-[calc(100dvh-2rem)] max-w-[calc(100vw-2rem)] bg-transparent text-ink backdrop:bg-black/85"
+        className="photo-viewer m-auto max-h-[calc(100dvh-2rem)] max-w-[calc(100vw-2rem)] bg-transparent text-ink backdrop:bg-black/85"
       >
         <figure className="flex flex-col rounded-card border border-border bg-panel p-3 sm:p-4">
           <Image
@@ -73,7 +73,7 @@ export function PhotoStack({ photos, alt }: { photos: ImageAsset[]; alt: string 
               aspectRatio: `${current.width} / ${current.height}`,
               width: `min(100vw - 4rem, ${current.width}px, (100dvh - 12rem) * ${current.width / current.height})`,
             }}
-            className="mx-auto block h-auto max-w-none rounded-control bg-paper"
+            className="photo-viewer__img mx-auto block h-auto max-w-none rounded-control bg-paper"
           />
           <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
             <p className="min-w-0 text-sm leading-snug text-ink/85">

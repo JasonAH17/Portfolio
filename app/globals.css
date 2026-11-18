@@ -334,11 +334,12 @@
    * Theme switch spreads from the toggle: the new theme grows as a circle from the button
    * (--vt-x, --vt-y and --vt-r are set by theme-toggle.tsx) while the old view holds still.
    */
-  ::view-transition-old(root) {
+  html[data-theme-switch]::view-transition-old(root) {
     animation: none;
   }
 
-  ::view-transition-new(root) {
+  /* Scoped to the toggle (it sets data-theme-switch), so page navigations keep their own transition. */
+  html[data-theme-switch]::view-transition-new(root) {
     animation: theme-reveal 450ms var(--ease-out);
   }
 
@@ -348,6 +349,103 @@
     }
     to {
       clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0%));
+    }
+  }
+
+  /*
+   * ---------- Project screenshot to case study ----------
+   * MorphLink gives a project's thumbnail and the same screenshot on its case study one
+   * shared name for the length of a navigation, so the browser moves and resizes one into
+   * the other while the rest of the page crossfades. Both frames crop from the top, so the
+   * picture never stretches on the way.
+   */
+  ::view-transition {
+    pointer-events: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 200ms;
+  }
+
+  ::view-transition-group(project-morph) {
+    animation-duration: 350ms;
+    animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  ::view-transition-old(project-morph),
+  ::view-transition-new(project-morph) {
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  /* No counterpart on the next page (it is off screen): the picture just fades with the page. */
+  ::view-transition-old(project-morph):only-child {
+    animation-duration: 200ms;
+  }
+
+  /*
+   * ---------- Photo viewer ----------
+   * Fades and settles in from slightly small, and leaves a little faster than it arrives.
+   * `display` and `overlay` are held until the exit finishes so the fade-out is visible.
+   */
+  .photo-viewer,
+  .photo-viewer::backdrop {
+    opacity: 0;
+    transition:
+      opacity 150ms var(--ease-out),
+      transform 150ms var(--ease-out),
+      overlay 150ms allow-discrete,
+      display 150ms allow-discrete;
+  }
+
+  .photo-viewer {
+    transform: scale(0.97);
+  }
+
+  .photo-viewer[open],
+  .photo-viewer[open]::backdrop {
+    opacity: 1;
+    transition-duration: 200ms;
+  }
+
+  .photo-viewer[open] {
+    transform: none;
+  }
+
+  @starting-style {
+    .photo-viewer[open],
+    .photo-viewer[open]::backdrop {
+      opacity: 0;
+    }
+
+    .photo-viewer[open] {
+      transform: scale(0.97);
+    }
+  }
+
+  /* Stepping to another photo: the new one fades in. The frame's size is not animated. */
+  .photo-viewer__img {
+    animation: fade-in 150ms ease-out both;
+  }
+
+  /* A label that replaces another in place ("Copy" to "Copied"): it rises in a few pixels. */
+  .label-swap {
+    display: inline-block;
+    animation: label-in 150ms var(--ease-out) both;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes label-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
     }
   }
 
@@ -699,6 +797,26 @@
       transition: none;
     }
 
+    /* Navigation: no travelling screenshot, only a short crossfade at its new place. */
+    ::view-transition-group(project-morph) {
+      animation-duration: 0s;
+    }
+
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation-duration: 150ms;
+    }
+
+    /* Viewer and label swaps keep their fade and drop the movement. */
+    .photo-viewer,
+    .photo-viewer[open] {
+      transform: none;
+      transition-property: opacity, overlay, display;
+    }
+
+    .label-swap {
+      animation-name: fade-in;
+    }
 
   }
 }

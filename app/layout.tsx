@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Fraunces, IBM_Plex_Mono } from "next/font/google";
+import { MorphArrival } from "@/components/motion/morph-link";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { SiteFooter } from "@/components/ui/site-footer";
@@ -59,6 +60,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      // Lets Next jump straight to the top on a page change (anchor links still scroll smoothly),
+      // so the case-study screenshot is already in place when the thumbnail grows into it.
+      data-scroll-behavior="smooth"
       className={`${archivo.variable} ${plexMono.variable} ${fraunces.variable} h-full antialiased`}
       suppressHydrationWarning
     >
@@ -71,6 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteFooter />
         <BackToTop />
         <RevealObserver />
+        <MorphArrival />
       </body>
     </html>
   );

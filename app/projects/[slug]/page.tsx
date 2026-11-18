@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 import { Mask } from "@/components/motion/mask";
+import { MorphLink } from "@/components/motion/morph-link";
 import { reveal } from "@/components/motion/reveal";
 import { GitHubIcon, HuggingFaceIcon } from "@/components/ui/icons";
 import { ImpactBulletText } from "@/components/ui/impact-bullet";
@@ -19,10 +19,22 @@ function gallerySpan(image: ImageAsset) {
 
 const loadDelay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
-function Figure({ image, alt, sizes, priority = false }: { image: ImageAsset; alt: string; sizes: string; priority?: boolean }) {
+type FigureProps = {
+  image: ImageAsset;
+  alt: string;
+  sizes: string;
+  priority?: boolean;
+  /** The screenshot the home thumbnail shows: MorphLink grows the thumbnail into it on navigation. */
+  morph?: boolean;
+};
+
+function Figure({ image, alt, sizes, priority = false, morph = false }: FigureProps) {
+  const picture = (
+    <SiteImage src={image.src} width={image.width} height={image.height} alt={alt} sizes={sizes} priority={priority} />
+  );
   return (
     <figure>
-      <SiteImage src={image.src} width={image.width} height={image.height} alt={alt} sizes={sizes} priority={priority} />
+      {morph ? <div data-morph-hero>{picture}</div> : picture}
       {image.caption && <figcaption className="mt-2 text-sm leading-snug text-ink/70">{image.caption}</figcaption>}
     </figure>
   );
@@ -106,6 +118,11 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const showCover = hasImage(project.cover.src) || !gallery.length;
   // Phone screenshots only (no cover): show them beside the overview so they don't leave a half-empty row.
   const phoneGallery = !showCover && gallery.length > 0 && gallery.every((image) => image.height > image.width);
+  // The screenshot the home thumbnail shows. It takes part in the navigation morph, so it skips the
+  // scroll reveal: a wipe would hide it at the moment the thumbnail needs to land on it.
+  const hero = projectImage(project);
+  const morphFor = (image: ImageAsset) => image.src === hero?.src;
+  const revealImage = (image: ImageAsset, index: number) => (morphFor(image) ? {} : reveal(index, "wipe"));
   const sections = [
     { id: "overview", label: "Overview" },
     { id: "background", label: "Background" },
@@ -129,12 +146,17 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
     <main className="flex flex-1 flex-col" style={{ "--channel": color } as CSSProperties}>
       {/* Header */}
       <div className="mx-auto w-full max-w-6xl px-4 pt-8 sm:px-6 sm:pt-12">
-        <Link href="/#projects" className="reveal link-hover text-sm text-signal">
+        <MorphLink
+          href="/#projects"
+          from="[data-morph-hero]"
+          to={`[data-morph-thumb="${project.slug}"]`}
+          className="reveal link-hover text-sm text-signal"
+        >
           <span aria-hidden="true" className="nudge nudge--left">
             ←
           </span>{" "}
           All projects
-        </Link>
+        </MorphLink>
 
         <p className="reveal type-label mt-8 flex flex-wrap items-center gap-x-2 gap-y-1" style={{ color, ...loadDelay(60) }}>
           <span className="inline-block h-2 w-2 rounded-full bg-current" />
@@ -174,18 +196,25 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
       <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
         {/* Cover: the real image if present; the placeholder only when there's nothing else to show. */}
         {showCover && (
-          <div {...reveal(0, "wipe")} className="max-w-4xl">
-            <Figure image={project.cover} alt={`${project.title} cover`} sizes="(min-width: 1024px) 896px, 100vw" priority />
+          <div {...revealImage(project.cover, 0)} className="max-w-4xl">
+            <Figure
+              image={project.cover}
+              alt={`${project.title} cover`}
+              sizes="(min-width: 1024px) 896px, 100vw"
+              priority
+              morph={morphFor(project.cover)}
+            />
           </div>
         )}
         {gallery.length > 0 && !phoneGallery && (
           <div className="mt-8 grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 first:mt-0">
             {gallery.map((image, index) => (
-              <div key={image.src} {...reveal(index, "wipe")} className={gallerySpan(image)}>
+              <div key={image.src} {...revealImage(image, index)} className={gallerySpan(image)}>
                 <Figure
                   image={image}
                   alt={image.caption ?? `${project.title} screenshot`}
                   sizes="(min-width: 640px) 448px, 100vw"
+                  morph={morphFor(image)}
                 />
               </div>
             ))}
@@ -213,8 +242,13 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                 <p className="text-lg leading-relaxed text-ink/85 sm:text-xl">{project.about}</p>
                 <div className="grid grid-cols-2 gap-4">
                   {gallery.map((image, index) => (
-                    <div key={image.src} {...reveal(index, "wipe")}>
-                      <Figure image={image} alt={image.caption ?? `${project.title} screenshot`} sizes="192px" />
+                    <div key={image.src} {...revealImage(image, index)}>
+                      <Figure
+                        image={image}
+                        alt={image.caption ?? `${project.title} screenshot`}
+                        sizes="192px"
+                        morph={morphFor(image)}
+                      />
                     </div>
                   ))}
                 </div>
@@ -366,8 +400,10 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
           <ul className="mt-6 grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {others.map((other, index) => (
               <li key={other.slug} {...reveal(index)}>
-                <Link
+                <MorphLink
                   href={`/projects/${other.slug}`}
+                  from="[data-morph-thumb]"
+                  to="[data-morph-hero]"
                   className="live-group grid grid-cols-[7rem_1fr] items-center gap-4 border-t border-border py-4"
                   style={{ "--channel": accentVar(other.accent) } as CSSProperties}
                 >
@@ -378,7 +414,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                     </span>
                     <span className="live-title type-title mt-1 block text-lg">{other.title}</span>
                   </span>
-                </Link>
+                </MorphLink>
               </li>
             ))}
           </ul>
