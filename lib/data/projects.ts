@@ -21,6 +21,8 @@ export type ImpactBullet = ImpactSegment[];
 
 export type Project = {
   slug: string;
+  /** Kept in the data but left off the site for now (no card, no case-study page). */
+  hidden?: boolean;
   tier?: "primary" | "secondary";
   badge?: string;
   /** Accent colour for the project's labels. */
@@ -65,7 +67,7 @@ export type Project = {
   whatILearned: string[];
 };
 
-export const projects: Project[] = [
+const allProjects: Project[] = [
   {
     slug: "sepsis-guard",
     tier: "primary",
@@ -366,6 +368,7 @@ export const projects: Project[] = [
   },
   {
     slug: "finansmart",
+    hidden: true,
     accent: "aux",
     category: "Product design",
     kind: "Group project",
@@ -705,3 +708,6 @@ export const projects: Project[] = [
     ],
   },
 ];
+
+/** The projects shown on the site. */
+export const projects = allProjects.filter((project) => !project.hidden);
